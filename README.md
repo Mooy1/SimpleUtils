@@ -1,10 +1,10 @@
 # Infinity Expansion
-DESCRIPTION
+More machines and utility items for slimefun
 
 # Download
-https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master/
+https://thebusybiscuit.github.io/builds/Mooy1/SlimeUtils/master/
 
-[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
+[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SlimeUtils/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
 
 If you would like your own local server, check out my guide here:
 

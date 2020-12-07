@@ -1,8 +1,8 @@
-name: NAME
+name: SlimeUtils
 author: Mooy1
-description: DESCRIPTION
-main: io.github.mooy1.PACKAGE
-website: https://github.com/Mooy1/NAME
+description: More machines and utility items for slimefun
+main: io.github.mooy1.slimeutils
+website: https://github.com/Mooy1/SlimeUtils
 depend: [Slimefun, CS-CoreLib]
 softdepend: []
 version: ${project.version}

@@ -1,5 +1,6 @@
-package io.github.mooy1.PACKAGE;
+package io.github.mooy1.slimeutils;
 
+import io.github.mooy1.slimeutils.setup.Setup;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
@@ -11,10 +12,10 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
-public class NAME extends JavaPlugin implements SlimefunAddon {
+public class SlimeUtils extends JavaPlugin implements SlimefunAddon {
 
     @Getter
-    private static NAME instance;
+    private static SlimeUtils instance;
 
     @Override
     public void onEnable() {
@@ -35,6 +36,7 @@ public class NAME extends JavaPlugin implements SlimefunAddon {
         }
 
         //setup
+        Setup.setup(this);
         
     }
 
@@ -45,7 +47,7 @@ public class NAME extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public String getBugTrackerURL() {
-        return "https://github.com/Mooy1/NAME/issues";
+        return "https://github.com/Mooy1/SlimeUtils/issues";
     }
 
     @Nonnull

@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.mooy1</groupId>
-    <artifactId>NAME</artifactId>
+    <artifactId>SlimeUtils</artifactId>
     <version>MODIFIED</version>
 
     <properties>
@@ -122,7 +122,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.mooy1.PACKAGE.bstats</shadedPattern>
+                            <shadedPattern>io.github.mooy1.slimeutils.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
