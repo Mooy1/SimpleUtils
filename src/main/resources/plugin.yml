@@ -1,0 +1,9 @@
+name: NAME
+author: Mooy1
+description: DESCRIPTION
+main: io.github.mooy1.PACKAGE
+website: https://github.com/Mooy1/NAME
+depend: [Slimefun, CS-CoreLib]
+softdepend: []
+version: ${project.version}
+api-version: 1.16
