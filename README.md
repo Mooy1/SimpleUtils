@@ -1,8 +1,8 @@
-# Infinity Expansion
+# SlimeGrid
 More machines and utility items for slimefun
 
 # Download
-https://thebusybiscuit.github.io/builds/Mooy1/SlimeUtils/master/
+https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/
 
 [![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SlimeUtils/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
 

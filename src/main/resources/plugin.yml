@@ -1,6 +1,6 @@
-name: SlimeUtils
+name: SlimeGrid
 author: Mooy1
-description: More machines and utility items for slimefun
+description: More machines and utility items for slimefun featuring a custom power system
 main: io.github.mooy1.slimeutils
 website: https://github.com/Mooy1/SlimeUtils
 depend: [Slimefun, CS-CoreLib]
