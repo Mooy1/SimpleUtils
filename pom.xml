@@ -93,7 +93,7 @@
         <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>6486eec</version>
+            <version>d30ad55</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -131,7 +131,7 @@
                             <shadedPattern>io.github.mooy1.slimegrid.bstats</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>io.github.mooy1</pattern>
+                            <pattern>io.github.mooy1.infinitylib</pattern>
                             <shadedPattern>io.github.mooy1.slimegrid.infinitylib</shadedPattern>
                         </relocation>
                     </relocations>

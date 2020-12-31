@@ -1,9 +1,20 @@
 name: SlimeGrid
 author: Mooy1
-description: More machines and utility items for slimefun featuring a custom power system
-main: io.github.mooy1.slimeutils
-website: https://github.com/Mooy1/SlimeUtils
+description: More machines and utility items for slime
+website: https://github.com/Mooy1/SlimeGridfun featuring a custom power system
+main: io.github.mooy1.slimegrid.SlimeGrid
 depend: [Slimefun, CS-CoreLib]
 softdepend: []
 version: ${project.version}
 api-version: 1.16
+
+commands:
+  slimegrid:
+    description: Do /help slimegrid for a list of commands
+    usage: /<command> <subcommand>
+    aliases: [sg]
+
+permissions:
+  slimegrid.admin:
+    description: Slimegrid admin commands
+    default: op

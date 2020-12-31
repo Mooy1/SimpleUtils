@@ -1,9 +1,8 @@
 package io.github.mooy1.slimegrid.implementation.generators;
 
-import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
+import io.github.mooy1.slimegrid.implementation.grid.PowerGenerator;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
-import io.github.mooy1.slimegrid.implementation.grid.GridGenerator;
 import io.github.mooy1.slimegrid.lists.Categories;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -12,17 +11,18 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public abstract class AbstractGridGenerator extends AbstractContainer {
 
-    private final Map<Location, GridGenerator> generators = new HashMap<>();
+    private final Map<Location, PowerGenerator> generators = new HashMap<>();
     private final Map<Location, PowerGrid> grids = new HashMap<>();
     private final int statusSlot;
     
@@ -32,10 +32,11 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
         this.statusSlot = statusSlot;
         
         registerBlockHandler(getId(), (p, b, item1, reason) -> {
-            try {
-                this.grids.remove(b.getLocation()).getGenerators().remove(this.generators.remove(b.getLocation()));
-            } catch (NullPointerException e) {
-                PluginUtils.log(Level.WARNING, "There was an error removing the generator at " + b.getLocation().toString());
+            @Nullable PowerGrid grid = this.grids.remove(b.getLocation());
+            @Nullable PowerGenerator generator = this.generators.remove(b.getLocation());
+            if (grid != null && generator != null) {
+                grid.getGenerators().remove(generator);
+                onBreak(p, b, BlockStorage.getInventory(b), grid, generator);
             }
             return true;
         });
@@ -47,10 +48,14 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
             }
         });
     }
+
+    public void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid, PowerGenerator generator) {
+        
+    }
     
     @Override
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-        GridGenerator gen = new GridGenerator(b.getLocation().hashCode());
+        PowerGenerator gen = new PowerGenerator(b.getLocation().hashCode());
         this.generators.put(b.getLocation(), gen);
         PowerGrid grid = PowerGrid.get(BlockStorage.getLocationInfo(b.getLocation(), "owner"));
         grid.getGenerators().add(gen);
@@ -60,14 +65,16 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
 
     @Override
     public void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
-        try {
-            int generation = getGeneration(blockMenu, block);
-            this.generators.get(block.getLocation()).setGeneration(generation);
+        int generation = getGeneration(blockMenu, block);
+        @Nullable PowerGenerator generator = this.generators.get(block.getLocation());
+        if (generator != null) {
+            generator.setGeneration(generation);
             if (blockMenu.hasViewer()) {
-                blockMenu.replaceExistingItem(this.statusSlot, this.grids.get(block.getLocation()).getStatusItem(true, generation));
+                @Nullable PowerGrid grid = this.grids.get(block.getLocation());
+                if (grid != null) {
+                    blockMenu.replaceExistingItem(this.statusSlot, grid.getStatusItem(true, generation));
+                }
             }
-        } catch (NullPointerException e) {
-            PluginUtils.log(Level.WARNING, "There was an error setting the generation of the generator at " + block.getLocation().toString());
         }
     }
     

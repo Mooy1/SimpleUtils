@@ -1,7 +1,5 @@
 package io.github.mooy1.slimegrid.implementation.generators;
 
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -37,8 +35,6 @@ public class GridPanel extends AbstractGridGenerator {
         super(item, recipe, 4);
         this.day = day;
         this.night = night;
-        
-        addItemHandler((BlockUseHandler) PlayerRightClickEvent::cancel);
     }
     
     @Override

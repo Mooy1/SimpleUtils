@@ -1,6 +1,5 @@
-package io.github.mooy1.slimegrid.implementation.generators;
+package io.github.mooy1.slimegrid.implementation.consumers;
 
-import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
 import io.github.mooy1.slimegrid.lists.Categories;
@@ -11,13 +10,14 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public abstract class AbstractGridConsumer extends AbstractContainer {
 
@@ -32,11 +32,7 @@ public abstract class AbstractGridConsumer extends AbstractContainer {
         this.consumption = consumption;
         
         registerBlockHandler(getId(), (p, b, item1, reason) -> {
-            try {
-                this.grids.remove(b.getLocation());
-            } catch (NullPointerException e) {
-                PluginUtils.log(Level.WARNING, "There was an error removing the consumer at " + b.getLocation().toString());
-            }
+            onBreak(p, b, b.getLocation(), BlockStorage.getInventory(b), this.grids.remove(b.getLocation()));
             return true;
         });
 
@@ -47,7 +43,12 @@ public abstract class AbstractGridConsumer extends AbstractContainer {
             }
         });
     }
+    
+    public abstract void onBreak(Player p, Block b, Location l, BlockMenu menu, PowerGrid grid);
 
+    /**
+     * Always call super when overriding
+     */
     @Override
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
         PowerGrid grid = PowerGrid.get(BlockStorage.getLocationInfo(b.getLocation(), "owner"));
@@ -57,8 +58,8 @@ public abstract class AbstractGridConsumer extends AbstractContainer {
 
     @Override
     public void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
-        try {
-            PowerGrid grid = this.grids.get(block.getLocation());
+        @Nullable PowerGrid grid = this.grids.get(block.getLocation());
+        if (grid != null) {
             if (grid.consume(this.consumption, false) && process(blockMenu, block)) {
                 grid.consume(this.consumption, true);
                 if (blockMenu.hasViewer()) {
@@ -67,8 +68,6 @@ public abstract class AbstractGridConsumer extends AbstractContainer {
             } else if (blockMenu.hasViewer()) {
                 blockMenu.replaceExistingItem(this.statusSlot, grid.getStatusItem(false, 0));
             }
-        } catch (NullPointerException e) {
-            PluginUtils.log(Level.WARNING, "There was an error consuming grid power at " + block.getLocation().toString());
         }
     }
     
