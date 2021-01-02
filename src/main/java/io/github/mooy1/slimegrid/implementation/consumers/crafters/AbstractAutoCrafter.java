@@ -1,10 +1,8 @@
 package io.github.mooy1.slimegrid.implementation.consumers.crafters;
 
 import io.github.mooy1.infinitylib.filter.FilterType;
-import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
 import io.github.mooy1.infinitylib.items.StackUtils;
-import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.mooy1.slimegrid.implementation.consumers.AbstractGridConsumer;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
@@ -51,21 +49,22 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     private static final int keySlot = 23;
     private static final int[] outputSlots = {25};
     private static final int[] outputBorder = {24, 26, 15, 16, 17, 33, 34, 35};
-    protected final Map<Location, Pair<MultiFilter, ItemStack>> cache = new HashMap<>();
+    final Map<Location, Pair<MultiFilter, ItemStack>> cache = new HashMap<>();
+    private static final int EMPTY = new MultiFilter(FilterType.MIN_AMOUNT, new ItemStack[9]).hashCode();
 
     public AbstractAutoCrafter(int gp, SlimefunItemStack item, ItemStack[] recipe) {
         super(item, recipe, 7, gp);
     }
 
     @Override
-    public void onBreak(Player p, Block b, Location l, BlockMenu menu, PowerGrid grid) {
+    public final void onBreak(Player p, Block b, Location l, BlockMenu menu, PowerGrid grid) {
         menu.dropItems(l, inputSlots);
         menu.dropItems(l, outputSlots);
         this.cache.remove(b.getLocation());
     }
 
     @Override
-    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
         super.onNewInstance(menu, b);
 
         menu.addMenuClickHandler(keySlot, new ChestMenu.AdvancedMenuClickHandler() {
@@ -98,7 +97,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     public abstract boolean updateCache(@Nonnull Block b, @Nonnull ItemStack item);
 
     @Override
-    public void setupInv(@Nonnull BlockMenuPreset blockMenuPreset) {
+    public final void setupInv(@Nonnull BlockMenuPreset blockMenuPreset) {
         for (int slot : inputBorder) {
             blockMenuPreset.addItem(slot, MenuPreset.borderItemInput, ChestMenuUtils.getEmptyClickHandler());
         }
@@ -112,39 +111,39 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
 
     @Nonnull
     @Override
-    public int[] getTransportSlots(@Nonnull DirtyChestMenu menu, @Nonnull ItemTransportFlow flow, @Nonnull ItemStack item) {
+    public final int[] getTransportSlots(@Nonnull DirtyChestMenu menu, @Nonnull ItemTransportFlow flow, @Nonnull ItemStack item) {
         if (flow == ItemTransportFlow.WITHDRAW) {
             return outputSlots;
         }
         @Nullable Pair<MultiFilter, ItemStack> pair = this.cache.get(((BlockMenu) menu).getLocation());
         if (pair != null) {
-            int i = pair.getFirstValue().indexOf(new ItemFilter(item), FilterType.IGNORE_AMOUNT);
+            int i = pair.getFirstValue().indexOf(item);
             if (i > -1) return new int[] {inputSlots[i]};
         }
         return new int[0];
     }
 
     @Override
-    public boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public final boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
         
         Pair<MultiFilter, ItemStack> pair = this.cache.get(b.getLocation());
         
-        if (pair == null) return false;
+        if (pair == null || !menu.fits(pair.getSecondValue(), outputSlots)) {
+            return false;
+        }
 
-        MultiFilter input = MultiFilter.fromMenu(menu, inputSlots);
-
-        MessageUtils.broadcast(input.hashCode() + " ");
+        MultiFilter input = MultiFilter.fromMenu(FilterType.MIN_AMOUNT, menu, inputSlots);
         
-        if (input.hashCode() == 9 || !pair.getFirstValue().matches(input, FilterType.MIN_AMOUNT)) return false;
+        if (input.hashCode() == EMPTY || !pair.getFirstValue().fits(input, FilterType.MIN_AMOUNT)) {
+            return false;
+        }
         
-        if (!menu.fits(pair.getSecondValue(), outputSlots)) return false;
-
         menu.pushItem(pair.getSecondValue().clone(), outputSlots);
 
-        for (int i = 0 ; i < pair.getFirstValue().size() ; i++) {
+        for (int i = 0 ; i < pair.getFirstValue().getAmounts().length ; i++) {
             int amount = pair.getFirstValue().getAmounts()[i];
             if (amount > 0) {
-                menu.consumeItem(inputSlots[i], amount);
+                menu.consumeItem(inputSlots[i], amount); // use to update cache
             }
         }
 

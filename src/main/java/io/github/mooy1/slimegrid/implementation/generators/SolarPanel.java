@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class GridPanel extends AbstractGridGenerator {
+public final class SolarPanel extends AbstractGridGenerator {
 
     public static final int I_DAY = 1;
     public static final int I_NIGHT = 0;
@@ -31,7 +31,7 @@ public class GridPanel extends AbstractGridGenerator {
     private final int day;
     private final int night;
 
-    public GridPanel(int day, int night, SlimefunItemStack item, ItemStack[] recipe) {
+    public SolarPanel(int day, int night, SlimefunItemStack item, ItemStack[] recipe) {
         super(item, recipe, 4);
         this.day = day;
         this.night = night;

@@ -44,7 +44,7 @@ import java.util.Objects;
  * @author Mooy1
  * 
  */
-public class WirelessConfigurator extends SlimefunItem implements NotPlaceable, Listener {
+public final class WirelessConfigurator extends SlimefunItem implements NotPlaceable, Listener {
 
     private final NamespacedKey key;
     private final Map<Player, Long> coolDowns = new HashMap<>();

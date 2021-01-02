@@ -1,10 +1,14 @@
 # SlimeGrid
-More machines and utility items for slimefun
+A new energy system: power grids. These are per-player, global, and heavily optimized. 
+
+Machines and Generators to go along with power grids, which have multiple tiers and are heavily optimized internally.
+
+Utility items and tools.
 
 # Download
 https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/
 
-[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SlimeUtils/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
+[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
 
 If you would like your own local server, check out my guide here:
 
@@ -15,11 +19,11 @@ Minecraft Version: 1.16+ (Paper recommended)
 
 https://papermc.io/downloads
 
-Slimefun Version: DEV 741+
+Slimefun Version: DEV 765+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/)
 
-CS-CoreLib Version: DEV 91+
+CS-CoreLib Version: DEV 92+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/)
 

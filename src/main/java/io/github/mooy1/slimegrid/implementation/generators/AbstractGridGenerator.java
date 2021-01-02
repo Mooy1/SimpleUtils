@@ -1,7 +1,7 @@
 package io.github.mooy1.slimegrid.implementation.generators;
 
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
-import io.github.mooy1.slimegrid.implementation.grid.PowerGenerator;
+import io.github.mooy1.slimegrid.implementation.grid.GridGenerator;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
 import io.github.mooy1.slimegrid.lists.Categories;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 public abstract class AbstractGridGenerator extends AbstractContainer {
 
-    private final Map<Location, PowerGenerator> generators = new HashMap<>();
+    private final Map<Location, GridGenerator> generators = new HashMap<>();
     private final Map<Location, PowerGrid> grids = new HashMap<>();
     private final int statusSlot;
     
@@ -33,7 +33,7 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
         
         registerBlockHandler(getId(), (p, b, item1, reason) -> {
             @Nullable PowerGrid grid = this.grids.remove(b.getLocation());
-            @Nullable PowerGenerator generator = this.generators.remove(b.getLocation());
+            @Nullable GridGenerator generator = this.generators.remove(b.getLocation());
             if (grid != null && generator != null) {
                 grid.getGenerators().remove(generator);
                 onBreak(p, b, BlockStorage.getInventory(b), grid, generator);
@@ -49,13 +49,16 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
         });
     }
 
-    public void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid, PowerGenerator generator) {
+    public void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid, GridGenerator generator) {
         
     }
-    
+
+    /**
+     * Always call super when overriding
+     */
     @Override
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
-        PowerGenerator gen = new PowerGenerator(b.getLocation().hashCode());
+        GridGenerator gen = new GridGenerator(b.getLocation().hashCode());
         this.generators.put(b.getLocation(), gen);
         PowerGrid grid = PowerGrid.get(BlockStorage.getLocationInfo(b.getLocation(), "owner"));
         grid.getGenerators().add(gen);
@@ -64,9 +67,9 @@ public abstract class AbstractGridGenerator extends AbstractContainer {
     }
 
     @Override
-    public void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
+    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
         int generation = getGeneration(blockMenu, block);
-        @Nullable PowerGenerator generator = this.generators.get(block.getLocation());
+        @Nullable GridGenerator generator = this.generators.get(block.getLocation());
         if (generator != null) {
             generator.setGeneration(generation);
             if (blockMenu.hasViewer()) {

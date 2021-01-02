@@ -30,7 +30,7 @@ public class SlimeGrid extends JavaPlugin implements SlimefunAddon {
         PluginUtils.setup(this, "Mooy1/SlimeGrid/master", getFile());
         MessageUtils.setPrefix(ChatColor.GOLD + "SlimeGrid");
         new CommandLib(this, "slimegrid", "slimegrid.admin", "/sg");
-        CommandLib.addCommand(new TimingsCommand());
+        CommandLib.addCommands(new TimingsCommand());
         
         @SuppressWarnings("unused")
         final Metrics metrics = new Metrics(this, 9734);

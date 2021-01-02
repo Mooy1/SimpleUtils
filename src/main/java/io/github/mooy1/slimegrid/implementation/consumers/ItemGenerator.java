@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class ItemGenerator extends AbstractGridConsumer {
+public final class ItemGenerator extends AbstractGridConsumer {
 
     public static final int COBBLE_I = 1;
     public static final int COBBLE_II = 4;

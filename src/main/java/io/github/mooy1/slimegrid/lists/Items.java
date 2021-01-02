@@ -2,12 +2,13 @@ package io.github.mooy1.slimegrid.lists;
 
 import io.github.mooy1.infinitylib.presets.LorePreset;
 import io.github.mooy1.slimegrid.SlimeGrid;
-import io.github.mooy1.slimegrid.implementation.consumers.GridMachine;
 import io.github.mooy1.slimegrid.implementation.consumers.ItemGenerator;
+import io.github.mooy1.slimegrid.implementation.consumers.ProcessingMachine;
 import io.github.mooy1.slimegrid.implementation.consumers.crafters.MagicAutoCrafter;
 import io.github.mooy1.slimegrid.implementation.consumers.crafters.SlimefunAutoCrafter;
 import io.github.mooy1.slimegrid.implementation.consumers.crafters.VanillaAutoCrafter;
-import io.github.mooy1.slimegrid.implementation.generators.GridPanel;
+import io.github.mooy1.slimegrid.implementation.generators.PowerGenerator;
+import io.github.mooy1.slimegrid.implementation.generators.SolarPanel;
 import io.github.mooy1.slimegrid.utils.GridLorePreset;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
@@ -51,18 +52,18 @@ public final class Items {
             "&7" + SlimeGrid.getInstance().getBugTrackerURL()
     );
 
-    public static final SlimefunItemStack GRID_PANEL_I = makeGridPanel(1, GridPanel.I_DAY, GridPanel.I_NIGHT); // .5
-    public static final SlimefunItemStack GRID_PANEL_II = makeGridPanel(2, GridPanel.II_DAY, GridPanel.II_NIGHT); // 1.5
-    public static final SlimefunItemStack GRID_PANEL_III = makeGridPanel(3, GridPanel.III_DAY, GridPanel.III_NIGHT); // 4
-    public static final SlimefunItemStack GRID_PANEL_IV = makeGridPanel(4, GridPanel.IV_DAY, GridPanel.IV_NIGHT); // 10
-    public static final SlimefunItemStack GRID_PANEL_V = makeGridPanel(5, GridPanel.V_DAY, GridPanel.V_NIGHT); // 35
-    public static final SlimefunItemStack GRID_PANEL_VI = makeGridPanel(6, GridPanel.VI_DAY, GridPanel.VI_NIGHT); // 90
-    public static final SlimefunItemStack GRID_PANEL_VII = makeGridPanel(7, GridPanel.VII_DAY, GridPanel.VII_NIGHT); // 240
+    public static final SlimefunItemStack GRID_PANEL_I = makePanel(1, SolarPanel.I_DAY, SolarPanel.I_NIGHT); // .5
+    public static final SlimefunItemStack GRID_PANEL_II = makePanel(2, SolarPanel.II_DAY, SolarPanel.II_NIGHT); // 1.5
+    public static final SlimefunItemStack GRID_PANEL_III = makePanel(3, SolarPanel.III_DAY, SolarPanel.III_NIGHT); // 4
+    public static final SlimefunItemStack GRID_PANEL_IV = makePanel(4, SolarPanel.IV_DAY, SolarPanel.IV_NIGHT); // 10
+    public static final SlimefunItemStack GRID_PANEL_V = makePanel(5, SolarPanel.V_DAY, SolarPanel.V_NIGHT); // 35
+    public static final SlimefunItemStack GRID_PANEL_VI = makePanel(6, SolarPanel.VI_DAY, SolarPanel.VI_NIGHT); // 90
+    public static final SlimefunItemStack GRID_PANEL_VII = makePanel(7, SolarPanel.VII_DAY, SolarPanel.VII_NIGHT); // 240
 
-    public static final SlimefunItemStack COBBLE_GEN_I = makeGridItemGenerator("Cobble", 1, ItemGenerator.COBBLE_I, ItemGenerator.COBBLE_I, Material.);
-    public static final SlimefunItemStack COBBLE_GEN_II = makeGridItemGenerator("Cobble", 2, ItemGenerator.COBBLE_II, ItemGenerator.COBBLE_II, Material.);
-    public static final SlimefunItemStack COBBLE_GEN_III = makeGridItemGenerator("Cobble", 3, ItemGenerator.COBBLE_III, ItemGenerator.COBBLE_III, Material.);
-    public static final SlimefunItemStack COBBLE_GEN_IV = makeGridItemGenerator("Cobble", 4, ItemGenerator.COBBLE_IV, ItemGenerator.COBBLE_IV, Material.);
+    public static final SlimefunItemStack COBBLE_GEN_I = makeItemGenerator("Cobble", 1, ItemGenerator.COBBLE_I, ItemGenerator.COBBLE_I, Material.SMOOTH_STONE);
+    public static final SlimefunItemStack COBBLE_GEN_II = makeItemGenerator("Cobble", 2, ItemGenerator.COBBLE_II, ItemGenerator.COBBLE_II, Material.SMOOTH_STONE);
+    public static final SlimefunItemStack COBBLE_GEN_III = makeItemGenerator("Cobble", 3, ItemGenerator.COBBLE_III, ItemGenerator.COBBLE_III, Material.SMOOTH_STONE);
+    public static final SlimefunItemStack COBBLE_GEN_IV = makeItemGenerator("Cobble", 4, ItemGenerator.COBBLE_IV, ItemGenerator.COBBLE_IV, Material.SMOOTH_STONE);
 
     public static final SlimefunItemStack GRID_CIRCUIT_I = makeCircuit(1);
     public static final SlimefunItemStack GRID_CIRCUIT_II = makeCircuit(2);
@@ -72,41 +73,41 @@ public final class Items {
     public static final SlimefunItemStack GRID_CIRCUIT_VI = makeCircuit(6);
     public static final SlimefunItemStack GRID_CIRCUIT_VII = makeCircuit(7);
 
-    public static final SlimefunItemStack PULVERIZER_I = makeMachine(GridMachine.P_I, 1, 1, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.);
-    public static final SlimefunItemStack PULVERIZER_II = makeMachine(GridMachine.P_II, 2, 4, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.);
-    public static final SlimefunItemStack PULVERIZER_III = makeMachine(GridMachine.P_III, 3, 16, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.);
+    public static final SlimefunItemStack PULVERIZER_I = makeMachine(ProcessingMachine.P_I, 1, 1, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.BLAST_FURNACE);
+    public static final SlimefunItemStack PULVERIZER_II = makeMachine(ProcessingMachine.P_II, 2, 4, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.BLAST_FURNACE);
+    public static final SlimefunItemStack PULVERIZER_III = makeMachine(ProcessingMachine.P_III, 3, 16, "Pulverizer", "Pulverizes ores and ingots, into dusts", Material.BLAST_FURNACE);
 
-    public static final SlimefunItemStack FURNACE_I = makeMachine(GridMachine.F_I, 1, 1, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_II = makeMachine(GridMachine.F_II, 2, 2, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_III = makeMachine(GridMachine.F_III, 3, 4, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_IV = makeMachine(GridMachine.F_IV, 4, 8, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_V = makeMachine(GridMachine.F_V, 5, 16, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_VI = makeMachine(GridMachine.F_VI, 6, 32, "Furnace", "Smelts materials using GP", Material.)
-    public static final SlimefunItemStack FURNACE_VII = makeMachine(GridMachine.F_VII, 7, 64, "Furnace", "Smelts materials using GP", Material.)
+    public static final SlimefunItemStack FURNACE_I = makeMachine(ProcessingMachine.F_I, 1, 1, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_II = makeMachine(ProcessingMachine.F_II, 2, 2, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_III = makeMachine(ProcessingMachine.F_III, 3, 4, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_IV = makeMachine(ProcessingMachine.F_IV, 4, 8, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_V = makeMachine(ProcessingMachine.F_V, 5, 16, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_VI = makeMachine(ProcessingMachine.F_VI, 6, 32, "Furnace", "Smelts materials using GP", Material.FURNACE);
+    public static final SlimefunItemStack FURNACE_VII = makeMachine(ProcessingMachine.F_VII, 7, 64, "Furnace", "Smelts materials using GP", Material.FURNACE);
 
-    public static final SlimefunItemStack COMPRESSOR_I = makeMachine(GridMachine.C_I, 1, 1, "Compressor", "Compresses ingots and other materials into blocks", Material.);
-    public static final SlimefunItemStack COMPRESSOR_II = makeMachine(GridMachine.C_II, 2, 4, "Compressor", "Compresses ingots and other materials into blocks", Material.);
+    public static final SlimefunItemStack COMPRESSOR_I = makeMachine(ProcessingMachine.C_I, 1, 1, "Compressor", "Compresses ingots and other materials into blocks", Material.SMOOTH_SANDSTONE);
+    public static final SlimefunItemStack COMPRESSOR_II = makeMachine(ProcessingMachine.C_II, 2, 4, "Compressor", "Compresses ingots and other materials into blocks", Material.SMOOTH_SANDSTONE);
 
-    public static final SlimefunItemStack DECOMPRESSOR_I = makeMachine(GridMachine.D_I, 1, 1, "Decompressor", "Decompresses blocks into ingots and materials", Material.);
-    public static final SlimefunItemStack DECOMPRESSOR_II = makeMachine(GridMachine.D_II, 2, 4, "Decompressor", "Decompresses blocks into ingots and materials", Material.);
+    public static final SlimefunItemStack DECOMPRESSOR_I = makeMachine(ProcessingMachine.D_I, 1, 1, "Decompressor", "Decompresses blocks into ingots and materials", Material.SMOOTH_RED_SANDSTONE);
+    public static final SlimefunItemStack DECOMPRESSOR_II = makeMachine(ProcessingMachine.D_II, 2, 4, "Decompressor", "Decompresses blocks into ingots and materials", Material.SMOOTH_RED_SANDSTONE);
     
     public static final SlimefunItemStack INFUSED_GLASS = new SlimefunItemStack(
             "INFUSED_GLASS",
             Material.WHITE_STAINED_GLASS,
             "&fInfused Glass",
-            "&7Grid machine Component"
+            "&7Grid machine component"
     );
-    public static final SlimefunItemStack INFUSED_CRYSTAL = new SlimefunItemStack(
-            "INFUSED_CRYSTAL",
+    public static final SlimefunItemStack INFUSED_CORE = new SlimefunItemStack(
+            "INFUSED_CORE",
             Material.QUARTZ,
-            "&fInfused Crystal",
-            "&7Grid machine Component"
+            "&fInfused Core",
+            "&7Grid machine component"
     );
     public static final SlimefunItemStack INFUSED_PLATE = new SlimefunItemStack(
             "INFUSED_PLATE",
             Material.PAPER,
             "&fInfused Plate",
-            "&7Grid machine Component"
+            "&7Grid machine component"
     );
     public static final SlimefunItemStack SILVER_WIRE = new SlimefunItemStack(
             "SILVER_WIRE",
@@ -132,14 +133,17 @@ public final class Items {
     );
     public static final SlimefunItemStack MAGIC_AUTO_CRAFTER = new SlimefunItemStack(
             "MAGIC_AUTO_CRAFTER",
-            Material.LODESTONE,
+            Material.BOOKSHELF,
             "&eAuto Magic Workbench",
             "&7Automatically crafts magic items and runes using GP",
             "",
             GridLorePreset.consumesGridPower(MagicAutoCrafter.GP)
     );
 
-    private static SlimefunItemStack makeGridPanel(int tier, int day, int night) {
+    public static final SlimefunItemStack SURVIVAL_GENERATOR = makeGenerator(PowerGenerator.SURVIVAL, "Survival", "flammable fuels", Material.GRAY_CONCRETE);
+    public static final SlimefunItemStack OVERCLOCKED_GENERATOR = makeGenerator(PowerGenerator.OVERCLOCKED, "Overclocked", "flammable fuels", Material.MAGENTA_CONCRETE);
+
+    private static SlimefunItemStack makePanel(int tier, int day, int night) {
         return new SlimefunItemStack(
                 "GRID_PANEL_" + LorePreset.romanNumeral(tier),
                 Material.DAYLIGHT_DETECTOR,
@@ -151,9 +155,9 @@ public final class Items {
         );
     }
 
-    private static SlimefunItemStack makeGridItemGenerator(String type, int tier, int power, int speed, Material material) {
+    private static SlimefunItemStack makeItemGenerator(String type, int tier, int power, int speed, Material material) {
         return new SlimefunItemStack(
-                type.toUpperCase(Locale.ROOT) + "_GENERATOR_" + LorePreset.romanNumeral(tier),
+                type.toUpperCase(Locale.ROOT) + "_ITEM_GENERATOR_" + LorePreset.romanNumeral(tier),
                 material,
                 "&e" + type + " Generator &6" + LorePreset.romanNumeral(tier),
                 "&7Generates " + type + " from GP",
@@ -172,19 +176,19 @@ public final class Items {
         );
     }
 
-    private static SlimefunItemStack makeGenerator(int power, int tier, String name, String desc, Material material) {
+    private static SlimefunItemStack makeGenerator(int power, String name, String input, Material material) {
         return new SlimefunItemStack(
-                name.toUpperCase(Locale.ROOT) + "_GENERATOR_" + LorePreset.romanNumeral(tier),
+                name.toUpperCase(Locale.ROOT) + "_GRID_GENERATOR",
                 material,
-                "&e" + name + " Generator &6" + LorePreset.romanNumeral(tier),
-                "&7Generates power from " + desc,
+                "&e" + name + " Generator &6",
+                "&7Generates power from " + input,
                 GridLorePreset.generatesGridPower(power)
         );
     }
 
     private static SlimefunItemStack makeMachine(int power, int tier, int speed, String name, String desc, Material material) {
         return new SlimefunItemStack(
-                name.toUpperCase(Locale.ROOT) + "_MACHINE_" + LorePreset.romanNumeral(tier),
+                name.toUpperCase(Locale.ROOT) + "_GRID_MACHINE_" + LorePreset.romanNumeral(tier),
                 material,
                 "&e" + name + " &6" + LorePreset.romanNumeral(tier),
                 "&7" + desc,

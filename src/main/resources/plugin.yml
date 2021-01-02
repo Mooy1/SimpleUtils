@@ -1,7 +1,7 @@
 name: SlimeGrid
 author: Mooy1
-description: More machines and utility items for slime
-website: https://github.com/Mooy1/SlimeGridfun featuring a custom power system
+description: More machines and utility items for slimefun
+website: https://github.com/Mooy1/SlimeGrid
 main: io.github.mooy1.slimegrid.SlimeGrid
 depend: [Slimefun, CS-CoreLib]
 softdepend: []

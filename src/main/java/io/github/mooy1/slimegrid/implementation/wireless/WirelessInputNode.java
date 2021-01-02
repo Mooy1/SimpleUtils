@@ -31,7 +31,7 @@ import java.util.Objects;
  * @author Mooy1
  * 
  */
-public class WirelessInputNode extends AbstractGridConsumer {
+public final class WirelessInputNode extends AbstractGridConsumer {
 
     private static final ItemStack WHITELIST = new CustomItem(Material.WHITE_STAINED_GLASS_PANE, "&fWhitelist", "&7Click to switch");
     private static final ItemStack BLACKLIST = new CustomItem(Material.BLACK_STAINED_GLASS_PANE, "&8Blacklist", "&7Click to switch");
@@ -108,7 +108,7 @@ public class WirelessInputNode extends AbstractGridConsumer {
 
         boolean vanilla = WirelessUtils.isVanilla(l);
         ItemStack item = whiteMenu.getItemInSlot(WHITELIST_SLOT);
-        ItemFilter filter = item != null ? new ItemFilter(item) : null;
+        ItemFilter filter = ItemFilter.get(item, FilterType.IGNORE_AMOUNT);
         boolean whitelist = isWhitelist(l);
 
         if (vanilla) {
@@ -148,7 +148,7 @@ public class WirelessInputNode extends AbstractGridConsumer {
         for (int slot : TransferUtils.getSlots(menu, ItemTransportFlow.WITHDRAW, null)) {
             ItemStack item = menu.getItemInSlot(slot);
             
-            if (item == null || whitelist != (filter == null || new ItemFilter(item).matches(filter, FilterType.IGNORE_AMOUNT))) {
+            if (item == null || whitelist != (filter == null || filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
                 continue;
             }
             
@@ -172,7 +172,7 @@ public class WirelessInputNode extends AbstractGridConsumer {
         for (int slot : TransferUtils.getOutputSlots(inv)) {
             ItemStack item = inv.getContents()[slot];
             
-            if (item == null || whitelist != (filter == null || new ItemFilter(item).matches(filter, FilterType.IGNORE_AMOUNT))) {
+            if (item == null || whitelist != (filter == null || filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
                 continue;
             }
 
@@ -194,9 +194,9 @@ public class WirelessInputNode extends AbstractGridConsumer {
     
     @Override
     public void setupInv(@Nonnull BlockMenuPreset blockMenuPreset) {
-        for (int i = 0 ; i < 18 ; i++) {
+        for (int i = 0 ; i < 9 ; i++) {
             if (i == INFO || i == WHITELIST_SLOT) {
-                i++;
+                continue;
             }
             blockMenuPreset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }

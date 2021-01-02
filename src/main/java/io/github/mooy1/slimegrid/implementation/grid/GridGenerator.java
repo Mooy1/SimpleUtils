@@ -3,14 +3,14 @@ package io.github.mooy1.slimegrid.implementation.grid;
 import lombok.Getter;
 import lombok.Setter;
 
-public final class PowerGenerator {
+public final class GridGenerator {
 
     @Setter
     @Getter
     private int generation;
     private final int hashcode;
 
-    public PowerGenerator(int hashcode) {
+    public GridGenerator(int hashcode) {
         this.hashcode = hashcode;
         this.generation = 0;
     }
@@ -22,7 +22,7 @@ public final class PowerGenerator {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof PowerGenerator && obj.hashCode() == this.hashcode;
+        return obj instanceof GridGenerator && obj.hashCode() == this.hashcode;
     }
 
 }

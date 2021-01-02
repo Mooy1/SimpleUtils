@@ -4,6 +4,7 @@ import io.github.mooy1.infinitylib.objects.AbstractContainer;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
 import io.github.mooy1.slimegrid.lists.Categories;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -53,11 +54,12 @@ public abstract class AbstractGridConsumer extends AbstractContainer {
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
         PowerGrid grid = PowerGrid.get(BlockStorage.getLocationInfo(b.getLocation(), "owner"));
         this.grids.put(b.getLocation(), grid);
+        menu.addMenuClickHandler(this.statusSlot, ChestMenuUtils.getEmptyClickHandler());
         menu.replaceExistingItem(this.statusSlot, grid.getStatusItem(false, 0));
     }
 
     @Override
-    public void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
+    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu) {
         @Nullable PowerGrid grid = this.grids.get(block.getLocation());
         if (grid != null) {
             if (grid.consume(this.consumption, false) && process(blockMenu, block)) {

@@ -1,6 +1,6 @@
 package io.github.mooy1.slimegrid.implementation.consumers.crafters;
 
-import io.github.mooy1.infinitylib.filter.ItemFilter;
+import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
 import io.github.mooy1.slimegrid.lists.Items;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -19,9 +19,9 @@ public final class SlimefunAutoCrafter extends AbstractAutoCrafter {
 
     public SlimefunAutoCrafter() {
         super(GP, Items.SLIMEFUN_AUTO_CRAFTER, new ItemStack[] {
-                Items.SILVER_WIRE, Items.INFUSED_CRYSTAL, Items.SILVER_WIRE,
+                Items.SILVER_WIRE, Items.INFUSED_CORE, Items.SILVER_WIRE,
                 Items.GRID_CIRCUIT_II, new ItemStack(Material.CRAFTING_TABLE), Items.GRID_CIRCUIT_II,
-                Items.SILVER_WIRE, Items.INFUSED_CRYSTAL, Items.SILVER_WIRE
+                Items.SILVER_WIRE, Items.INFUSED_CORE, Items.SILVER_WIRE
         });
     }
 
@@ -46,15 +46,10 @@ public final class SlimefunAutoCrafter extends AbstractAutoCrafter {
 
     @Nullable
     private Pair<MultiFilter, ItemStack> getSlimefunRecipe(@Nonnull SlimefunItem slimefunItem) {
-        if (slimefunItem.getRecipeType() == RecipeType.ENHANCED_CRAFTING_TABLE || slimefunItem.getRecipeType() == RecipeType.ARMOR_FORGE) {
-            ItemFilter[] array = new ItemFilter[9];
-            for (int i = 0 ; i < 9 ; i ++) {
-                ItemStack item = slimefunItem.getRecipe()[i];
-                if (item != null) {
-                    array[i] = new ItemFilter(item);
-                }
-            }
-            return new Pair<>(new MultiFilter(array), slimefunItem.getRecipeOutput());
+        if ((slimefunItem.getRecipeType() == RecipeType.ENHANCED_CRAFTING_TABLE
+                || slimefunItem.getRecipeType() == RecipeType.ARMOR_FORGE)
+                && slimefunItem.getRecipe().length == 9) {
+            return new Pair<>(new MultiFilter(FilterType.MIN_AMOUNT, slimefunItem.getRecipe()), slimefunItem.getRecipeOutput());
         }
         return null;
     }

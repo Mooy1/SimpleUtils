@@ -16,7 +16,7 @@ public final class PowerGrid {
     private static final Map<String, PowerGrid> grids = new HashMap<>();
     
     @Getter
-    private final Set<PowerGenerator> generators = new HashSet<>();
+    private final Set<GridGenerator> generators = new HashSet<>();
     
     private final String playerName;
 
@@ -43,7 +43,7 @@ public final class PowerGrid {
         this.max = 0;
         this.maxed = false;
 
-        for (PowerGenerator generator : this.generators) {
+        for (GridGenerator generator : this.generators) {
             this.max += generator.getGeneration();
         }
     }
