@@ -117,8 +117,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
         }
         @Nullable Pair<MultiFilter, ItemStack> pair = this.cache.get(((BlockMenu) menu).getLocation());
         if (pair != null) {
-            int i = pair.getFirstValue().indexOf(item);
-            if (i > -1) return new int[] {inputSlots[i]};
+            return pair.getFirstValue().getTransportSlot(item, inputSlots);
         }
         return new int[0];
     }

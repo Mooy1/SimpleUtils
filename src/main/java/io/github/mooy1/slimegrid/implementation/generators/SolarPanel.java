@@ -14,19 +14,19 @@ import javax.annotation.Nonnull;
 public final class SolarPanel extends AbstractGridGenerator {
 
     public static final int I_DAY = 1;
-    public static final int I_NIGHT = 0;
+    public static final int I_NIGHT = 0; //.5
     public static final int II_DAY = 2;
-    public static final int II_NIGHT = 1;
-    public static final int III_DAY = 6;
-    public static final int III_NIGHT = 2;
-    public static final int IV_DAY = 16;
-    public static final int IV_NIGHT = 4;
-    public static final int V_DAY = 50;
-    public static final int V_NIGHT = 20;
-    public static final int VI_DAY = 120;
-    public static final int VI_NIGHT = 60;
-    public static final int VII_DAY = 240;
-    public static final int VII_NIGHT = 240;
+    public static final int II_NIGHT = 0; //1
+    public static final int III_DAY = 5;
+    public static final int III_NIGHT = 1; //3
+    public static final int IV_DAY = 15;
+    public static final int IV_NIGHT = 3; //9
+    public static final int V_DAY = 54;
+    public static final int V_NIGHT = 18; //36
+    public static final int VI_DAY = 192;
+    public static final int VI_NIGHT = 96; //144
+    public static final int VII_DAY = 720;
+    public static final int VII_NIGHT = 720; //720
     
     private final int day;
     private final int night;

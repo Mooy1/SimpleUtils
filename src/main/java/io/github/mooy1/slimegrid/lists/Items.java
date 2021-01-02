@@ -52,13 +52,13 @@ public final class Items {
             "&7" + SlimeGrid.getInstance().getBugTrackerURL()
     );
 
-    public static final SlimefunItemStack GRID_PANEL_I = makePanel(1, SolarPanel.I_DAY, SolarPanel.I_NIGHT); // .5
-    public static final SlimefunItemStack GRID_PANEL_II = makePanel(2, SolarPanel.II_DAY, SolarPanel.II_NIGHT); // 1.5
-    public static final SlimefunItemStack GRID_PANEL_III = makePanel(3, SolarPanel.III_DAY, SolarPanel.III_NIGHT); // 4
-    public static final SlimefunItemStack GRID_PANEL_IV = makePanel(4, SolarPanel.IV_DAY, SolarPanel.IV_NIGHT); // 10
-    public static final SlimefunItemStack GRID_PANEL_V = makePanel(5, SolarPanel.V_DAY, SolarPanel.V_NIGHT); // 35
-    public static final SlimefunItemStack GRID_PANEL_VI = makePanel(6, SolarPanel.VI_DAY, SolarPanel.VI_NIGHT); // 90
-    public static final SlimefunItemStack GRID_PANEL_VII = makePanel(7, SolarPanel.VII_DAY, SolarPanel.VII_NIGHT); // 240
+    public static final SlimefunItemStack GRID_PANEL_I = makePanel(1, SolarPanel.I_DAY, SolarPanel.I_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_II = makePanel(2, SolarPanel.II_DAY, SolarPanel.II_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_III = makePanel(3, SolarPanel.III_DAY, SolarPanel.III_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_IV = makePanel(4, SolarPanel.IV_DAY, SolarPanel.IV_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_V = makePanel(5, SolarPanel.V_DAY, SolarPanel.V_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_VI = makePanel(6, SolarPanel.VI_DAY, SolarPanel.VI_NIGHT); 
+    public static final SlimefunItemStack GRID_PANEL_VII = makePanel(7, SolarPanel.VII_DAY, SolarPanel.VII_NIGHT); 
 
     public static final SlimefunItemStack COBBLE_GEN_I = makeItemGenerator("Cobble", 1, ItemGenerator.COBBLE_I, ItemGenerator.COBBLE_I, Material.SMOOTH_STONE);
     public static final SlimefunItemStack COBBLE_GEN_II = makeItemGenerator("Cobble", 2, ItemGenerator.COBBLE_II, ItemGenerator.COBBLE_II, Material.SMOOTH_STONE);

@@ -2,7 +2,6 @@ package io.github.mooy1.slimegrid;
 
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.command.CommandLib;
-import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
 import io.github.mooy1.slimegrid.setup.Setup;
 import io.github.mooy1.slimegrid.setup.TimingsCommand;
@@ -27,8 +26,7 @@ public class SlimeGrid extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         instance = this;
 
-        PluginUtils.setup(this, "Mooy1/SlimeGrid/master", getFile());
-        MessageUtils.setPrefix(ChatColor.GOLD + "SlimeGrid");
+        PluginUtils.setup(ChatColor.GOLD + "SlimeGrid", this, "Mooy1/SlimeGrid/master", getFile());
         new CommandLib(this, "slimegrid", "slimegrid.admin", "/sg");
         CommandLib.addCommands(new TimingsCommand());
         

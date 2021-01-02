@@ -225,8 +225,10 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
         String set = WirelessUtils.toString(l);
 
         if (set == null) {
+            meta.setDisplayName(getItemName());
             meta.getPersistentDataContainer().remove(this.key);
         } else {
+            meta.setDisplayName(getItemName() + ChatColor.GREEN + " (Location Selected)");
             meta.getPersistentDataContainer().set(this.key, PersistentDataType.STRING, set);
         }
 

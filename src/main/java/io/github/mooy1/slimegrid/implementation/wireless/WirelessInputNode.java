@@ -3,12 +3,13 @@ package io.github.mooy1.slimegrid.implementation.wireless;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.general.TransferUtils;
+import io.github.mooy1.infinitylib.objects.AbstractContainer;
 import io.github.mooy1.slimegrid.SlimeGrid;
-import io.github.mooy1.slimegrid.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.slimegrid.implementation.grid.PowerGrid;
+import io.github.mooy1.slimegrid.lists.Categories;
 import io.github.mooy1.slimegrid.lists.Items;
 import io.github.mooy1.slimegrid.utils.WirelessUtils;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
@@ -17,7 +18,6 @@ import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +31,7 @@ import java.util.Objects;
  * @author Mooy1
  * 
  */
-public final class WirelessInputNode extends AbstractGridConsumer {
+public final class WirelessInputNode extends AbstractContainer {
 
     private static final ItemStack WHITELIST = new CustomItem(Material.WHITE_STAINED_GLASS_PANE, "&fWhitelist", "&7Click to switch");
     private static final ItemStack BLACKLIST = new CustomItem(Material.BLACK_STAINED_GLASS_PANE, "&8Blacklist", "&7Click to switch");
@@ -39,15 +39,18 @@ public final class WirelessInputNode extends AbstractGridConsumer {
     private static final int INFO = 3;
     
     public WirelessInputNode() {
-        super(Items.WIRELESS_INPUT_NODE, new ItemStack[] {
+        super(Categories.MAIN, Items.WIRELESS_INPUT_NODE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 
-        }, 5, 1);
+        });
         addItemHandler(WirelessUtils.NODE_HANDLER);
-    }
-
-    @Override
-    public void onBreak(Player p, Block b, Location l, BlockMenu menu, PowerGrid grid) {
-        menu.dropItems(b.getLocation(), WHITELIST_SLOT);
+        
+        registerBlockHandler(getId(), (p, b, item, reason) -> {
+            BlockMenu menu = BlockStorage.getInventory(b);
+            if (menu != null) {
+                menu.dropItems(b.getLocation(), WHITELIST_SLOT);
+            }
+            return true;
+        });
     }
 
     @Override
@@ -71,18 +74,18 @@ public final class WirelessInputNode extends AbstractGridConsumer {
     private boolean isWhitelist(@Nonnull Location l) {
         return Boolean.parseBoolean(BlockStorage.getLocationInfo(l, "whitelist"));
     }
-
+    
     @Override
-    public boolean process(@Nonnull BlockMenu whiteMenu, @Nonnull Block b) {
+    public void tick(@Nonnull Block b, @Nonnull BlockMenu whiteMenu) {
         if (SlimeGrid.getTick() % 4 != 0) {
-            return false;
+            return;
         }
 
         Location l = b.getLocation();
         Location connected = WirelessUtils.getConnected(l);
 
         if (connected == null) {
-            return false;
+            return;
         }
 
         BlockMenu targetMenu;
@@ -93,7 +96,7 @@ public final class WirelessInputNode extends AbstractGridConsumer {
             if (targetInv == null) {
                 WirelessUtils.breakWithNoPlayer(connected, Items.WIRELESS_OUTPUT_NODE);
                 WirelessUtils.setConnected(l, null);
-                return false;
+                return;
             }
             targetMenu = null;
         } else {
@@ -101,14 +104,13 @@ public final class WirelessInputNode extends AbstractGridConsumer {
             if (targetMenu == null) {
                 WirelessUtils.breakWithNoPlayer(connected, Items.WIRELESS_OUTPUT_NODE);
                 WirelessUtils.setConnected(l, null);
-                return false;
+                return;
             }
             targetInv = null;
         }
 
         boolean vanilla = WirelessUtils.isVanilla(l);
-        ItemStack item = whiteMenu.getItemInSlot(WHITELIST_SLOT);
-        ItemFilter filter = ItemFilter.get(item, FilterType.IGNORE_AMOUNT);
+        ItemFilter filter = ItemFilter.get(whiteMenu.getItemInSlot(WHITELIST_SLOT), FilterType.IGNORE_AMOUNT);
         boolean whitelist = isWhitelist(l);
 
         if (vanilla) {
@@ -116,11 +118,11 @@ public final class WirelessInputNode extends AbstractGridConsumer {
 
             if (sourceInv == null) {
                 WirelessUtils.breakWithNoPlayer(l, getItem());
-                return false;
+                return;
             }
 
             if (outputFromInv(sourceInv, targetMenu, targetInv, l, filter, whitelist)) {
-                return false;
+                return;
             }
 
         } else {
@@ -128,11 +130,11 @@ public final class WirelessInputNode extends AbstractGridConsumer {
 
             if (sourceMenu == null) {
                 WirelessUtils.breakWithNoPlayer(l, getItem());
-                return false;
+                return;
             }
 
             if (outputFromMenu(sourceMenu, targetMenu, targetInv, l, filter, whitelist)) {
-                return false;
+                return;
             }
 
         }
@@ -140,15 +142,13 @@ public final class WirelessInputNode extends AbstractGridConsumer {
         if (WirelessUtils.centerAndTest(l, connected)) {
             WirelessUtils.sendParticle(l.getWorld(), l, connected);
         }
-        
-        return true;
     }
 
     private boolean outputFromMenu(@Nonnull BlockMenu menu, @Nullable BlockMenu outMenu, @Nullable Inventory outInv, @Nonnull Location l, @Nullable ItemFilter filter, boolean whitelist) {
         for (int slot : TransferUtils.getSlots(menu, ItemTransportFlow.WITHDRAW, null)) {
             ItemStack item = menu.getItemInSlot(slot);
             
-            if (item == null || whitelist != (filter == null || filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
+            if (item == null || whitelist == (filter == null || !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
                 continue;
             }
             
@@ -172,10 +172,10 @@ public final class WirelessInputNode extends AbstractGridConsumer {
         for (int slot : TransferUtils.getOutputSlots(inv)) {
             ItemStack item = inv.getContents()[slot];
             
-            if (item == null || whitelist != (filter == null || filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
+            if (item == null || whitelist == (filter == null || !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
                 continue;
             }
-
+            
             if (outMenu != null) {
                 inv.setItem(slot, TransferUtils.insertToBlockMenu(outMenu, item));
             } else if (outInv != null) {
