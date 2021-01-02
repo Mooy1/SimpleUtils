@@ -1,7 +1,6 @@
 package io.github.mooy1.slimegrid.lists;
 
 import io.github.mooy1.infinitylib.presets.LorePreset;
-import io.github.mooy1.slimegrid.SlimeGrid;
 import io.github.mooy1.slimegrid.implementation.consumers.ItemGenerator;
 import io.github.mooy1.slimegrid.implementation.consumers.ProcessingMachine;
 import io.github.mooy1.slimegrid.implementation.consumers.crafters.MagicAutoCrafter;
@@ -39,18 +38,16 @@ public final class Items {
             "&eCrouch + Right-Click &7the air to clear the input node currently being configured"
     );
 
-    public static final SlimefunItemStack ADDON_INFO = new SlimefunItemStack(
-            SlimeGrid.getInstance().getName().toUpperCase(Locale.ROOT) + "_ADDON_INFO",
-            Material.NETHER_STAR,
-            "&bAddon Info",
-            "&fVersion: &7" + SlimeGrid.getInstance().getPluginVersion(),
-            "",
-            "&fDiscord: &b@&7Riley&8#5911",
-            "&7discord.gg/slimefun",
-            "",
-            "&fGithub: &b@&8&7Mooy1",
-            "&7" + SlimeGrid.getInstance().getBugTrackerURL()
-    );
+    public static final SlimefunItemStack ALUMINUM_PLATE = makePlate("Aluminum", Material.WHITE_STAINED_GLASS_PANE);
+    public static final SlimefunItemStack TIN_PLATE = makePlate("Tin", Material.CYAN_STAINED_GLASS_PANE);
+    public static final SlimefunItemStack LEAD_PLATE = makePlate("Lead", Material.GRAY_STAINED_GLASS_PANE);
+    public static final SlimefunItemStack IRON_PLATE = makePlate("Iron", Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+    public static final SlimefunItemStack BRONZE_PLATE = makePlate("Bronze", Material.ORANGE_STAINED_GLASS_PANE);
+
+    public static final SlimefunItemStack GOLDEN_GEAR = makePlate("Gold", Material.HORN_CORAL);
+    public static final SlimefunItemStack COPPER_GEAR = makePlate("Copper", Material.FIRE_CORAL);
+    public static final SlimefunItemStack MAGNESIUM_GEAR = makePlate("Magnesium", Material.BRAIN_CORAL);
+    public static final SlimefunItemStack COBALT_GEAR = makePlate("Cobalt", Material.TUBE_CORAL);
 
     public static final SlimefunItemStack GRID_PANEL_I = makePanel(1, SolarPanel.I_DAY, SolarPanel.I_NIGHT); 
     public static final SlimefunItemStack GRID_PANEL_II = makePanel(2, SolarPanel.II_DAY, SolarPanel.II_NIGHT); 
@@ -103,12 +100,6 @@ public final class Items {
             "&fInfused Core",
             "&7Grid machine component"
     );
-    public static final SlimefunItemStack INFUSED_PLATE = new SlimefunItemStack(
-            "INFUSED_PLATE",
-            Material.PAPER,
-            "&fInfused Plate",
-            "&7Grid machine component"
-    );
     public static final SlimefunItemStack SILVER_WIRE = new SlimefunItemStack(
             "SILVER_WIRE",
             Material.STRING,
@@ -145,7 +136,7 @@ public final class Items {
 
     private static SlimefunItemStack makePanel(int tier, int day, int night) {
         return new SlimefunItemStack(
-                "GRID_PANEL_" + LorePreset.romanNumeral(tier),
+                "PANEL_" + LorePreset.romanNumeral(tier) + "_GRID",
                 Material.DAYLIGHT_DETECTOR,
                 "&eSolar Panel &6" + LorePreset.romanNumeral(tier),
                 "&7Generates GP from sunlight",
@@ -157,7 +148,7 @@ public final class Items {
 
     private static SlimefunItemStack makeItemGenerator(String type, int tier, int power, int speed, Material material) {
         return new SlimefunItemStack(
-                type.toUpperCase(Locale.ROOT) + "_ITEM_GENERATOR_" + LorePreset.romanNumeral(tier),
+                type.toUpperCase(Locale.ROOT) + "GEN_" + LorePreset.romanNumeral(tier) + "_GRID",
                 material,
                 "&e" + type + " Generator &6" + LorePreset.romanNumeral(tier),
                 "&7Generates " + type + " from GP",
@@ -169,7 +160,7 @@ public final class Items {
 
     private static SlimefunItemStack makeCircuit(int tier) {
         return new SlimefunItemStack(
-                "GRID_CIRCUIT_" + LorePreset.romanNumeral(tier),
+                "CIRCUIT_" + LorePreset.romanNumeral(tier) + "_GRID",
                 Material.HONEYCOMB,
                 "&eGrid Circuit &6" + LorePreset.romanNumeral(tier),
                 "&7Grid Machine component"
@@ -178,7 +169,7 @@ public final class Items {
 
     private static SlimefunItemStack makeGenerator(int power, String name, String input, Material material) {
         return new SlimefunItemStack(
-                name.toUpperCase(Locale.ROOT) + "_GRID_GENERATOR",
+                name.toUpperCase(Locale.ROOT) + "_GENERATOR_GRID",
                 material,
                 "&e" + name + " Generator &6",
                 "&7Generates power from " + input,
@@ -188,12 +179,30 @@ public final class Items {
 
     private static SlimefunItemStack makeMachine(int power, int tier, int speed, String name, String desc, Material material) {
         return new SlimefunItemStack(
-                name.toUpperCase(Locale.ROOT) + "_GRID_MACHINE_" + LorePreset.romanNumeral(tier),
+                name.toUpperCase(Locale.ROOT) + "_" + LorePreset.romanNumeral(tier) + "_GRID",
                 material,
                 "&e" + name + " &6" + LorePreset.romanNumeral(tier),
                 "&7" + desc,
                 GridLorePreset.consumesGridPower(power),
                 LorePreset.speed(speed)
+        );
+    }
+    
+    private static SlimefunItemStack makePlate(String name, Material material) {
+        return new SlimefunItemStack(
+                name.toUpperCase(Locale.ROOT) + "_PLATE_GRID",
+                material,
+                "&6" + name + " Plate",
+                "&7Grid Machine Component"
+        );
+    }
+
+    private static SlimefunItemStack makeGear(String name, Material material) {
+        return new SlimefunItemStack(
+                name.toUpperCase(Locale.ROOT) + "_GEAR_GRID",
+                material,
+                "&6" + name + " Plate",
+                "&7Grid Machine Component"
         );
     }
     

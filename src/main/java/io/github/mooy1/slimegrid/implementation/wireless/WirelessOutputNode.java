@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public final class WirelessOutputNode extends SlimefunItem {
     
     public WirelessOutputNode() {
-        super(Categories.MACHINES, Items.WIRELESS_OUTPUT_NODE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+        super(Categories.MAIN, Items.WIRELESS_OUTPUT_NODE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 
         });
         

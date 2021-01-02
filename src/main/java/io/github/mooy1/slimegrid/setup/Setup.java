@@ -1,5 +1,6 @@
 package io.github.mooy1.slimegrid.setup;
 
+import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.slimegrid.SlimeGrid;
 import io.github.mooy1.slimegrid.implementation.consumers.ProcessingMachine;
 import io.github.mooy1.slimegrid.implementation.consumers.ItemGenerator;
@@ -24,7 +25,7 @@ public final class Setup {
 
     public static void setup(SlimeGrid plugin) {
 
-        new SlimefunItem(Categories.COMPONENTS, Items.ADDON_INFO, RecipeType.NULL, null).register(plugin);
+        PluginUtils.registerAddonInfoItem(Categories.MAIN, SlimeGrid.getInstance());
 
         new VanillaAutoCrafter().register(plugin);
         new SlimefunAutoCrafter().register(plugin);

@@ -50,7 +50,7 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
     private final Map<Player, Long> coolDowns = new HashMap<>();
 
     public WirelessConfigurator(SlimeGrid plugin) {
-        super(Categories.MACHINES, Items.WIRELESS_CONFIGURATOR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+        super(Categories.MAIN, Items.WIRELESS_CONFIGURATOR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
 
         });
         Bukkit.getPluginManager().registerEvents(this, plugin);
