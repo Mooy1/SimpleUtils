@@ -1,9 +1,11 @@
-# SlimeGrid
+# GridFoundation
 A new energy system: power grids. These are per-player, global, and heavily optimized. 
 
 Machines and Generators to go along with power grids, which have multiple tiers and are heavily optimized internally.
 
 Utility items and tools.
+
+Inspiration taken from the mods Extra Utilities and Thermal Expansion.
 
 # Download
 https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/
