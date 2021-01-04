@@ -34,7 +34,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     
     private static final int[] inputSlots = MenuPreset.craftingInput;
     private static final int keySlot = 23;
-    private static final int outputSlots = MenuPreset.craftingOutput;
+    private static final int[] outputSlots = MenuPreset.craftingOutput;
     private static final int EMPTY = new MultiFilter(FilterType.MIN_AMOUNT, new ItemStack[9]).hashCode();
 
     private final Map<Location, Pair<MultiFilter, ItemStack>> cache = new HashMap<>();
@@ -102,7 +102,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
         for (int slot : MenuPreset.craftingOutputBorder) {
             blockMenuPreset.addItem(slot, MenuPreset.borderItemOutput, ChestMenuUtils.getEmptyClickHandler());
         }
-        for (int slot : MenuPreset.background) {
+        for (int slot : MenuPreset.craftingBackground) {
             blockMenuPreset.addItem(slot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
     }
@@ -140,7 +140,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
         for (int i = 0 ; i < pair.getFirstValue().getAmounts().length ; i++) {
             int amount = pair.getFirstValue().getAmounts()[i];
             if (amount > 0) {
-                menu.consumeItem(inputSlots[i], amount); // use to update cache
+                menu.consumeItem(inputSlots[i], amount);
             }
         }
 
@@ -154,12 +154,12 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     @Nonnull
     @Override
     public UpgradeType getMaxLevel() {
-        return UpgradeType.NONE;
+        return UpgradeType.BASIC;
     }
 
     @Override
     public int getUpgradeSlot() {
-        return 0;
+        return -1;
     }
 
 }

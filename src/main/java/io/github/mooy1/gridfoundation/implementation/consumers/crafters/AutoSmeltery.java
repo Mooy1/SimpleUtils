@@ -14,15 +14,17 @@ import javax.annotation.Nonnull;
 
 public final class AutoSmeltery extends AbstractAutoCrafter {
 
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "SMELTERY_AUTO_CRAFTER",
+            Material.FURNACE,
+            "&eAutomatic Smeltery",
+            "&7Automatically smelts dusts and ingots using GP",
+            "",
+            GridLorePreset.consumesGridPower(4)
+    );
+
     public AutoSmeltery() {
-        super(new SlimefunItemStack(
-                "SMELTERY_AUTO_CRAFTER",
-                Material.BLAST_FURNACE,
-                "&eAutomatic Smeltery",
-                "&7Automatically smelts dusts and ingots using GP",
-                "",
-                GridLorePreset.consumesGridPower(4)
-        ), 4, new ItemStack[] {
+        super(ITEM, 4, new ItemStack[] {
                 
         });
     }

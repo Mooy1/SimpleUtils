@@ -1,18 +1,17 @@
 package io.github.mooy1.gridfoundation.implementation.wireless;
 
-import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.general.TransferUtils;
-import io.github.mooy1.infinitylib.player.EventUtils;
-import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.mooy1.gridfoundation.GridFoundation;
 import io.github.mooy1.gridfoundation.setup.Categories;
-import io.github.mooy1.gridfoundation.setup.Items;
-import io.github.mooy1.gridfoundation.utils.WirelessUtils;
+import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.general.TransferUtils;
+import io.github.mooy1.infinitylib.player.LeaveListener;
+import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,9 +20,10 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,6 +34,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A tool for configuring wireless input/output nodes
@@ -43,20 +44,28 @@ import java.util.Objects;
  */
 public final class WirelessConfigurator extends SlimefunItem implements NotPlaceable, Listener {
 
-    private final NamespacedKey key;
-    private final Map<Player, Long> coolDowns = new HashMap<>();
-
-    public WirelessConfigurator(GridFoundation plugin) {
-        super(Categories.MAIN, Items.WIRELESS_CONFIGURATOR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+    private final NamespacedKey key = PluginUtils.getKey("wireless");
+    private final Map<UUID, Long> coolDowns = new HashMap<>();
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "WIRELESS_CONFIGURATOR",
+            Material.BLAZE_ROD,
+            "&9Wireless configurator",
+            "&eRight-Click &7an input node then an output node to connect them",
+            "&eCrouch + Right-Click &7an input node to remove connected output node",
+            "&eCrouch + Right-Click &7the air to clear the input node currently being configured"
+    );
+    
+    public WirelessConfigurator() {
+        super(Categories.MAIN, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
 
         });
-        Bukkit.getPluginManager().registerEvents(this, plugin);
-        this.key = new NamespacedKey(plugin, "wireless");
+        Bukkit.getPluginManager().registerEvents(this, GridFoundation.getInstance());
+        new LeaveListener(this.coolDowns);
     }
     
     @EventHandler
     public void onRightClick(@Nonnull PlayerRightClickEvent e) {
-        if (!EventUtils.checkRightClickEvent(e)) return;
+        if (e.getHand() == EquipmentSlot.OFF_HAND) return;
         
         if (SlimefunItem.getByItem(e.getItem()) instanceof WirelessConfigurator) {
 
@@ -71,11 +80,14 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
             } else if (e.getPlayer().isSneaking()) {
                 resetHandler(e.getItem(), e.getPlayer());
             }
+            
+            e.setUseBlock(Event.Result.DENY);
 
         } else if (e.getPlayer().isSneaking() && e.getClickedBlock().isPresent()
-                && Objects.equals(BlockStorage.checkID(e.getClickedBlock().get()), Items.WIRELESS_INPUT_NODE.getItemId())
+                && Objects.equals(BlockStorage.checkID(e.getClickedBlock().get()), WirelessInputNode.ITEM.getItemId())
         ) {
             infoHandler(e.getClickedBlock().get(), e.getClickedBlock().get().getLocation(), e.getPlayer(), false);
+            e.setUseBlock(Event.Result.DENY);
         }
     }
 
@@ -85,7 +97,7 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
     }
 
     private void clearHandler(@Nonnull Block b, @Nonnull Player p) {
-        if (Objects.equals(BlockStorage.checkID(b), Items.WIRELESS_INPUT_NODE.getItemId())) {
+        if (Objects.equals(BlockStorage.checkID(b), WirelessInputNode.ITEM.getItemId())) {
 
             WirelessUtils.setConnected(b.getLocation(), null);
             MessageUtils.messageWithCD(p, 500, "&eConnected Location Cleared!");
@@ -103,15 +115,15 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
         }
         Location temp = getTemp(item);
         if (temp == null) {
-            if (id.equals(Items.WIRELESS_INPUT_NODE.getItemId())) {
+            if (id.equals(WirelessInputNode.ITEM.getItemId())) {
                 setTemp(item, b.getLocation());
                 MessageUtils.message(p, "&aNow click on a wireless output node to connect");
             } else {
                 clickInputNode(p);
             }
         } else {
-            if (id.equals(Items.WIRELESS_OUTPUT_NODE.getItemId())) {
-                if (temp.getBlock().getType() != Material.AIR && Objects.equals(BlockStorage.checkID(temp), Items.WIRELESS_INPUT_NODE.getItemId())) {
+            if (id.equals(WirelessOutputNode.ITEM.getItemId())) {
+                if (temp.getBlock().getType() != Material.AIR && Objects.equals(BlockStorage.checkID(temp), WirelessInputNode.ITEM.getItemId())) {
                     setTemp(item, null);
                     WirelessUtils.setConnected(temp, b.getLocation());
                     MessageUtils.message(p, "&aConnected Nodes");
@@ -131,10 +143,10 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
 
     private void infoHandler(@Nonnull Block b, @Nonnull Location l, @Nonnull Player p, boolean force) {
 
-        if (!force && this.coolDowns.containsKey(p) && System.currentTimeMillis() - this.coolDowns.get(p) < 2000) {
+        if (!force && System.currentTimeMillis() - this.coolDowns.getOrDefault(p.getUniqueId(), 0L) < 2000) {
             return;
         }
-        this.coolDowns.put(p, System.currentTimeMillis());
+        this.coolDowns.put(p.getUniqueId(), System.currentTimeMillis());
         
         Location source = WirelessUtils.getTarget(b.getLocation());
         
@@ -223,11 +235,6 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
         }
 
         item.setItemMeta(meta);
-    }
-
-    @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent e) {
-        this.coolDowns.remove(e.getPlayer());
     }
 
 }

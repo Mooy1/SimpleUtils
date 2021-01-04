@@ -1,16 +1,15 @@
 package io.github.mooy1.gridfoundation.implementation.wireless;
 
+import io.github.mooy1.gridfoundation.GridFoundation;
+import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.general.TransferUtils;
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
-import io.github.mooy1.gridfoundation.GridFoundation;
-import io.github.mooy1.gridfoundation.setup.Categories;
-import io.github.mooy1.gridfoundation.setup.Items;
-import io.github.mooy1.gridfoundation.utils.WirelessUtils;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -23,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
 /**
@@ -32,22 +32,34 @@ import java.util.Objects;
  * 
  */
 public final class WirelessInputNode extends AbstractContainer {
-
-    private static final ItemStack WHITELIST = new CustomItem(Material.WHITE_STAINED_GLASS_PANE, "&fWhitelist", "&7Click to switch");
-    private static final ItemStack BLACKLIST = new CustomItem(Material.BLACK_STAINED_GLASS_PANE, "&8Blacklist", "&7Click to switch");
-    private static final int WHITELIST_SLOT = 4;
-    private static final int INFO = 3;
+    
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "WIRELESS_INPUT_NODE",
+            Material.END_ROD,
+            "&9Wireless input node",
+            "&7Transfers items from the connected inventory to wireless output nodes",
+            "&7Crouch + Right-Click to get info and mark a path to the connected output node"
+    );
+    private final ItemStack WHITELIST = new CustomItem(Material.WHITE_STAINED_GLASS_PANE, "&fWhitelist", "&7Click to switch");
+    private final ItemStack BLACKLIST = new CustomItem(Material.BLACK_STAINED_GLASS_PANE, "&8Blacklist", "&7Click to switch");
+    private final int WHITELIST_SLOT = 4;
+    private final int INFO = 3;
     
     public WirelessInputNode() {
-        super(Categories.MAIN, Items.WIRELESS_INPUT_NODE, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+        super(Categories.MAIN, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 
         });
+    }
+
+    @Override
+    public void preRegister() {
+        super.preRegister();
         addItemHandler(WirelessUtils.NODE_HANDLER);
-        
+
         registerBlockHandler(getId(), (p, b, item, reason) -> {
             BlockMenu menu = BlockStorage.getInventory(b);
             if (menu != null) {
-                menu.dropItems(b.getLocation(), WHITELIST_SLOT);
+                menu.dropItems(b.getLocation(), this.WHITELIST_SLOT);
             }
             return true;
         });
@@ -58,11 +70,11 @@ public final class WirelessInputNode extends AbstractContainer {
         if (BlockStorage.getLocationInfo(b.getLocation(), "whitelist") == null) {
             setWhitelist(b.getLocation(), false);
         }
-        menu.replaceExistingItem(INFO, isWhitelist(b.getLocation()) ? WHITELIST : BLACKLIST, false);
-        menu.addMenuClickHandler(INFO, (p, i, stack, action) -> {
+        menu.replaceExistingItem(this.INFO, isWhitelist(b.getLocation()) ? this.WHITELIST : this.BLACKLIST, false);
+        menu.addMenuClickHandler(this.INFO, (p, i, stack, action) -> {
             boolean blacklist = !isWhitelist(b.getLocation());
             setWhitelist(b.getLocation(), blacklist);
-            menu.replaceExistingItem(INFO, blacklist ? WHITELIST : BLACKLIST, false);
+            menu.replaceExistingItem(this.INFO, blacklist ? this.WHITELIST : this.BLACKLIST, false);
             return false;
         });
     }
@@ -94,7 +106,7 @@ public final class WirelessInputNode extends AbstractContainer {
         if (WirelessUtils.isVanilla(connected)) {
             targetInv = WirelessUtils.getTargetInv(connected);
             if (targetInv == null) {
-                WirelessUtils.breakWithNoPlayer(connected, Items.WIRELESS_OUTPUT_NODE);
+                WirelessUtils.breakWithNoPlayer(connected, WirelessOutputNode.ITEM);
                 WirelessUtils.setConnected(l, null);
                 return;
             }
@@ -102,7 +114,7 @@ public final class WirelessInputNode extends AbstractContainer {
         } else {
             targetMenu = WirelessUtils.getTargetMenu(connected);
             if (targetMenu == null) {
-                WirelessUtils.breakWithNoPlayer(connected, Items.WIRELESS_OUTPUT_NODE);
+                WirelessUtils.breakWithNoPlayer(connected, WirelessOutputNode.ITEM);
                 WirelessUtils.setConnected(l, null);
                 return;
             }
@@ -110,7 +122,7 @@ public final class WirelessInputNode extends AbstractContainer {
         }
 
         boolean vanilla = WirelessUtils.isVanilla(l);
-        ItemFilter filter = ItemFilter.get(whiteMenu.getItemInSlot(WHITELIST_SLOT), FilterType.IGNORE_AMOUNT);
+        ItemFilter filter = new ItemFilter(whiteMenu.getItemInSlot(this.WHITELIST_SLOT), FilterType.IGNORE_AMOUNT);
         boolean whitelist = isWhitelist(l);
 
         if (vanilla) {
@@ -144,11 +156,12 @@ public final class WirelessInputNode extends AbstractContainer {
         }
     }
 
-    private boolean outputFromMenu(@Nonnull BlockMenu menu, @Nullable BlockMenu outMenu, @Nullable Inventory outInv, @Nonnull Location l, @Nullable ItemFilter filter, boolean whitelist) {
+    @ParametersAreNonnullByDefault
+    private boolean outputFromMenu(BlockMenu menu, @Nullable BlockMenu outMenu, @Nullable Inventory outInv, Location l, ItemFilter filter, boolean whitelist) {
         for (int slot : TransferUtils.getSlots(menu, ItemTransportFlow.WITHDRAW, null)) {
             ItemStack item = menu.getItemInSlot(slot);
             
-            if (item == null || whitelist == (filter == null || !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
+            if (item == null || whitelist == !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT))) {
                 continue;
             }
             
@@ -167,12 +180,13 @@ public final class WirelessInputNode extends AbstractContainer {
 
         return true;
     }
-
-    private boolean outputFromInv(@Nonnull Inventory inv, @Nullable BlockMenu outMenu, @Nullable Inventory outInv, @Nonnull Location l, @Nullable ItemFilter filter, boolean whitelist) {
+    
+    @ParametersAreNonnullByDefault
+    private boolean outputFromInv(Inventory inv, @Nullable BlockMenu outMenu, @Nullable Inventory outInv, Location l, ItemFilter filter, boolean whitelist) {
         for (int slot : TransferUtils.getOutputSlots(inv)) {
             ItemStack item = inv.getContents()[slot];
             
-            if (item == null || whitelist == (filter == null || !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT)))) {
+            if (item == null || whitelist == !filter.fits(new ItemFilter(item, FilterType.IGNORE_AMOUNT))) {
                 continue;
             }
             
@@ -195,7 +209,7 @@ public final class WirelessInputNode extends AbstractContainer {
     @Override
     public void setupInv(@Nonnull BlockMenuPreset blockMenuPreset) {
         for (int i = 0 ; i < 9 ; i++) {
-            if (i == INFO || i == WHITELIST_SLOT) {
+            if (i == this.INFO || i == this.WHITELIST_SLOT) {
                 continue;
             }
             blockMenuPreset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());

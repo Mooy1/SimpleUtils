@@ -1,11 +1,10 @@
 package io.github.mooy1.gridfoundation;
 
-import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.command.CommandLib;
 import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeManager;
 import io.github.mooy1.gridfoundation.setup.Setup;
 import io.github.mooy1.gridfoundation.setup.TimingsCommand;
+import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.command.CommandLib;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
 import me.mrCookieSlime.bstats.bukkit.Metrics;
@@ -35,8 +34,6 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
         final Metrics metrics = new Metrics(this, 9734);
         
         Setup.setup(this);
-        
-        new UpgradeManager(this);
 
         PluginUtils.scheduleRepeatingSync(() -> {
             long time = System.nanoTime();

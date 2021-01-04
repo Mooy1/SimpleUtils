@@ -13,16 +13,18 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 public final class MagicAutoCrafter extends AbstractAutoCrafter {
+    
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "MAGIC_AUTO_CRAFTER",
+            Material.BOOKSHELF,
+            "&eAuto Magic Workbench",
+            "&7Automatically crafts magic items and runes using GP",
+            "",
+            GridLorePreset.consumesGridPower(8)
+    );
 
     public MagicAutoCrafter() {
-        super(new SlimefunItemStack(
-                "MAGIC_AUTO_CRAFTER",
-                Material.BOOKSHELF,
-                "&eAuto Magic Workbench",
-                "&7Automatically crafts magic items and runes using GP",
-                "",
-                GridLorePreset.consumesGridPower(8)
-        ), 8, new ItemStack[] {
+        super(ITEM, 8, new ItemStack[] {
                 
         });
     }

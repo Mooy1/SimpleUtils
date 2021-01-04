@@ -14,15 +14,17 @@ import javax.annotation.Nonnull;
 
 public final class SlimefunAutoCrafter extends AbstractAutoCrafter {
 
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "SLIMEFUN_AUTO_CRAFTER",
+            Material.LOOM,
+            "&eAuto Enhanced Workbench",
+            "&7Automatically crafts slimefun items and armor using GP",
+            "",
+            GridLorePreset.consumesGridPower(2)
+    );
+
     public SlimefunAutoCrafter() {
-        super(new SlimefunItemStack(
-                "SLIMEFUN_AUTO_CRAFTER",
-                Material.LOOM,
-                "&eAuto Enhanced Workbench",
-                "&7Automatically crafts slimefun items and armor using GP",
-                "",
-                GridLorePreset.consumesGridPower(2)
-        ), 2, new ItemStack[] {
+        super(ITEM, 2, new ItemStack[] {
                 
         });
     }

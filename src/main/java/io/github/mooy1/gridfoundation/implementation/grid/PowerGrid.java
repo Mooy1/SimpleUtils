@@ -65,7 +65,9 @@ public final class PowerGrid {
                 this.maxed ? Material.RED_STAINED_GLASS_PANE : this.usage == this.max ? Material.YELLOW_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
                 "&a" + (generator ? "Generating" : "Consuming") + ": " + amount + " GP",
                 "&7Grid: " + this.usage + " / " + this.max,
-                "&7Owner: " + this.playerName
+                "&7Owner: " + this.playerName,
+                "",
+                this.maxed ? "&cGrid Overloaded!" : ""
         );
     }
     

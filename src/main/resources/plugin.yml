@@ -2,7 +2,7 @@ name: GridFoundation
 author: Mooy1
 description: More machines and utility items for slimefun
 website: https://github.com/Mooy1/GridFoundation
-main: io.github.mooy1.slimegrid.GridFoundation
+main: io.github.mooy1.gridfoundation.GridFoundation
 depend: [Slimefun, CS-CoreLib]
 softdepend: []
 version: ${project.version}

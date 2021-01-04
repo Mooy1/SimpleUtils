@@ -1,5 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.crafters;
 
+import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -16,15 +17,17 @@ import java.util.List;
 
 public final class VanillaAutoCrafter extends AbstractAutoCrafter {
 
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "VANILLA_AUTO_CRAFTER",
+            Material.CRAFTING_TABLE,
+            "&eAuto Vanilla Workbench",
+            "&7Automatically crafts vanilla items using GP",
+            "",
+            GridLorePreset.consumesGridPower(2)
+    );
+
     public VanillaAutoCrafter() {
-        super(new SlimefunItemStack(
-                "VANILLA_AUTO_CRAFTER",
-                Material.CRAFTING_TABLE,
-                "&eAuto Vanilla Workbench",
-                "&7Automatically crafts vanilla items using GP",
-                "",
-                GridLorePreset.consumesGridPower(2)
-        ), 2, new ItemStack[] {
+        super(ITEM, 2, new ItemStack[] {
                 
         });
     }
@@ -35,10 +38,10 @@ public final class VanillaAutoCrafter extends AbstractAutoCrafter {
         for (Recipe recipe : recipes) {
             if (recipe instanceof ShapedRecipe) {
                 ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
-                return new Pair<>(MultiFilter.fromRecipe(shapedRecipe), shapedRecipe.getResult());
+                return new Pair<>(MultiFilter.fromRecipe(shapedRecipe, FilterType.MIN_AMOUNT), shapedRecipe.getResult());
             } else if (recipe instanceof ShapelessRecipe) {
                 ShapelessRecipe shapelessRecipe = (ShapelessRecipe) recipe;
-                return new Pair<>(MultiFilter.fromRecipe(shapelessRecipe), shapelessRecipe.getResult());
+                return new Pair<>(MultiFilter.fromRecipe(shapelessRecipe, FilterType.MIN_AMOUNT), shapelessRecipe.getResult());
             }
         }
         return null;
