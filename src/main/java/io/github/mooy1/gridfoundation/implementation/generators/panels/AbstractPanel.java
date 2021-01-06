@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.generators.panels;
 
 import io.github.mooy1.gridfoundation.implementation.generators.AbstractGridGenerator;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -68,7 +68,7 @@ public abstract class AbstractPanel extends AbstractGridGenerator {
 
 
     @Override
-    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull PowerGrid grid) {
+    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
         super.onNewInstance(menu, b, grid);
         BlockData data = b.getBlockData();
         if (data instanceof DaylightDetector) {

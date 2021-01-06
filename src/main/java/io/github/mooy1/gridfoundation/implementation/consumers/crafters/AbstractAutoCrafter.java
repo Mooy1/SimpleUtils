@@ -1,12 +1,12 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.crafters;
 
+import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
 import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
-import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -21,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -44,14 +45,15 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     }
 
     @Override
-    public final void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid) {
-        menu.dropItems(b.getLocation(), inputSlots);
-        menu.dropItems(b.getLocation(), outputSlots);
-        this.cache.remove(b.getLocation());
+    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+        super.onBreak(e, l, menu, grid);
+        menu.dropItems(l, inputSlots);
+        menu.dropItems(l, outputSlots);
+        this.cache.remove(l);
     }
 
     @Override
-    public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull PowerGrid grid) {
+    public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
         super.onNewInstance(menu, b, grid);
 
         menu.addMenuClickHandler(keySlot, new ChestMenu.AdvancedMenuClickHandler() {
@@ -103,6 +105,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
             blockMenuPreset.addItem(slot, MenuPreset.borderItemOutput, ChestMenuUtils.getEmptyClickHandler());
         }
         for (int slot : MenuPreset.craftingBackground) {
+            if (slot == keySlot) slot++;
             blockMenuPreset.addItem(slot, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
     }
@@ -121,18 +124,18 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     }
 
     @Override
-    public final boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public final void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
 
         Pair<MultiFilter, ItemStack> pair = this.cache.get(b.getLocation());
 
         if (pair == null || !menu.fits(pair.getSecondValue(), outputSlots)) {
-            return false;
+            return;
         }
 
         MultiFilter input = MultiFilter.fromMenu(FilterType.MIN_AMOUNT, menu, inputSlots);
 
         if (input.hashCode() == EMPTY || !pair.getFirstValue().fits(input, FilterType.MIN_AMOUNT)) {
-            return false;
+            return;
         }
 
         menu.pushItem(pair.getSecondValue().clone(), outputSlots);
@@ -143,8 +146,6 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
                 menu.consumeItem(inputSlots[i], amount);
             }
         }
-
-        return true;
 
     }
     

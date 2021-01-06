@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.combiners;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.infinitylib.filter.FilterType;
@@ -21,7 +21,7 @@ import org.apache.commons.lang.mutable.MutableInt;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -58,7 +58,7 @@ public abstract class AbstractCombiner extends AbstractGridConsumer implements R
     public AbstractCombiner(SlimefunItemStack item, BetterRecipeType type, String processing, int consumption, ItemStack[] recipe) {
         super(item, recipe, 5, consumption);
         this.processing = processing;
-        type.accept((itemStacks, stack) -> {
+        type.acceptEach((itemStacks, stack) -> {
             ItemStack[] input = new ItemStack[3];
             System.arraycopy(itemStacks, 0, input, 0, 3);
             MultiFilter filter = new MultiFilter(FilterType.MIN_AMOUNT, input);
@@ -82,37 +82,35 @@ public abstract class AbstractCombiner extends AbstractGridConsumer implements R
     }
     
     @Override
-    public void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid) {
-        menu.dropItems(b.getLocation(), inputSlots);
-        menu.dropItems(b.getLocation(), outputSlot);
-        progressing.remove(b.getLocation());
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+        super.onBreak(e, l, menu, grid);
+        menu.dropItems(l, inputSlots);
+        menu.dropItems(l, outputSlot);
+        progressing.remove(l);
     }
 
     @Override
-    public boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
         Pair<MutableInt, ItemStack> progress = progressing.computeIfAbsent(b.getLocation(), k -> new Pair<>(new MutableInt(0), null));
-        int ticks = time / getLevel(b);
+        int ticks = time / type.getLevel();
         if (progress.getFirstValue().intValue() == 0) {
-            return tryStart(menu, progress, ticks);
+            tryStart(menu, progress);
         } else if (progress.getFirstValue().intValue() >= ticks) {
             if (menu.fits(progress.getSecondValue(), outputSlot)) {
                 menu.pushItem(progress.getSecondValue(), outputSlot);
                 progress.getFirstValue().setValue(0);
                 progress.setSecondValue(null);
-                return tryStart(menu, progress, ticks);
+                tryStart(menu, progress);
             }
         } else {
             progress.getFirstValue().increment();
-            setStatus(menu, progress.getFirstValue().intValue(), ticks);
-            return true;
         }
-        setStatus(menu, 0, ticks);
-        return false;
+        setStatus(menu, progress.getFirstValue().intValue(), ticks);
     }
     
     private static final int EMPTY = new MultiFilter(FilterType.IGNORE_AMOUNT, new ItemStack[3]).hashCode();
 
-    private boolean tryStart(@Nonnull BlockMenu menu, @Nonnull Pair<MutableInt, ItemStack> progress, int ticks) {
+    private void tryStart(@Nonnull BlockMenu menu, @Nonnull Pair<MutableInt, ItemStack> progress) {
         MultiFilter input = MultiFilter.fromMenu(FilterType.MIN_AMOUNT, menu, inputSlots);
         if (input.hashCode() != EMPTY) {
             Pair<ItemStack, int[]> output = this.recipes.get(input);
@@ -125,12 +123,8 @@ public abstract class AbstractCombiner extends AbstractGridConsumer implements R
                 }
                 progress.getFirstValue().setValue(1);
                 progress.setSecondValue(output.getFirstValue().clone());
-                setStatus(menu, 1, ticks);
-                return true;
             }
         }
-        setStatus(menu, 0, ticks);
-        return false;
     }
 
     private void setStatus(BlockMenu menu, int current, int ticks) {

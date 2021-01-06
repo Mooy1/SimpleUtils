@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.processors;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.infinitylib.filter.FilterType;
@@ -19,7 +19,7 @@ import org.apache.commons.lang.mutable.MutableInt;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -43,7 +43,7 @@ public abstract class AbstractProcessor extends AbstractGridConsumer implements 
     public AbstractProcessor(SlimefunItemStack item, int consumption, String processing, BetterRecipeType type, ItemStack[] recipe) {
         super(item, recipe, 4, consumption);
         this.processing = processing;
-        type.accept((stacks, stack) -> {
+        type.acceptEach((stacks, stack) -> {
             ItemStack input = stacks[0];
             AbstractProcessor.this.recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(stack, input.getAmount()));
             AbstractProcessor.this.displayRecipes.add(input);
@@ -52,34 +52,32 @@ public abstract class AbstractProcessor extends AbstractGridConsumer implements 
     }
 
     @Override
-    public void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid) {
-        menu.dropItems(b.getLocation(), inputSlot, outputSlot);
-        progressing.remove(b.getLocation());
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+        super.onBreak(e, l, menu, grid);
+        menu.dropItems(l, inputSlot, outputSlot);
+        progressing.remove(l);
     }
 
     @Override
-    public boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
         Pair<MutableInt, ItemStack> progress = progressing.computeIfAbsent(b.getLocation(), k -> new Pair<>(new MutableInt(0), null));
-        int ticks = AbstractProcessor.time / getLevel(b);
+        int ticks = time / type.getLevel();
         if (progress.getFirstValue().intValue() == 0) {
-            return tryStart(menu, progress, ticks);
+            tryStart(menu, progress);
         } else if (progress.getFirstValue().intValue() >= ticks) {
             if (menu.fits(progress.getSecondValue(), outputSlot)) {
                 menu.pushItem(progress.getSecondValue(), outputSlot);
                 progress.getFirstValue().setValue(0);
                 progress.setSecondValue(null);
-                return tryStart(menu, progress, ticks);
+                tryStart(menu, progress);
             }
         } else {
             progress.getFirstValue().increment();
-            setStatus(menu, progress.getFirstValue().intValue(), ticks);
-            return true;
         }
-        setStatus(menu, 0, ticks);
-        return false;
+        setStatus(menu, progress.getFirstValue().intValue(), ticks);
     }
     
-    private boolean tryStart(@Nonnull BlockMenu menu, @Nonnull Pair<MutableInt, ItemStack> progress, int ticks) {
+    private void tryStart(@Nonnull BlockMenu menu, @Nonnull Pair<MutableInt, ItemStack> progress) {
         ItemStack input = menu.getItemInSlot(inputSlot);
         if (input != null) {
             Pair<ItemStack, Integer> output = this.recipes.get(new ItemFilter(input, FilterType.MIN_AMOUNT));
@@ -87,12 +85,8 @@ public abstract class AbstractProcessor extends AbstractGridConsumer implements 
                 menu.consumeItem(inputSlot, output.getSecondValue());
                 progress.getFirstValue().setValue(1);
                 progress.setSecondValue(output.getFirstValue().clone());
-                setStatus(menu, 1, ticks);
-                return true;
             }
         }
-        setStatus(menu, 0, ticks);
-        return false;
     }
 
     @Override

@@ -1,8 +1,8 @@
-package io.github.mooy1.gridfoundation.implementation.tools;
+package io.github.mooy1.gridfoundation.implementation.blocks;
 
-import io.github.mooy1.gridfoundation.GridFoundation;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
+import io.github.mooy1.infinitylib.presets.MenuPreset;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -14,10 +14,12 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * Crafts vanilla and slimefun recipes
+ * Crafts vanilla and slimefun recipes O.o
  */
-public final class EnhancedWorkbench extends AbstractContainer {
+public class EnhancedWorkbench extends AbstractContainer {
 
+    private static final int[] inputSlots = MenuPreset.craftingInput;
+    
     public static final SlimefunItemStack ITEM = new SlimefunItemStack(
             "ENHANCED_WORKBENCH",
             Material.CRAFTING_TABLE,

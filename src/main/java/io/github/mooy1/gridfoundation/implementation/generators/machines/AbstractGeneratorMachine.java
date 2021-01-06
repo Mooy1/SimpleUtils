@@ -1,13 +1,12 @@
 package io.github.mooy1.gridfoundation.implementation.generators.machines;
 
 import io.github.mooy1.gridfoundation.implementation.generators.AbstractGridGenerator;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.items.LoreUtils;
-import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -20,7 +19,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -41,8 +40,8 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
         recipes.put(new ItemFilter(stack, FilterType.IGNORE_AMOUNT), ticks);
     }
     
-    private static final int input = MenuPreset.slot2 + 9;
-    private static final int status = MenuPreset.slot2;
+    private static final int input = 13;
+    private static final int status = 4;
 
     private final Map<Location, MutableInt> progressing = new HashMap<>();
     private final Map<ItemFilter, Integer> recipes;
@@ -50,7 +49,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
     private final List<ItemStack> displayRecipes = new ArrayList<>();
 
     public AbstractGeneratorMachine(SlimefunItemStack item, int power,  Map<ItemFilter, Integer> recipes, ItemStack[] recipe) {
-        super(item, recipe, 4);
+        super(item, recipe, 5);
         this.recipes = recipes;
         this.power = power;
         for (Map.Entry<ItemFilter, Integer> entry : this.recipes.entrySet()) {
@@ -97,7 +96,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
 
     @Override
     public void setupInv(@Nonnull BlockMenuPreset blockMenuPreset) {
-        for (int i = 0 ; i < 27 ; i++) {
+        for (int i = 0 ; i < 18 ; i++) {
             if (i == input || i == status) i++;
             blockMenuPreset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
@@ -113,9 +112,9 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
     }
 
     @Override
-    public final void onBreak(Player p, Block b, BlockMenu menu, PowerGrid grid) {
-        super.onBreak(p, b, menu, grid);
-        this.progressing.remove(b.getLocation());
+    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+        super.onBreak(e, l, menu, grid);
+        this.progressing.remove(l);
     }
 
     @Nonnull
@@ -132,7 +131,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
 
     @Override
     public int getUpgradeSlot() {
-        return 0;
+        return 3;
     }
     
     static SlimefunItemStack make(String name, String source, int gp, Material material) {

@@ -3,32 +3,26 @@ package io.github.mooy1.gridfoundation.utils;
 import io.github.mooy1.infinitylib.PluginUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.function.BiConsumer;
 
 public class BetterRecipeType extends RecipeType {
-    
-    private List<Pair<ItemStack[], ItemStack>> items;
+
+    private final DelayedConsumer<ItemStack[], ItemStack> delayed;
     
     public BetterRecipeType(SlimefunItemStack item) {
-        this(item, new ArrayList<>());
-    }
-    
-    private BetterRecipeType(SlimefunItemStack item, List<Pair<ItemStack[], ItemStack>> items) {
-        super(PluginUtils.getKey(item.getItemId().toLowerCase(Locale.ROOT)), item, ((itemStacks, itemStack) -> items.add(new Pair<>(itemStacks, itemStack))));
-        this.items = items;
-    }
-    
-    public void accept(BiConsumer<ItemStack[], ItemStack> consumer) {
-        for (Pair<ItemStack[], ItemStack> pair : this.items) {
-            consumer.accept(pair.getFirstValue(), pair.getSecondValue());
-        }
-        this.items = null;
+        this(item, new DelayedConsumer<>());
     }
 
+    private BetterRecipeType(SlimefunItemStack item, DelayedConsumer<ItemStack[], ItemStack> consumer) {
+        super(PluginUtils.getKey(item.getItemId().toLowerCase(Locale.ROOT)), item, (consumer::accept));
+        this.delayed = consumer;
+    }
+    
+    public void acceptEach(BiConsumer<ItemStack[], ItemStack> consumer) {
+        this.delayed.acceptEach(consumer);
+    }
+    
 }

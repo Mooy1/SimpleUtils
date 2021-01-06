@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.gens;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.Grid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -9,9 +9,10 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -36,18 +37,17 @@ public abstract class AbstractItemGen extends AbstractGridConsumer {
     }
 
     @Override
-    public void onBreak(Player p, Block b,  BlockMenu menu, PowerGrid grid) {
-        menu.dropItems(b.getLocation(), 13);
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+        super.onBreak(e, l, menu, grid);
+        menu.dropItems(l, outputs);
     }
 
     @Override
-    public boolean process(@Nonnull BlockMenu menu, @Nonnull Block b) {
-        ItemStack output = new ItemStack(this.material, getLevel(b));
+    public void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
+        ItemStack output = new ItemStack(this.material, type.getLevel());
         if (menu.fits(output, outputs)) {
             menu.pushItem(output, outputs);
-            return true;
         }
-        return false;
     }
 
     @Override

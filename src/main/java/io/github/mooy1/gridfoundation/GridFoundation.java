@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation;
 
-import io.github.mooy1.gridfoundation.implementation.grid.PowerGrid;
+import io.github.mooy1.gridfoundation.implementation.grid.GridManager;
 import io.github.mooy1.gridfoundation.setup.Setup;
 import io.github.mooy1.gridfoundation.setup.TimingsCommand;
 import io.github.mooy1.infinitylib.PluginUtils;
@@ -37,7 +37,7 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
 
         PluginUtils.scheduleRepeatingSync(() -> {
             long time = System.nanoTime();
-            PowerGrid.tick();
+            GridManager.tick();
             if (tick < 60) {
                 tick++;
             } else {

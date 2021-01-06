@@ -1,8 +1,10 @@
 package io.github.mooy1.gridfoundation.implementation.upgrades;
 
+import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -20,20 +22,24 @@ public interface UpgradeableBlock {
     
     void getStats(@Nonnull List<String> stats, int level);
     
-    default int getLevel(@Nonnull Block b) {
-        return UpgradeManager.getType(b.getLocation()).level;
+    default UpgradeType getUpgrade(@Nonnull Block b) {
+        return UpgradeManager.getType(b.getLocation());
     }
     
     default void placeUpgrade(@Nonnull Location l, @Nonnull ItemStack item) {
         UpgradeManager.onPlace(l, item, this);
     }
 
-    default void breakUpgrade(@Nonnull Location l, @Nonnull ItemStack item) {
-        UpgradeManager.onBreak(l, item);
+    default void breakUpgrade(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull ItemStack item) {
+        UpgradeManager.onBreak(e, l, item);
     }
     
     default void updateMenuUpgrade(@Nonnull BlockMenu menu, @Nonnull Location l) {
         UpgradeManager.updateMenu(menu, UpgradeManager.getType(l), this);
+    }
+    
+    default void addTier(@Nonnull SlimefunItemStack item) {
+        UpgradeManager.addTier(item);
     }
     
 }

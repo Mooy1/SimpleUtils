@@ -14,6 +14,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -83,7 +84,8 @@ public final class UpgradeManager {
         }
     }
 
-    static void onBreak(@Nonnull Location l, @Nonnull ItemStack item) {
+    static void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull ItemStack item) {
+        e.setDropItems(false);
         setTier(item, getType(l));
         World w = l.getWorld();
         if (w != null) {
@@ -94,18 +96,20 @@ public final class UpgradeManager {
     private static final String DEFAULT = ChatColors.color("&6Tier: " + UpgradeType.BASIC.name);
     
     static void setTier(@Nonnull ItemStack item, @Nonnull UpgradeType type) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            List<String> lore = meta.getLore();
-            if (lore != null) {
-                int index = lore.indexOf(DEFAULT);
-                if (index > -1) {
-                    lore.set(index, ChatColors.color("&6Tier: " + type.name));
+        if (type != UpgradeType.BASIC) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                List<String> lore = meta.getLore();
+                if (lore != null) {
+                    int index = lore.indexOf(DEFAULT);
+                    if (index > -1) {
+                        lore.set(index, ChatColors.color("&6Tier: " + type.name));
+                    }
                 }
+                meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, type.name());
+                meta.setLore(lore);
+                item.setItemMeta(meta);
             }
-            meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, type.name());
-            meta.setLore(lore);
-            item.setItemMeta(meta);
         }
     }
     

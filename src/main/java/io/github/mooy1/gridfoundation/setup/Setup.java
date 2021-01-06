@@ -1,13 +1,16 @@
 package io.github.mooy1.gridfoundation.setup;
 
 import io.github.mooy1.gridfoundation.GridFoundation;
+import io.github.mooy1.gridfoundation.implementation.blocks.ManualSieve;
+import io.github.mooy1.gridfoundation.implementation.consumers.AutoSieve;
+import io.github.mooy1.gridfoundation.implementation.grid.GridViewer;
+import io.github.mooy1.gridfoundation.implementation.materials.CrushedBlock;
 import io.github.mooy1.gridfoundation.implementation.components.Gear;
-import io.github.mooy1.gridfoundation.implementation.components.InfusedAlloy;
-import io.github.mooy1.gridfoundation.implementation.components.InfusedGlass;
 import io.github.mooy1.gridfoundation.implementation.components.MachineFrame;
 import io.github.mooy1.gridfoundation.implementation.components.Plate;
-import io.github.mooy1.gridfoundation.implementation.components.UltimatumAlloy;
+import io.github.mooy1.gridfoundation.implementation.materials.Alloy;
 import io.github.mooy1.gridfoundation.implementation.components.Wire;
+import io.github.mooy1.gridfoundation.implementation.consumers.combiners.AlloySmelter;
 import io.github.mooy1.gridfoundation.implementation.consumers.crafters.AutoSmeltery;
 import io.github.mooy1.gridfoundation.implementation.consumers.crafters.MagicAutoCrafter;
 import io.github.mooy1.gridfoundation.implementation.consumers.crafters.SlimefunAutoCrafter;
@@ -42,14 +45,24 @@ public final class Setup {
 
         PluginUtils.registerAddonInfoItem(Categories.MAIN, GridFoundation.getInstance());
 
-        // TODO grid manager
+        // blocks
+        
+        new GridViewer().register(plugin);
+        new ManualSieve().register(plugin);
         
         // components
 
         new MachineFrame().register(plugin);
-        new InfusedAlloy().register(plugin);
-        new UltimatumAlloy().register(plugin);
-        new InfusedGlass().register(plugin);
+        new Alloy(Alloy.GLASS, new ItemStack(Material.SAND, 4), new SlimefunItemStack(SlimefunItems.SILVER_DUST, 6), new ItemStack(Material.QUARTZ, 4)).register(plugin);
+        //new Alloy(Alloy.INFUSED, , , ).register(plugin);
+        //new Alloy(Alloy.ULTIMATUM, , , ).register(plugin);
+        
+        new CrushedBlock(CrushedBlock.DUST).register(plugin);
+        new CrushedBlock(CrushedBlock.END).register(plugin);
+        new CrushedBlock(CrushedBlock.NETHER).register(plugin);
+        new CrushedBlock(CrushedBlock.ANDESITE).register(plugin);
+        new CrushedBlock(CrushedBlock.GRANITE).register(plugin);
+        new CrushedBlock(CrushedBlock.DIORITE).register(plugin);
         
         new Wire(Wire.SILVER, SlimefunItems.SILVER_INGOT).register(plugin);
 
@@ -63,7 +76,7 @@ public final class Setup {
         new Plate(Plate.IRON, new ItemStack(Material.IRON_INGOT, 16)).register(plugin);
         new Plate(Plate.LEAD, new SlimefunItemStack(SlimefunItems.LEAD_INGOT, 16)).register(plugin);
         
-        // TODO: circuits
+        // TODO: circuits, custom dusts from sifter
         
         // consumers
         
@@ -83,7 +96,11 @@ public final class Setup {
         new Furnace().register(plugin);
         new Pulverizer().register(plugin);
         
-        //TODO: alloy smelter, pumps
+        new AlloySmelter().register(plugin);
+        
+        new AutoSieve().register(plugin);
+        
+        //TODO: crucible, sifter for crushed stuff and dirt, sand , gravel, soulsand
         
         // generators
         
@@ -120,6 +137,8 @@ public final class Setup {
         new WirelessConfigurator().register(plugin);
         new WirelessInputNode().register(plugin);
         new WirelessOutputNode().register(plugin);
+        
+        // TODO workbench, wand, hammers, gear for advanced ingots
         
     }
 
