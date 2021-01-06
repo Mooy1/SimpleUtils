@@ -1,6 +1,7 @@
 package io.github.mooy1.gridfoundation.utils;
 
 import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.misc.DelayedConsumer;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.inventory.ItemStack;

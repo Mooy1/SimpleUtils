@@ -43,7 +43,7 @@ public abstract class AbstractPanel extends AbstractGridGenerator {
     }
 
     @Override
-    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
         if (this.day == (
                 b.getWorld().getEnvironment() == World.Environment.NORMAL
                 && b.getWorld().getTime() < 13000

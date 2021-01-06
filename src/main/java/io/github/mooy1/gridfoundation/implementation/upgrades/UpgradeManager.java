@@ -63,12 +63,12 @@ public final class UpgradeManager {
             return;
         }
         List<String> stats = new ArrayList<>(3);
-        block.getStats(stats, type.level);
+        block.getStats(stats, type.getLevel());
         if (type == block.getMaxLevel()) {
-            menu.replaceExistingItem(block.getUpgradeSlot(), new CustomItem(type.material, "&6Upgrade: " + type.name + " &6(Max)", stats));
+            menu.replaceExistingItem(block.getUpgradeSlot(), new CustomItem(type.getMaterial(), "&6Upgrade: " + type.getName() + " &6(Max)", stats));
         } else {
-            stats.add("&6Max: &e" + block.getMaxLevel().name);
-            menu.replaceExistingItem(block.getUpgradeSlot(), new CustomItem(type.material, "&6Upgrade: &e" + type.name, stats));
+            stats.add("&6Max: &e" + block.getMaxLevel().getName());
+            menu.replaceExistingItem(block.getUpgradeSlot(), new CustomItem(type.getMaterial(), "&6Upgrade: &e" + type.getName(), stats));
         }
         
     }
@@ -93,7 +93,7 @@ public final class UpgradeManager {
         }
     }
     
-    private static final String DEFAULT = ChatColors.color("&6Tier: " + UpgradeType.BASIC.name);
+    private static final String DEFAULT = ChatColors.color("&6Tier: " + UpgradeType.BASIC.getName());
     
     static void setTier(@Nonnull ItemStack item, @Nonnull UpgradeType type) {
         if (type != UpgradeType.BASIC) {
@@ -103,7 +103,7 @@ public final class UpgradeManager {
                 if (lore != null) {
                     int index = lore.indexOf(DEFAULT);
                     if (index > -1) {
-                        lore.set(index, ChatColors.color("&6Tier: " + type.name));
+                        lore.set(index, ChatColors.color("&6Tier: " + type.getName()));
                     }
                 }
                 meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, type.name());
@@ -151,13 +151,13 @@ public final class UpgradeManager {
                 ItemUtils.consumeItem(item, false);
             }
             
-            MessageUtils.message(p, "&aUpgraded to " + type.name);
+            MessageUtils.message(p, "&aUpgraded to " + type.getName());
 
             p.playSound(target, Sound.BLOCK_ANVIL_USE, 1, 1);
 
         } else if (old.ordinal() + 1 < UpgradeType.values().length) {
 
-            MessageUtils.message(p, "&eThis Block requires an " + UpgradeType.values()[old.ordinal() + 1].item.getDisplayName() + "&e to be upgraded further!");
+            MessageUtils.message(p, "&eThis Block requires an " + UpgradeType.values()[old.ordinal() + 1].getItem().getDisplayName() + "&e to be upgraded further!");
 
         }
     }

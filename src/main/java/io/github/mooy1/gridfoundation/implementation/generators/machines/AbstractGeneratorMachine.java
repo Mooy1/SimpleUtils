@@ -65,7 +65,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
     }
 
     @Override
-    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b) {
+    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
         MutableInt remaining = this.progressing.computeIfAbsent(b.getLocation(), k -> new MutableInt(0));
         if (remaining.intValue() > 0) {
             remaining.decrement();
@@ -75,7 +75,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
             return this.power;
         } else {
             @Nullable ItemStack input = menu.getItemInSlot(AbstractGeneratorMachine.input);
-            int speed = Math.max(1, getLevel(b) / 2);
+            int speed = Math.max(1, type.getLevel() / 2);
             if (input != null && input.getAmount() >= speed) {
                 Integer ticks = this.recipes.get(new ItemFilter(input, FilterType.IGNORE_AMOUNT));
                 if (ticks != null) {

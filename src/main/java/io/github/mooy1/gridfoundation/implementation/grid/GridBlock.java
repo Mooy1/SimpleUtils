@@ -1,5 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.grid;
 
+import io.github.mooy1.infinitylib.menus.LocationUtils;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -21,9 +22,14 @@ public interface GridBlock {
     }
 
     default Grid addGrid(@Nonnull Location l) {
-        Grid grid = GridManager.get(UUID.fromString(BlockStorage.getLocationInfo(l, "owner")));
-        locations.put(l, grid);
-        return grid;
+        try {
+            Grid grid = GridManager.get(UUID.fromString(BlockStorage.getLocationInfo(l, "owner")));
+            locations.put(l, grid);
+            return grid;
+        } catch (IllegalArgumentException | NullPointerException e) {
+            LocationUtils.breakBlock(l);
+            return null;
+        }
     }
 
     default void storeGrid(@Nonnull Location l, @Nonnull Player p) {

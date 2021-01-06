@@ -1,5 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.grid;
 
+import lombok.NoArgsConstructor;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,14 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Represents a grid
  */
+@NoArgsConstructor
 public final class Grid {
-    
-    final UUID uuid;
     
     private final Map<Integer, Generator> generators = new HashMap<>();
     private final Map<Integer, Consumer> consumers = new HashMap<>();
@@ -24,10 +23,6 @@ public final class Grid {
     int usage;
     int max;
     boolean maxed;
-
-    Grid(@Nonnull UUID uuid) {
-        this.uuid = uuid;
-    }
 
     public void tick() {
         this.usage = 0;

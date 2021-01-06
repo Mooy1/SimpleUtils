@@ -30,9 +30,11 @@ public final class Decompactor extends AbstractConverter {
     }
 
     private static void addRecipe(ItemStack output, ItemStack input) {
-        displayRecipes.add(input);
-        displayRecipes.add(output);
-        recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(output, input.getAmount()));
+        if (input.getAmount() == 1 && input.getType() != Material.COBBLESTONE) {
+            displayRecipes.add(input);
+            displayRecipes.add(output);
+            recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(output, input.getAmount()));
+        }
     }
     
     @Nonnull

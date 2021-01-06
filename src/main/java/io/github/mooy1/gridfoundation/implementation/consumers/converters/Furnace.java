@@ -4,6 +4,7 @@ import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
+import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Furnace extends AbstractConverter {
 
@@ -43,12 +45,15 @@ public final class Furnace extends AbstractConverter {
             }
         });
 
-        MachineRecipeService.acceptSkipIDS(SlimefunItems.ELECTRIC_INGOT_FACTORY, Furnace::addRecipe, "GOLD_DUST");
+        MachineRecipeService.accept(SlimefunItems.ELECTRIC_INGOT_FACTORY, Furnace::addRecipe);
         addRecipe(SlimefunItems.GOLD_DUST, new ItemStack(Material.GOLD_INGOT));
         
     }
     
     public static void addRecipe(ItemStack input, ItemStack output) {
+        if (Objects.equals("GOLD_DUST", StackUtils.getItemID(input, false))) {
+            return;
+        }
         displayRecipes.add(0, input);
         displayRecipes.add(0, output);
         furnaceRecipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(output, input.getAmount()));

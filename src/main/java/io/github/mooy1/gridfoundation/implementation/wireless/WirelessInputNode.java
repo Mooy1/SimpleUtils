@@ -4,7 +4,7 @@ import io.github.mooy1.gridfoundation.GridFoundation;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
-import io.github.mooy1.infinitylib.general.TransferUtils;
+import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.objects.AbstractContainer;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;

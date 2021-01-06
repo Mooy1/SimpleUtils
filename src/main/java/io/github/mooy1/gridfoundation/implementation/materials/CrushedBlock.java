@@ -26,10 +26,9 @@ public final class CrushedBlock extends UnplaceableBlock {
     
     private static SlimefunItemStack make(String name, String source, Material material) {
         return new SlimefunItemStack(
-                "CRUSHED_" + source.toLowerCase(Locale.ROOT),
+                "CRUSHED_" + source.toUpperCase(Locale.ROOT),
                 material,
-                "&6" + name,
-                "&7Crushed " + source
+                "&6" + name
         );
     }
 

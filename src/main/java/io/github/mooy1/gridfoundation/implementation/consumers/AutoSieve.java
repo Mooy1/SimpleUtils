@@ -19,7 +19,7 @@ public class AutoSieve extends AbstractGridConsumer {
 
     public static final SlimefunItemStack ITEM = make(4, "Auto Sieve", "&7Sifts gravel, sand, and crushed materials into dusts", Material.BROWN_CONCRETE);
     
-    private static final int input = MenuPreset.slot2;
+    private static final int inputSlot = MenuPreset.slot2;
     private static final int[] outputSlots = {37, 38, 39, 40, 41, 42, 43};
     
     public AutoSieve() {
@@ -30,29 +30,18 @@ public class AutoSieve extends AbstractGridConsumer {
 
     @Override
     public void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
-        
-        // tier     0 1 2 3  4  5  6
-        // amount   1 2 2 4  4  8  8
-        // size     1 1 2 2  4  4  8
-        // product  1 2 4 8 16 32 64
-        
-        int size = 1;
-        int i = type.getTier() >>> 1; // 0 0 1 1 2 2 3
-        while (i > 0) {
-            size *=2;
-            i--;
+        ItemStack input = menu.getItemInSlot(inputSlot);
+        if (input == null) {
+            return;
         }
+        int amount = Math.min(type.getLevel(), input.getAmount());
         
-        int amount;
-        if (type.getTier() % 2 == 0) {
-            amount = size;
-        } else {
-            amount = size << 1;
-        }
-        
-        List<Optional<ItemStack>> outputs = ManualSieve.getOutputs(menu.getItemInSlot(input), amount);
+        List<Optional<ItemStack>> outputs = ManualSieve.getOutputs(input, Math.max(1, amount / 8));
         if (outputs == null) {
             return;
+        }
+        for (int i = 0 ; i < amount ; i++) {
+            // TODO BETTER WAY OF OUTPUTTING RANDOMLY
         }
         for (Optional<ItemStack> output : outputs) {
             if (output.isPresent()) {
@@ -61,7 +50,7 @@ public class AutoSieve extends AbstractGridConsumer {
                 menu.pushItem(item, outputSlots);
             }
         }
-        menu.consumeItem(input, type.getLevel());
+        menu.consumeItem(inputSlot, amount);
     }
 
     @Nonnull

@@ -15,7 +15,7 @@ public final class UpgradeKit extends SimpleSlimefunItem<ItemUseHandler> impleme
     final UpgradeType type;
 
     public UpgradeKit(UpgradeType type, ItemStack[] recipe) {
-        super(Categories.MAIN, type.item, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
+        super(Categories.MAIN, type.getItem(), RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         this.type = type;
     }
 

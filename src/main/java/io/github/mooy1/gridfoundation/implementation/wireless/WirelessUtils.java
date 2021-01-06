@@ -1,8 +1,8 @@
 package io.github.mooy1.gridfoundation.implementation.wireless;
 
 import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.general.LocationUtils;
-import io.github.mooy1.infinitylib.general.TransferUtils;
+import io.github.mooy1.infinitylib.menus.LocationUtils;
+import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 public final class WirelessUtils {
-
+    
     public static void setConnected(@Nonnull Location l, @Nullable Location set) {
         BlockStorage.addBlockInfo(l, "connected", toString(set));
     }

@@ -28,7 +28,7 @@ public abstract class AbstractGridContainer extends AbstractContainer implements
             Block b = e.getBlock();
             Grid grid = removeGrid(b.getLocation());
             BlockMenu menu = BlockStorage.getInventory(b);
-            if (menu != null) {
+            if (menu != null && grid != null) {
                 onBreak(e, e.getBlock().getLocation(), menu, grid);
             }
             return true;
@@ -51,7 +51,9 @@ public abstract class AbstractGridContainer extends AbstractContainer implements
     @Override
     public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b) {
         Grid grid = addGrid(b.getLocation());
-        onNewInstance(menu, b, grid);
+        if (grid != null) {
+            onNewInstance(menu, b, grid);
+        }
     }
     
     @OverridingMethodsMustInvokeSuper

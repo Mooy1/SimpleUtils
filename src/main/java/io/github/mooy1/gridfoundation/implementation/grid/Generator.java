@@ -33,7 +33,6 @@ public final class Generator extends Component {
                 this.grid.maxed ? Material.RED_STAINED_GLASS_PANE : this.grid.usage == this.grid.max ? Material.YELLOW_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
                 "&aGenerating: " + this.generation + " GP",
                 "&7Grid: " + this.grid.usage + " / " + this.grid.max,
-                "&7Owner: " + this.grid.uuid,
                 "",
                 this.grid.maxed ? "&cGrid Overloaded!" : ""
         );

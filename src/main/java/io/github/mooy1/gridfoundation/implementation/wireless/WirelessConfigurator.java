@@ -3,7 +3,7 @@ package io.github.mooy1.gridfoundation.implementation.wireless;
 import io.github.mooy1.gridfoundation.GridFoundation;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.general.TransferUtils;
+import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.player.LeaveListener;
 import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;

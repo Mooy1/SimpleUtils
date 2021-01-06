@@ -6,12 +6,10 @@ import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.inventory.ItemStack;
 
-public final class InfusionShard extends UnplaceableBlock {
+public class Ingot extends UnplaceableBlock {
 
-    public static final SlimefunItemStack ITEM = null;
-
-    public InfusionShard(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public Ingot(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
-    } // TODO add to sieve
+    }
 
 }

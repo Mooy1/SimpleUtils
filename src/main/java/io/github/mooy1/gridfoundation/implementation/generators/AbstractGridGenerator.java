@@ -3,6 +3,7 @@ package io.github.mooy1.gridfoundation.implementation.generators;
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
 import io.github.mooy1.gridfoundation.implementation.grid.Generator;
 import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -50,13 +51,14 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer implem
     public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull Grid grid) {
         Generator generator = grid.getGenerator(block.getLocation());
         if (generator != null) {
-            int generation = getLevel(block) * getGeneration(blockMenu, block);
+            UpgradeType type = getUpgrade(block);
+            int generation = type.getLevel() * getGeneration(blockMenu, block, type);
             generator.setGeneration(generation);
             generator.updateStatus(blockMenu, this.statusSlot);
         }
     }
     
-    public abstract int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b);
+    public abstract int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type);
 
     @Override
     @OverridingMethodsMustInvokeSuper
