@@ -12,7 +12,7 @@ commands:
   gridfoundation:
     description: Do /help gridfoundation for a list of commands
     usage: /<command> <subcommand>
-    aliases: [gf]
+    aliases: [foundation, grid, gf]
 
 permissions:
   gridfoundation.admin:

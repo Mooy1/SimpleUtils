@@ -1,17 +1,25 @@
 package io.github.mooy1.gridfoundation.implementation.materials;
 
-import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
+import io.github.mooy1.gridfoundation.implementation.blocks.ManualSieve;
+import io.github.mooy1.gridfoundation.setup.Categories;
+import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public final class InfusionShard extends UnplaceableBlock {
+public final class InfusionShard extends SlimefunItem implements NotPlaceable {
 
-    public static final SlimefunItemStack ITEM = null;
+    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
+            "INFUSION_SHARD",
+            Material.QUARTZ,
+            "&fInfusion Shard"
+    );
 
-    public InfusionShard(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(category, item, recipeType, recipe);
-    } // TODO add to sieve
+    public InfusionShard() {
+        super(Categories.MATERIALS, ITEM, ManualSieve.TYPE, new ItemStack[] {
+                
+        });
+    }
 
 }

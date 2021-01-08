@@ -60,7 +60,7 @@ public final class WirelessConfigurator extends SlimefunItem implements NotPlace
 
         });
         Bukkit.getPluginManager().registerEvents(this, GridFoundation.getInstance());
-        new LeaveListener(this.coolDowns);
+        LeaveListener.add(this.coolDowns);
     }
     
     @EventHandler

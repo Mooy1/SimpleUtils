@@ -1,6 +1,5 @@
-package io.github.mooy1.gridfoundation.implementation.consumers.converters;
+package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
 import io.github.mooy1.infinitylib.filter.FilterType;
@@ -12,13 +11,12 @@ import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Pulverizer extends AbstractConverter {
+public final class Pulverizer extends AbstractSingleProcessor {
 
     public static final Map<ItemFilter, Pair<ItemStack, Integer>> recipes = new HashMap<>();
     private static final List<ItemStack> displayRecipes = new ArrayList<>();
@@ -27,28 +25,23 @@ public final class Pulverizer extends AbstractConverter {
     public static final BetterRecipeType TYPE = new BetterRecipeType(ITEM);
 
     public Pulverizer() {
-        super(ITEM, displayRecipes, recipes, 4, new ItemStack[] {
+        super(ITEM,Material.IRON_PICKAXE, 4, recipes, displayRecipes, 4, new ItemStack[] {
                 
         });
-        TYPE.acceptEach(((stacks, stack) -> addRecipe(stacks[0], stack)));
-        MachineRecipeService.accept(SlimefunItems.ELECTRIC_INGOT_PULVERIZER, Pulverizer::addRecipe);
-        MachineRecipeService.accept(SlimefunItems.ELECTRIC_ORE_GRINDER, Pulverizer::addRecipe);
-        addRecipe(new ItemStack(Material.COBBLESTONE), new ItemStack(Material.GRAVEL));
+        TYPE.acceptEach(((stacks, stack) -> addRecipe(stacks[0], stack, true)));
+        MachineRecipeService.accept((input, stack) -> addRecipe(input, stack, false),
+                () -> addRecipe(new ItemStack(Material.COBBLESTONE), new ItemStack(Material.GRAVEL), true),
+                SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_ORE_GRINDER
+        );
     }
     
-    public static void addRecipe(ItemStack input, ItemStack stack) {
-        if (SlimefunTag.STONE_VARIANTS.isTagged(stack.getType())) {
+    public static void addRecipe(ItemStack input, ItemStack stack, boolean force) {
+        if (!force && SlimefunTag.STONE_VARIANTS.isTagged(stack.getType())) {
             return;
         }
         displayRecipes.add(input);
         displayRecipes.add(stack);
         recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(stack, input.getAmount()));
-    }
-
-    @Nonnull
-    @Override
-    public UpgradeType getMaxLevel() {
-        return UpgradeType.ULTIMATE;
     }
     
 }

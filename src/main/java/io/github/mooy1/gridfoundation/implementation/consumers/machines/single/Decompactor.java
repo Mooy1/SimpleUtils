@@ -1,6 +1,5 @@
-package io.github.mooy1.gridfoundation.implementation.consumers.converters;
+package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
@@ -10,23 +9,22 @@ import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Decompactor extends AbstractConverter {
+public final class Decompactor extends AbstractSingleProcessor {
 
     public static final Map<ItemFilter, Pair<ItemStack, Integer>> recipes = new HashMap<>();
     private static final List<ItemStack> displayRecipes = new ArrayList<>();
     public static final SlimefunItemStack ITEM = make(6,"Decompactor", "Decompresses blocks into ingots and materials", Material.SMOOTH_RED_SANDSTONE);
 
     public Decompactor() {
-        super(ITEM, displayRecipes, recipes, 6, new ItemStack[] {
+        super(ITEM, Material.STICKY_PISTON,16, recipes, displayRecipes, 6, new ItemStack[] {
                 
         });
-        MachineRecipeService.accept(SlimefunItems.ELECTRIC_PRESS, Decompactor::addRecipe);
+        MachineRecipeService.accept(Decompactor::addRecipe, () -> {}, SlimefunItems.ELECTRIC_PRESS);
     }
 
     private static void addRecipe(ItemStack output, ItemStack input) {
@@ -35,11 +33,5 @@ public final class Decompactor extends AbstractConverter {
             displayRecipes.add(output);
             recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(output, input.getAmount()));
         }
-    }
-    
-    @Nonnull
-    @Override
-    public UpgradeType getMaxLevel() {
-        return UpgradeType.HARDENED;
     }
 }

@@ -1,11 +1,11 @@
 package io.github.mooy1.gridfoundation.implementation.grid;
 
 import lombok.Setter;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import org.bukkit.Material;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * represents a consumer in a grid
@@ -22,27 +22,16 @@ public final class Consumer extends Component {
         return this.consume;
     }
     
-    Consumer(@Nonnull ItemStack item, int consumption, @Nonnull Grid grid) {
-        super(item, grid);
+    Consumer(@Nonnull ItemStack item, int consumption, @Nonnull Grid grid, @Nullable Location l) {
+        super(item, grid, l);
         this.consumption = consumption;
     }
 
-    @Nonnull
-    @Override
-    ItemStack getViewerItem() {
-        return null;
-    }
 
     @Nonnull
     @Override
-    public ItemStack getStatusItem() {
-        return new CustomItem(
-                this.grid.maxed ? Material.RED_STAINED_GLASS_PANE : this.grid.usage == this.grid.max ? Material.YELLOW_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
-                "&aConsuming: " + this.consumption + " GP",
-                "&7Grid: " + this.grid.usage + " / " + this.grid.max,
-                "",
-                this.grid.maxed ? "&cGrid Overloaded!" : ""
-        );
+    String getStatus() {
+        return "&aConsuming: " + this.consumption;
     }
-    
+
 }

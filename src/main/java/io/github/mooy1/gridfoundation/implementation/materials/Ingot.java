@@ -1,15 +1,31 @@
 package io.github.mooy1.gridfoundation.implementation.materials;
 
-import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
+import io.github.mooy1.gridfoundation.setup.Categories;
+import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class Ingot extends UnplaceableBlock {
+import java.util.Locale;
 
-    public Ingot(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(category, item, recipeType, recipe);
+public class Ingot extends SlimefunItem implements NotPlaceable {
+    
+    public static final SlimefunItemStack PLATINUM = make(Material.IRON_INGOT, "Platinum");
+
+    public Ingot(SlimefunItemStack item, SlimefunItemStack dust) {
+        super(Categories.MATERIALS, item, RecipeType.SMELTERY, new ItemStack[] {
+                dust, null, null, null, null, null, null, null, null
+        });
+    }
+    
+    private static SlimefunItemStack make(Material material, String name) {
+        return new SlimefunItemStack(
+                name.toUpperCase(Locale.ROOT) + "_INGOT",
+                material,
+                name + " Ingot"
+        );
     }
 
 }

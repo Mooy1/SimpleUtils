@@ -34,46 +34,50 @@ public final class Grid {
         }
         
         for (Consumer consumer : this.consumers.values()) {
-            if (this.usage + consumer.consumption <= this.max) {
-                consumer.consume = true;
-                this.usage += consumer.consumption;
-            } else {
+            this.usage += consumer.consumption;
+            if (this.maxed) {
+                consumer.consume = false;
+                continue;
+            }
+            if (this.usage > this.max) {
                 this.maxed = true;
                 consumer.consume = false;
+                continue;
             }
+            consumer.consume = true;
         }
     }
-
+    
     @Nullable
-    public Generator getGenerator(@Nonnull Location l) {
-        return this.generators.get(l.hashCode());
+    public Generator getGenerator(int hash) {
+        return this.generators.get(hash);
     }
 
     @Nonnull
-    public Generator addGenerator(@Nonnull Location l, @Nonnull ItemStack item) {
-        Generator generator = new Generator(item, this);
-        this.generators.put(l.hashCode(), generator);
+    public Generator addGenerator(int hash, @Nonnull ItemStack item, @Nullable Location l) {
+        Generator generator = new Generator(item, this, l);
+        this.generators.put(hash, generator);
         return generator;
     }
 
-    public void removeGenerator(@Nonnull Location l) {
-        this.generators.remove(l.hashCode());
+    public void removeGenerator(int hash) {
+        this.generators.remove(hash);
     }
 
     @Nullable
-    public Consumer getConsumer(@Nonnull Location l) {
-        return this.consumers.get(l.hashCode());
+    public Consumer getConsumer(int hash) {
+        return this.consumers.get(hash);
     }
 
     @Nonnull
-    public Consumer addConsumer(@Nonnull Location l, @Nonnull ItemStack item, int consumption) {
-        Consumer consumer = new Consumer(item, consumption, this);
-        this.consumers.put(l.hashCode(), consumer);
+    public Consumer addConsumer(int hash, @Nonnull ItemStack item, int consumption, @Nullable Location l) {
+        Consumer consumer = new Consumer(item, consumption, this, l);
+        this.consumers.put(hash, consumer);
         return consumer;
     }
 
-    public void removeConsumer(@Nonnull Location l) {
-        this.consumers.remove(l.hashCode());
+    public void removeConsumer(int hash) {
+        this.consumers.remove(hash);
     }
     
     public List<Component> getComponents() {

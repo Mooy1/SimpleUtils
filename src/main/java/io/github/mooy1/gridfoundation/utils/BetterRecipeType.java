@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Locale;
 import java.util.function.BiConsumer;
 
-public class BetterRecipeType extends RecipeType {
+public final class BetterRecipeType extends RecipeType {
 
     private final DelayedConsumer<ItemStack[], ItemStack> delayed;
     
@@ -18,7 +18,7 @@ public class BetterRecipeType extends RecipeType {
     }
 
     private BetterRecipeType(SlimefunItemStack item, DelayedConsumer<ItemStack[], ItemStack> consumer) {
-        super(PluginUtils.getKey(item.getItemId().toLowerCase(Locale.ROOT)), item, (consumer::accept));
+        super(PluginUtils.getKey(item.getItemId().toLowerCase(Locale.ROOT)), item, consumer);
         this.delayed = consumer;
     }
     

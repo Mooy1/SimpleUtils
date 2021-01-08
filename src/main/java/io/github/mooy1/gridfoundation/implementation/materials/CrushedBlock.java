@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.materials;
 
-import io.github.mooy1.gridfoundation.implementation.consumers.converters.Pulverizer;
+import io.github.mooy1.gridfoundation.implementation.consumers.machines.single.Pulverizer;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;

@@ -43,7 +43,7 @@ public abstract class AbstractPanel extends AbstractGridGenerator {
     }
 
     @Override
-    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
+    public int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, int tier) {
         if (this.day == (
                 b.getWorld().getEnvironment() == World.Environment.NORMAL
                 && b.getWorld().getTime() < 13000
@@ -74,6 +74,7 @@ public abstract class AbstractPanel extends AbstractGridGenerator {
         if (data instanceof DaylightDetector) {
             DaylightDetector detector = (DaylightDetector) data;
             detector.setInverted(!this.day);
+            b.setBlockData(detector);
         }
     }
     

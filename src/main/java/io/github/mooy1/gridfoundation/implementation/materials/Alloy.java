@@ -1,13 +1,14 @@
 package io.github.mooy1.gridfoundation.implementation.materials;
 
-import io.github.mooy1.gridfoundation.implementation.consumers.combiners.AlloySmelter;
+import io.github.mooy1.gridfoundation.implementation.consumers.machines.multi.AlloySmelter;
 import io.github.mooy1.gridfoundation.setup.Categories;
-import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
+import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public final class Alloy extends UnplaceableBlock {
+public final class Alloy extends SlimefunItem implements NotPlaceable {
 
     public static final SlimefunItemStack ULTIMATUM = new SlimefunItemStack(
             "ULTIMATUM_ALLOY",

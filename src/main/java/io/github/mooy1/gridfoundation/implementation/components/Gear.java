@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.components;
 
-import io.github.mooy1.gridfoundation.implementation.consumers.processors.GearCaster;
+import io.github.mooy1.gridfoundation.implementation.consumers.machines.single.presses.GearCaster;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;

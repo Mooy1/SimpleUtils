@@ -20,10 +20,10 @@ public interface UpgradeableBlock {
     
     int getUpgradeSlot();
     
-    void getStats(@Nonnull List<String> stats, int level);
+    void getStats(@Nonnull List<String> stats, int tier);
     
-    default UpgradeType getUpgrade(@Nonnull Block b) {
-        return UpgradeManager.getType(b.getLocation());
+    default int getTier(@Nonnull Block b) {
+        return UpgradeManager.getUpgrade(b.getLocation()).tier();
     }
     
     default void placeUpgrade(@Nonnull Location l, @Nonnull ItemStack item) {
@@ -35,11 +35,11 @@ public interface UpgradeableBlock {
     }
     
     default void updateMenuUpgrade(@Nonnull BlockMenu menu, @Nonnull Location l) {
-        UpgradeManager.updateMenu(menu, UpgradeManager.getType(l), this);
+        UpgradeManager.updateMenu(menu, UpgradeManager.getUpgrade(l), this);
     }
     
-    default void addTier(@Nonnull SlimefunItemStack item) {
-        UpgradeManager.addTier(item);
+    default void addMeta(@Nonnull SlimefunItemStack item) {
+        UpgradeManager.addMeta(item);
     }
     
 }

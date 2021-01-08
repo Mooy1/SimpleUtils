@@ -18,7 +18,7 @@ public final class GridManager {
         }
     }
 
-    public static Grid get(@Nonnull UUID uuid) {
+    static Grid get(@Nonnull UUID uuid) {
         return players.computeIfAbsent(uuid, k -> new Grid());
     }
     

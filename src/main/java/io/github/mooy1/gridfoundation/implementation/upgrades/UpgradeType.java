@@ -12,23 +12,21 @@ import java.util.Map;
 @Getter
 public enum UpgradeType {
 
-    BASIC(1, Material.WHITE_STAINED_GLASS_PANE, "&fBasic"),
-    ADVANCED(2, Material.YELLOW_STAINED_GLASS_PANE, "&eAdvanced"),
-    HARDENED(4, Material.ORANGE_STAINED_GLASS_PANE, "&6Hardened"),
-    ELITE(8, Material.RED_STAINED_GLASS_PANE, "&cElite"),
-    REINFORCED(16, Material.BLACK_STAINED_GLASS_PANE, "&7Reinforced"),
-    INFUSED(32, Material.BLUE_STAINED_GLASS_PANE, "&9Infused"),
-    ULTIMATE(64, Material.PURPLE_STAINED_GLASS_PANE, "&dUltimate");
+    BASIC(Material.WHITE_STAINED_GLASS_PANE, "&fBasic"),
+    ADVANCED(Material.YELLOW_STAINED_GLASS_PANE, "&eAdvanced"),
+    HARDENED(Material.ORANGE_STAINED_GLASS_PANE, "&6Hardened"),
+    ELITE(Material.RED_STAINED_GLASS_PANE, "&cElite"),
+    REINFORCED(Material.BLACK_STAINED_GLASS_PANE, "&7Reinforced"),
+    INFUSED(Material.BLUE_STAINED_GLASS_PANE, "&9Infused"),
+    ULTIMATE(Material.PURPLE_STAINED_GLASS_PANE, "&dUltimate");
 
-    private final int level;
     private final Material material;
     private final String name;
     private final SlimefunItemStack item;
 
     private static final Map<String, UpgradeType> values = new HashMap<>();
 
-    UpgradeType(int level, Material material, String name) {
-        this.level = level;
+    UpgradeType(Material material, String name) {
         this.material = material;
         this.name = name;
         this.item = new SlimefunItemStack(
@@ -39,6 +37,10 @@ public enum UpgradeType {
                 "&7to upgrade it's speed or generation",
                 "&7Each tier must be used before the next"
         );
+    }
+    
+    public int tier() {
+        return this.ordinal();
     }
 
     static {

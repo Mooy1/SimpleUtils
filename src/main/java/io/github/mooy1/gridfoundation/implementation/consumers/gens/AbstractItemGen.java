@@ -43,8 +43,8 @@ public abstract class AbstractItemGen extends AbstractGridConsumer {
     }
 
     @Override
-    public void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
-        ItemStack output = new ItemStack(this.material, type.getLevel());
+    public void process(@Nonnull BlockMenu menu, @Nonnull Block b, int tier) {
+        ItemStack output = new ItemStack(this.material, 1 << tier);
         if (menu.fits(output, outputs)) {
             menu.pushItem(output, outputs);
         }

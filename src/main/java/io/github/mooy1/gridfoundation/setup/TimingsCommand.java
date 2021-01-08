@@ -12,12 +12,12 @@ import java.util.List;
 public class TimingsCommand extends LibCommand {
 
     public TimingsCommand() {
-        super("timings", "displays the timings of a slimegrid tick", true);
+        super("timings", "displays the timings of a power grid tick", true);
     }
 
     @Override
     public void onExecute(@Nonnull CommandSender commandSender, @Nonnull String[] strings) {
-        commandSender.sendMessage(ChatColors.color("&6SlimeGrid timings: &e" + GridFoundation.getTimings() + " ms"));
+        commandSender.sendMessage(ChatColors.color("&6Power Grid timings: &e" + GridFoundation.getTimings() + " ms"));
     }
 
     @Nonnull

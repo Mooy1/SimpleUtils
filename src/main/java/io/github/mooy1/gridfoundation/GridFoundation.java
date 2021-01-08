@@ -27,7 +27,7 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
         instance = this;
 
         PluginUtils.setup(ChatColor.GOLD + "GridFoundation", this, "Mooy1/GridFoundation/master", getFile());
-        new CommandLib(this, "gridfoundation", "gridfoundation.admin", "/gf");
+        new CommandLib(this, "gridfoundation", "gridfoundation.admin", "/foundation, /grid, /gf");
         CommandLib.addCommands(new TimingsCommand());
         
         @SuppressWarnings("unused")

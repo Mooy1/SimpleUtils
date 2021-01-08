@@ -3,7 +3,6 @@ package io.github.mooy1.gridfoundation.implementation.consumers;
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
 import io.github.mooy1.gridfoundation.implementation.grid.Consumer;
 import io.github.mooy1.gridfoundation.implementation.grid.Grid;
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
@@ -31,12 +30,12 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
         super(Categories.MACHINES, item, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         this.statusSlot = statusSlot;
         this.consumption = consumption;
-        addTier(item);
+        addMeta(item);
     }
 
     @Override
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
-        menu.replaceExistingItem(this.statusSlot, grid.addConsumer(b.getLocation(), getItem(), getUpgrade(b).getLevel()).getStatusItem());
+        menu.replaceExistingItem(this.statusSlot, grid.addConsumer(b.getLocation().hashCode(), getItem(), this.consumption << getTier(b), b.getLocation()).getStatusItem());
         updateMenuUpgrade(menu, b.getLocation());
     }
 
@@ -44,7 +43,7 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
     @OverridingMethodsMustInvokeSuper
     public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
         breakUpgrade(e, e.getBlock().getLocation(), getItem().clone());
-        grid.removeConsumer(e.getBlock().getLocation());
+        grid.removeConsumer(e.getBlock().getLocation().hashCode());
     }
 
     @Override
@@ -54,18 +53,18 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
 
     @Override
     public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull Grid grid) {
-        Consumer consumer = grid.getConsumer(block.getLocation());
+        Consumer consumer = grid.getConsumer(block.getLocation().hashCode());
         if (consumer != null) {
-            UpgradeType type = getUpgrade(block);
-            consumer.setConsumption(this.consumption * Math.max(1, type.getLevel() / 2));
+            int tier = getTier(block);
+            consumer.setConsumption(this.consumption << Math.max(0, tier - 1));
             if (consumer.canConsume()) {
-                process(blockMenu, block, type);
+                process(blockMenu, block, tier);
             }
             consumer.updateStatus(blockMenu, this.statusSlot);
         }
     }
     
-    public abstract void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type);
+    public abstract void process(@Nonnull BlockMenu menu, @Nonnull Block b, int tier);
 
     protected static SlimefunItemStack make(int power, String name, String desc, Material material) {
         return new SlimefunItemStack(
@@ -80,9 +79,8 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void getStats(@Nonnull List<String> stats, int level) {
-        stats.add("&6Usage: &e" + Math.max(1, level / 2) + "x");
-        stats.add("&6Speed: &e" + level + "x");
-    }
+    public void getStats(@Nonnull List<String> stats, int tier) {
+        stats.add("&6Usage: &e" +  (1 << Math.max(0, tier - 1)) + "x");
+    } // TODO add speed for consumers
 
 }

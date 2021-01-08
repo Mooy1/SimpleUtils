@@ -124,7 +124,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     }
 
     @Override
-    public final void process(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type) {
+    public final void process(@Nonnull BlockMenu menu, @Nonnull Block b, int tier) {
 
         Pair<MultiFilter, ItemStack> pair = this.cache.get(b.getLocation());
 

@@ -3,7 +3,6 @@ package io.github.mooy1.gridfoundation.implementation.generators;
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
 import io.github.mooy1.gridfoundation.implementation.grid.Generator;
 import io.github.mooy1.gridfoundation.implementation.grid.Grid;
-import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -22,23 +21,23 @@ import java.util.List;
 public abstract class AbstractGridGenerator extends AbstractGridContainer implements UpgradeableBlock {
 
     private final int statusSlot;
-    
+
     public AbstractGridGenerator(SlimefunItemStack item, ItemStack[] recipe, int statusSlot) {
         super(Categories.GENERATORS, item, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         this.statusSlot = statusSlot;
-        addTier(item);
+        addMeta(item);
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
     public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
-        breakUpgrade (e, e.getBlock().getLocation(), getItem().clone());
-        grid.removeGenerator(e.getBlock().getLocation());
+        breakUpgrade(e, e.getBlock().getLocation(), getItem().clone());
+        grid.removeGenerator(e.getBlock().getLocation().hashCode());
     }
 
     @Override
     public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
-        menu.replaceExistingItem(this.statusSlot, grid.addGenerator(b.getLocation(), getItem()).getStatusItem());
+        menu.replaceExistingItem(this.statusSlot, grid.addGenerator(b.getLocation().hashCode(), getItem(), b.getLocation()).getStatusItem());
         updateMenuUpgrade(menu, b.getLocation());
     }
 
@@ -49,21 +48,21 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer implem
 
     @Override
     public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull Grid grid) {
-        Generator generator = grid.getGenerator(block.getLocation());
+        Generator generator = grid.getGenerator(block.getLocation().hashCode());
         if (generator != null) {
-            UpgradeType type = getUpgrade(block);
-            int generation = type.getLevel() * getGeneration(blockMenu, block, type);
+            int tier = getTier(block);
+            int generation = getGeneration(blockMenu, block, tier) << tier;
             generator.setGeneration(generation);
             generator.updateStatus(blockMenu, this.statusSlot);
         }
     }
-    
-    public abstract int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull UpgradeType type);
+
+    public abstract int getGeneration(@Nonnull BlockMenu menu, @Nonnull Block b, int tier);
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void getStats(@Nonnull List<String> stats, int level) {
-        stats.add("&6Generation: &e" + level + "x");
+    public void getStats(@Nonnull List<String> stats, int tier) {
+        stats.add("&6Generation: &e" + (1 << tier) + "x");
     }
     
 }

@@ -1,12 +1,14 @@
 package io.github.mooy1.gridfoundation.utils;
 
 import io.github.mooy1.infinitylib.presets.LorePreset;
+import lombok.experimental.UtilityClass;
 
 /**
  * Collection of utils for building item lore with gp
  *
  * @author Mooy1
  */
+@UtilityClass
 public final class GridLorePreset {
     
     public static String consumesGridPower(int gp) {
