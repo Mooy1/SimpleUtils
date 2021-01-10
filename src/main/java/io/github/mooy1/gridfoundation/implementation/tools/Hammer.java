@@ -6,8 +6,12 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+import io.github.thebusybiscuit.slimefun4.implementation.items.tools.ExplosivePickaxe;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
@@ -60,29 +64,52 @@ public class Hammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPla
             
             for (Block b : blocks) {
                 if (canBreak(p, b)) {
-                    breakBlock(p, b, item, fortune);
+                    breakBlock(p, item, b, fortune, drops);
                 }
             }
         };
     }
     
-    private boolean canBreak(Player p, Block b) {
+    private static boolean canBreak(Player p, Block b) {
         return !b.isEmpty()
                 && !b.isLiquid()
                 && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(b.getType())
-                && !BlockStorage.hasBlockInfo(b)
                 && SlimefunPlugin.getProtectionManager().hasPermission(p, b.getLocation(), ProtectableAction.BREAK_BLOCK);
     }
-    
-    private void breakBlock(Player p, Block b, ItemStack item, int fortune) {
+
+    /**
+     * Breaks a block, this is pretty much the same as the {@link ExplosivePickaxe}'s method
+     */
+    private static void breakBlock(Player p, ItemStack item, Block b, int fortune, List<ItemStack> drops) {
         SlimefunPlugin.getProtectionManager().logAction(p, b, ProtectableAction.BREAK_BLOCK);
         b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, b.getType());
-        for (ItemStack drop : b.getDrops(item, p)) {
-            if (drop != null && drop.getType() != Material.AIR) {
-                b.getWorld().dropItemNaturally(b.getLocation(), new CustomItem(drop, fortune));
+
+        SlimefunItem sfItem = BlockStorage.check(b);
+        
+        if (sfItem != null && !sfItem.useVanillaBlockBreaking()) {
+            SlimefunBlockHandler handler = SlimefunPlugin.getRegistry().getBlockHandlers().get(sfItem.getId());
+
+            if (handler != null && !handler.onBreak(p, b, sfItem, UnregisterReason.PLAYER_BREAK)) {
+                drops.add(BlockStorage.retrieve(b));
+            }
+            
+        } else {
+            Material type = b.getType();
+            
+            if (type == Material.PLAYER_HEAD || SlimefunTag.SHULKER_BOXES.isTagged(type)) {
+                b.breakNaturally(item);
+            } else {
+                boolean applyFortune = SlimefunTag.FORTUNE_COMPATIBLE_ORES.isTagged(type);
+
+                for (ItemStack drop : b.getDrops(item)) {
+                    if (drop != null && drop.getType() != Material.AIR) {
+                        b.getWorld().dropItemNaturally(b.getLocation(), applyFortune ? new CustomItem(drop, fortune) : drop);
+                    }
+                }
+
+                b.setType(Material.AIR);
             }
         }
-        b.setType(Material.AIR);
     }
     
     private List<Block> getBlocks(Block middle, BlockFace face, float pitch) {

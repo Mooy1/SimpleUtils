@@ -36,7 +36,7 @@ public final class Pulverizer extends AbstractSingleProcessor {
     }
     
     public static void addRecipe(ItemStack input, ItemStack stack, boolean force) {
-        if (!force && SlimefunTag.STONE_VARIANTS.isTagged(stack.getType())) {
+        if (!force && (SlimefunTag.STONE_VARIANTS.isTagged(input.getType()) || input.getType() == Material.COBBLESTONE || input.getType() == Material.NETHERRACK)) {
             return;
         }
         displayRecipes.add(input);

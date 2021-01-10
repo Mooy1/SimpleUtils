@@ -1,6 +1,7 @@
 package io.github.mooy1.gridfoundation.setup;
 
 import io.github.mooy1.gridfoundation.GridFoundation;
+import io.github.mooy1.gridfoundation.implementation.blocks.EnhancedWorkbench;
 import io.github.mooy1.gridfoundation.implementation.blocks.ManualSieve;
 import io.github.mooy1.gridfoundation.implementation.components.Gear;
 import io.github.mooy1.gridfoundation.implementation.components.MachineFrame;
@@ -31,6 +32,7 @@ import io.github.mooy1.gridfoundation.implementation.materials.InfusionShard;
 import io.github.mooy1.gridfoundation.implementation.materials.Ingot;
 import io.github.mooy1.gridfoundation.implementation.materials.CrushedOre;
 import io.github.mooy1.gridfoundation.implementation.tools.Hammer;
+import io.github.mooy1.gridfoundation.implementation.tools.Wrench;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeKit;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.implementation.wireless.WirelessConfigurator;
@@ -55,6 +57,7 @@ public final class Setup {
         
         new GridViewer().register(plugin);
         new ManualSieve().register(plugin);
+        new EnhancedWorkbench().register(plugin);
         
         // components
 
@@ -83,7 +86,7 @@ public final class Setup {
         new Plate(Plate.IRON, new ItemStack(Material.IRON_INGOT, 16)).register(plugin);
         new Plate(Plate.LEAD, new SlimefunItemStack(SlimefunItems.LEAD_INGOT, 16)).register(plugin);
         
-        new Dust(Dust.PLATINUM, CrushedOre.PLATINUM, Ingot.PLATINUM).register(plugin);
+        new Dust(Dust.PLATINUM, CrushedOre.PLATINUM).register(plugin);
         new Dust(Dust.COBALT, CrushedOre.COBALT, SlimefunItems.COBALT_INGOT).register(plugin);
         new Dust(Dust.NICKEL, CrushedOre.NICKEL, SlimefunItems.NICKEL_INGOT).register(plugin);
 
@@ -170,6 +173,8 @@ public final class Setup {
         new WirelessConfigurator().register(plugin);
         new WirelessInputNode().register(plugin);
         new WirelessOutputNode().register(plugin);
+        
+        new Wrench().register(plugin);
         
         new Hammer(Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), ChatColor.AQUA, 3).register(plugin);
         new Hammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, ChatColor.GRAY, 5).register(plugin);

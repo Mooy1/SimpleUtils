@@ -22,7 +22,7 @@ public final class AutoSieve extends AbstractProcessor {
     private static final int inputSlot = MenuPreset.slot2;
     
     public AutoSieve() {
-        super(ITEM, ManualSieve.displayRecipes, Material.COMPOSTER, 4, 3, 15, 31, new int[] {37, 38, 39, 40, 41, 42, 43}, new ItemStack[] {
+        super(ITEM, ManualSieve.displayRecipes, Material.COMPOSTER, 4, 3, 15, 31, new int[] {46, 47, 48, 49, 50, 51, 52}, new ItemStack[] {
                 
         });
     }

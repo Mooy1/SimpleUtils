@@ -55,7 +55,7 @@ public final class CrushedOre extends SlimefunItem implements NotPlaceable {
         return new SlimefunItemStack(
                 "CRUSHED_" + dust.getItemId().replace("DUST", "ORE"),
                 material,
-                "&6Crushed " + Objects.requireNonNull(dust.getDisplayName()).replace("Dust", "").concat("Ore"),
+                "&6Crushed " + Objects.requireNonNull(dust.getDisplayName()).replace(" Dust", "").concat(" Ore"),
                 "&7Can be smelted into ingots or pulverized into dust"
         );
     }

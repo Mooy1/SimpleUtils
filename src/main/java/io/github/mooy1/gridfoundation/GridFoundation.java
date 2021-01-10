@@ -35,6 +35,8 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
         
         Setup.setup(this);
 
+        new OreGenerationManager(this);
+        
         PluginUtils.scheduleRepeatingSync(() -> {
             long time = System.nanoTime();
             GridManager.tick();
@@ -44,7 +46,7 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
                 tick = 1;
             }
             timings = (System.nanoTime() - time) / 1000000;
-        }, 100, PluginUtils.TICKER_DELAY);
+        }, 60, PluginUtils.TICKER_DELAY);
     }
 
     @Override

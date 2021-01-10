@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class Ingot extends SlimefunItem implements NotPlaceable {
     
-    public static final SlimefunItemStack PLATINUM = make(Material.IRON_INGOT, "Platinum");
+    public static final SlimefunItemStack PLATINUM = make(Material.IRON_INGOT, "&3Platinum");
 
     public Ingot(SlimefunItemStack item, SlimefunItemStack dust) {
         super(Categories.MATERIALS, item, RecipeType.SMELTERY, new ItemStack[] {
@@ -22,7 +22,7 @@ public class Ingot extends SlimefunItem implements NotPlaceable {
     
     private static SlimefunItemStack make(Material material, String name) {
         return new SlimefunItemStack(
-                name.toUpperCase(Locale.ROOT) + "_INGOT",
+                name.substring(2).toUpperCase(Locale.ROOT) + "_INGOT",
                 material,
                 name + " Ingot"
         );
