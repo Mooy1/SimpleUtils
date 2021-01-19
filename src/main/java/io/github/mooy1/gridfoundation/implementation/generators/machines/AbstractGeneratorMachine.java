@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.generators.machines;
 
 import io.github.mooy1.gridfoundation.implementation.generators.AbstractGridGenerator;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import io.github.mooy1.infinitylib.filter.FilterType;
@@ -112,7 +112,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
     }
 
     @Override
-    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         this.progressing.remove(l);
     }

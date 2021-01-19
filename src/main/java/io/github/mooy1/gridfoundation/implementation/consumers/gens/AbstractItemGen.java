@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.gens;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -37,7 +37,7 @@ public abstract class AbstractItemGen extends AbstractGridConsumer {
     }
 
     @Override
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         menu.dropItems(l, outputs);
     }

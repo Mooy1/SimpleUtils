@@ -24,7 +24,7 @@ import io.github.mooy1.gridfoundation.implementation.consumers.machines.single.p
 import io.github.mooy1.gridfoundation.implementation.generators.machines.SurvivalGenerator;
 import io.github.mooy1.gridfoundation.implementation.generators.panels.LunarPanel;
 import io.github.mooy1.gridfoundation.implementation.generators.panels.SolarPanel;
-import io.github.mooy1.gridfoundation.implementation.grid.GridViewer;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGridViewer;
 import io.github.mooy1.gridfoundation.implementation.materials.Alloy;
 import io.github.mooy1.gridfoundation.implementation.materials.CrushedBlock;
 import io.github.mooy1.gridfoundation.implementation.materials.Dust;
@@ -55,7 +55,7 @@ public final class Setup {
 
         // blocks
         
-        new GridViewer().register(plugin);
+        new PowerGridViewer().register(plugin);
         new ManualSieve().register(plugin);
         new EnhancedWorkbench().register(plugin);
         

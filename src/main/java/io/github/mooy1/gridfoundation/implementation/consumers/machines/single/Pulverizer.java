@@ -1,6 +1,5 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
@@ -22,7 +21,7 @@ public final class Pulverizer extends AbstractSingleProcessor {
     private static final List<ItemStack> displayRecipes = new ArrayList<>();
     
     public static final SlimefunItemStack ITEM = make(4,"Pulverizer", "Pulverizes ores and ingots, into dusts", Material.GRAY_CONCRETE);
-    public static final BetterRecipeType TYPE = new BetterRecipeType(ITEM);
+    public static final DelayedRecipeType TYPE = new DelayedRecipeType(ITEM);
 
     public Pulverizer() {
         super(ITEM,Material.IRON_PICKAXE, 4, recipes, displayRecipes, 4, new ItemStack[] {

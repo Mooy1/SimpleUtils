@@ -1,6 +1,5 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
@@ -25,7 +24,7 @@ public final class Furnace extends AbstractSingleProcessor {
     public static final Map<ItemFilter, Pair<ItemStack, Integer>> furnaceRecipes = new HashMap<>();
     private static final List<ItemStack> displayRecipes = new ArrayList<>();
     public static final SlimefunItemStack ITEM = make(4, "Furnace", "Smelts materials using GP", Material.FURNACE);
-    public static final BetterRecipeType TYPE = new BetterRecipeType(ITEM);
+    public static final DelayedRecipeType TYPE = new DelayedRecipeType(ITEM);
     
     public Furnace() {
         super(ITEM, Material.FLINT_AND_STEEL,2, furnaceRecipes, displayRecipes, 4, new ItemStack[] {

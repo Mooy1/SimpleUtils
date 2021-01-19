@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.crafters;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.AbstractGridConsumer;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
@@ -45,7 +45,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     }
 
     @Override
-    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public final void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         menu.dropItems(l, inputSlots);
         menu.dropItems(l, outputSlots);
@@ -53,7 +53,7 @@ public abstract class AbstractAutoCrafter extends AbstractGridConsumer {
     }
 
     @Override
-    public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
+    public final void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull PowerGrid grid) {
         super.onNewInstance(menu, b, grid);
 
         menu.addMenuClickHandler(keySlot, new ChestMenu.AdvancedMenuClickHandler() {

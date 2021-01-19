@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.machines.AbstractProcessor;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
@@ -49,7 +49,7 @@ public abstract class AbstractSingleProcessor extends AbstractProcessor {
     }
 
     @Override
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         menu.dropItems(l, inputSlot);
     }

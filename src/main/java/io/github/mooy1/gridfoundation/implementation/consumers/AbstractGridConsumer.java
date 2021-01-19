@@ -1,8 +1,8 @@
 package io.github.mooy1.gridfoundation.implementation.consumers;
 
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
-import io.github.mooy1.gridfoundation.implementation.grid.Consumer;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.GPConsumer;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.gridfoundation.utils.GridLorePreset;
@@ -34,14 +34,14 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
     }
 
     @Override
-    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
-        menu.replaceExistingItem(this.statusSlot, grid.addConsumer(b.getLocation().hashCode(), getItem(), this.consumption << getTier(b), b.getLocation()).getStatusItem());
+    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull PowerGrid grid) {
+        grid.addConsumer(b.getLocation().hashCode(), getItem(), this.consumption << getTier(b), b.getLocation()).updateStatus(menu, this.statusSlot);
         updateMenuUpgrade(menu, b.getLocation());
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         breakUpgrade(e, e.getBlock().getLocation(), getItem().clone());
         grid.removeConsumer(e.getBlock().getLocation().hashCode());
     }
@@ -52,15 +52,17 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
     }
 
     @Override
-    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull Grid grid) {
-        Consumer consumer = grid.getConsumer(block.getLocation().hashCode());
+    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull PowerGrid grid) {
+        GPConsumer consumer = grid.getConsumer(block.getLocation().hashCode());
         if (consumer != null) {
             int tier = getTier(block);
             consumer.setConsumption(this.consumption << Math.max(0, tier - 1));
             if (consumer.canConsume()) {
                 process(blockMenu, block, tier);
             }
-            consumer.updateStatus(blockMenu, this.statusSlot);
+            if (blockMenu.hasViewer()) {
+                consumer.updateStatus(blockMenu, this.statusSlot);
+            }
         }
     }
     

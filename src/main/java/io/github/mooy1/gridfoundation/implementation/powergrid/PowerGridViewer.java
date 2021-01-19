@@ -1,4 +1,4 @@
-package io.github.mooy1.gridfoundation.implementation.grid;
+package io.github.mooy1.gridfoundation.implementation.powergrid;
 
 import io.github.mooy1.gridfoundation.setup.Categories;
 import io.github.mooy1.infinitylib.player.LeaveListener;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public final class GridViewer extends SimpleSlimefunItem<BlockUseHandler> {
+public final class PowerGridViewer extends SimpleSlimefunItem<BlockUseHandler> {
     
     private static final int NEXT = 52;
     private static final int PREV = 46;
@@ -36,7 +36,7 @@ public final class GridViewer extends SimpleSlimefunItem<BlockUseHandler> {
             "&7Shows stats and components of your power grid"
     );
 
-    public GridViewer() {
+    public PowerGridViewer() {
         super(Categories.MAIN, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 
         });
@@ -60,7 +60,7 @@ public final class GridViewer extends SimpleSlimefunItem<BlockUseHandler> {
             menu.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
         }
         
-        Grid grid = GridManager.get(p.getUniqueId());
+        PowerGrid grid = PowerGridManager.get(p.getUniqueId());
         
         MutableInt pages = new MutableInt(0);
         
@@ -103,8 +103,8 @@ public final class GridViewer extends SimpleSlimefunItem<BlockUseHandler> {
         return true;
     }
     
-    private void refresh(@Nonnull Player p, @Nonnull ChestMenu menu, @Nonnull Grid grid, MutableInt page, MutableInt pages) {
-        List<Component> components = grid.getComponents();
+    private static void refresh(@Nonnull Player p, @Nonnull ChestMenu menu, @Nonnull PowerGrid grid, MutableInt page, MutableInt pages) {
+        List<GPComponent> components = grid.getComponents();
         
         pages.setValue(1 + components.size() / 36);
         

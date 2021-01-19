@@ -1,8 +1,8 @@
 package io.github.mooy1.gridfoundation.implementation.generators;
 
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
-import io.github.mooy1.gridfoundation.implementation.grid.Generator;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.GPGenerator;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -30,14 +30,14 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer implem
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         breakUpgrade(e, e.getBlock().getLocation(), getItem().clone());
         grid.removeGenerator(e.getBlock().getLocation().hashCode());
     }
 
     @Override
-    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull Grid grid) {
-        menu.replaceExistingItem(this.statusSlot, grid.addGenerator(b.getLocation().hashCode(), getItem(), b.getLocation()).getStatusItem());
+    public void onNewInstance(@Nonnull BlockMenu menu, @Nonnull Block b, @Nonnull PowerGrid grid) {
+        grid.addGenerator(b.getLocation().hashCode(), getItem(), b.getLocation()).updateStatus(menu, this.statusSlot);
         updateMenuUpgrade(menu, b.getLocation());
     }
 
@@ -47,13 +47,15 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer implem
     }
 
     @Override
-    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull Grid grid) {
-        Generator generator = grid.getGenerator(block.getLocation().hashCode());
+    public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull PowerGrid grid) {
+        GPGenerator generator = grid.getGenerator(block.getLocation().hashCode());
         if (generator != null) {
             int tier = getTier(block);
             int generation = getGeneration(blockMenu, block, tier) << tier;
             generator.setGeneration(generation);
-            generator.updateStatus(blockMenu, this.statusSlot);
+            if (blockMenu.hasViewer()) {
+                generator.updateStatus(blockMenu, this.statusSlot);
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single.presses;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.machines.single.AbstractSingleProcessor;
-import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 
 public abstract class AbstractPress extends AbstractSingleProcessor {
     
-    public AbstractPress(SlimefunItemStack item, int ticks, int consumption, BetterRecipeType type, ItemStack[] recipe) {
+    public AbstractPress(SlimefunItemStack item, int ticks, int consumption, DelayedRecipeType type, ItemStack[] recipe) {
         super(item, Material.PISTON, ticks, new HashMap<>(), new ArrayList<>(), consumption, recipe);
         type.acceptEach((stacks, stack) -> {
             ItemStack input = stacks[0];

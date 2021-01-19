@@ -1,8 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.multi;
 
 import io.github.mooy1.gridfoundation.implementation.consumers.machines.AbstractProcessor;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
-import io.github.mooy1.gridfoundation.utils.BetterRecipeType;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.filter.MultiFilter;
@@ -43,7 +42,7 @@ public abstract class AbstractMultiProcessor extends AbstractProcessor {
     };
     private static final int EMPTY = new MultiFilter(FilterType.IGNORE_AMOUNT, new ItemStack[3]).hashCode();
 
-    public AbstractMultiProcessor(SlimefunItemStack item, Material progressMaterial, BetterRecipeType type, int consumption, ItemStack[] recipe) {
+    public AbstractMultiProcessor(SlimefunItemStack item, Material progressMaterial, DelayedRecipeType type, int consumption, ItemStack[] recipe) {
         super(item, new ArrayList<>(), progressMaterial, 64, consumption, 5, 14, new int[] {MenuPreset.slot3}, recipe);
         
         type.acceptEach((itemStacks, stack) -> {
@@ -70,7 +69,7 @@ public abstract class AbstractMultiProcessor extends AbstractProcessor {
     }
 
     @Override
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         menu.dropItems(l, inputSlots);
     }

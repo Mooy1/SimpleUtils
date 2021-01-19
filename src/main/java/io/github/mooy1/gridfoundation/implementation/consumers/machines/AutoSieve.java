@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines;
 
 import io.github.mooy1.gridfoundation.implementation.blocks.ManualSieve;
-import io.github.mooy1.gridfoundation.implementation.grid.Grid;
+import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -28,7 +28,7 @@ public final class AutoSieve extends AbstractProcessor {
     }
 
     @Override
-    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull Grid grid) {
+    public void onBreak(@Nonnull BlockBreakEvent e, @Nonnull Location l, @Nonnull BlockMenu menu, @Nonnull PowerGrid grid) {
         super.onBreak(e, l, menu, grid);
         menu.dropItems(l, inputSlot);
         menu.dropItems(l, this.outputSlots);
