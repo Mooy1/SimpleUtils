@@ -58,6 +58,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
             this.displayRecipes.add(stack);
         }
     }
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull ItemTransportFlow flow) {
         if (flow == ItemTransportFlow.INSERT) return new int[] {input};

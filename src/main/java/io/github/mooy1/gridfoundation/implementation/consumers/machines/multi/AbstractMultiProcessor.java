@@ -92,6 +92,7 @@ public abstract class AbstractMultiProcessor extends AbstractProcessor {
         return null;
     }
     
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull DirtyChestMenu menu, @Nonnull ItemTransportFlow flow, @Nonnull ItemStack item) {
         if (flow == ItemTransportFlow.WITHDRAW) return this.outputSlots;

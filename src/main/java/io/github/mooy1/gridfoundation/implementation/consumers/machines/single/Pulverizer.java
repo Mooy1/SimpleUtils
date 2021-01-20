@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
+import io.github.mooy1.gridfoundation.utils.RecipeCopierService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -28,7 +28,7 @@ public final class Pulverizer extends AbstractSingleProcessor {
                 
         });
         TYPE.acceptEach(((stacks, stack) -> addRecipe(stacks[0], stack, true)));
-        MachineRecipeService.accept((input, stack) -> addRecipe(input, stack, false),
+        RecipeCopierService.accept((input, stack) -> addRecipe(input, stack, false),
                 () -> addRecipe(new ItemStack(Material.COBBLESTONE), new ItemStack(Material.GRAVEL), true),
                 SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_ORE_GRINDER
         );

@@ -50,6 +50,7 @@ public abstract class AbstractItemGen extends AbstractGridConsumer {
         }
     }
 
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull ItemTransportFlow flow) {
         return flow == ItemTransportFlow.WITHDRAW ? outputs : new int[0];

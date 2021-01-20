@@ -17,7 +17,7 @@ public class TimingsCommand extends LibCommand {
 
     @Override
     public void onExecute(@Nonnull CommandSender commandSender, @Nonnull String[] strings) {
-        commandSender.sendMessage(ChatColors.color("&6Power Grid timings: &e" + GridFoundation.getTimings() + " ms"));
+        commandSender.sendMessage(ChatColors.color("&6Grid Foundation timings: &e" + GridFoundation.getTimings() + " ms"));
     }
 
     @Nonnull

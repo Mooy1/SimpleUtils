@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * A component in a grid
  */
 @AllArgsConstructor
-abstract class GPComponent {
+abstract class GridComponent {
     
     private final ItemStack item;
             
@@ -26,7 +25,6 @@ abstract class GPComponent {
         return item;
     }
     
-    @OverridingMethodsMustInvokeSuper
     protected abstract void addViewerInfo(List<String> info);
     
 }

@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
+import io.github.mooy1.gridfoundation.utils.RecipeCopierService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -24,7 +24,7 @@ public final class Decompactor extends AbstractSingleProcessor {
         super(ITEM, Material.STICKY_PISTON,16, recipes, displayRecipes, 6, new ItemStack[] {
                 
         });
-        MachineRecipeService.accept(Decompactor::addRecipe, () -> {}, SlimefunItems.ELECTRIC_PRESS);
+        RecipeCopierService.accept(Decompactor::addRecipe, () -> {}, SlimefunItems.ELECTRIC_PRESS);
     }
 
     private static void addRecipe(ItemStack output, ItemStack input) {

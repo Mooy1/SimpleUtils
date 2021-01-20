@@ -1,22 +1,30 @@
 # GridFoundation
-A new energy system: power grids. These are per-player, global, and heavily optimized. 
+A large tech addon with new ways to generate and process resources.
 
-Machines and Generators to go along with power grids, which have multiple tiers and are heavily optimized internally.
+## Features
+- A new energy system: power grids. These are per-player and global.
 
-Utility items and tools.
+
+- Machines and Generators to go along with this energy system
+
+
+- Machine Upgrades in the form of kits which persist after the block is broken and placed again
+
+
+- Utility items and tools
 
 Inspiration taken from the mods Extra Utilities and Thermal Expansion.
 
-# Download
-https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/
+## Download
+https://thebusybiscuit.github.io/builds/Mooy1/GridFoundation/master/
 
-[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SlimeGrid/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
+[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/GridFoundation/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
 
 If you would like your own local server, check out my guide here:
 
 https://github.com/Mooy1/InfinityExpansion/wiki/How-to-make-a-Slimefun-Server
 
-# Requirements
+## Requirements
 Minecraft Version: 1.16+ (Paper recommended)
 
 https://papermc.io/downloads
@@ -29,7 +37,7 @@ CS-CoreLib Version: DEV 92+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/)
 
-# Bugs/Suggestions
+## Bugs/Suggestions
 Make a new issue or pull request and contact me on discord @Riley#5911
 
 Join the Slimefun Discord: https://discord.com/invite/slimefun

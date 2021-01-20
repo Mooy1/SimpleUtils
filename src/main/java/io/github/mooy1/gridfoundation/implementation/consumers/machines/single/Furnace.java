@@ -1,6 +1,6 @@
 package io.github.mooy1.gridfoundation.implementation.consumers.machines.single;
 
-import io.github.mooy1.gridfoundation.utils.MachineRecipeService;
+import io.github.mooy1.gridfoundation.utils.RecipeCopierService;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.items.StackUtils;
@@ -33,7 +33,7 @@ public final class Furnace extends AbstractSingleProcessor {
         
         TYPE.acceptEach((stacks, stack) -> addRecipe(stack, stack, true));
 
-        MachineRecipeService.accept((stack, stack2) -> addRecipe(stack, stack2, false), () -> addRecipe(SlimefunItems.GOLD_DUST, new ItemStack(Material.GOLD_INGOT), true), SlimefunItems.ELECTRIC_INGOT_FACTORY);
+        RecipeCopierService.accept((stack, stack2) -> addRecipe(stack, stack2, false), () -> addRecipe(SlimefunItems.GOLD_DUST, new ItemStack(Material.GOLD_INGOT), true), SlimefunItems.ELECTRIC_INGOT_FACTORY);
 
         SlimefunPlugin.getMinecraftRecipeService().subscribe(snapshot -> {
             for (FurnaceRecipe furnaceRecipe : snapshot.getRecipes(FurnaceRecipe.class)) {

@@ -54,6 +54,7 @@ public abstract class AbstractSingleProcessor extends AbstractProcessor {
         menu.dropItems(l, inputSlot);
     }
 
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull ItemTransportFlow flow) {
         if (flow == ItemTransportFlow.WITHDRAW) return this.outputSlots;

@@ -1,11 +1,12 @@
 package io.github.mooy1.gridfoundation.implementation.upgrades;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import org.bukkit.Material;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -24,7 +25,13 @@ public enum UpgradeType {
     private final String name;
     private final SlimefunItemStack item;
 
-    private static final Map<String, UpgradeType> values = new HashMap<>();
+    private static final Map<String, UpgradeType> VALUES = Maps.newHashMapWithExpectedSize(values().length);
+
+    static {
+        for (UpgradeType type : values()) {
+            VALUES.put(type.name(), type);
+        }
+    }
 
     UpgradeType(Material material, String name) {
         this.material = material;
@@ -43,18 +50,12 @@ public enum UpgradeType {
         return this.ordinal();
     }
 
-    static {
-        for (UpgradeType type : values()) {
-            values.put(type.name(), type);
-        }
-    }
-
-    @Nullable
+    @Nonnull
     static UpgradeType get(@Nullable String type) {
         if (type == null) {
             return BASIC;
         }
-        return values.get(type);
+        return VALUES.getOrDefault(type, BASIC);
     }
 
 }

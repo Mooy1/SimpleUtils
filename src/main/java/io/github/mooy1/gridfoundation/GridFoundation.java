@@ -18,7 +18,7 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
     @Getter
     private static GridFoundation instance;
     @Getter
-    private static long timings = 0;
+    private static double timings = 0;
     @Getter
     private static int tick = 1;
 
@@ -34,8 +34,6 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
         final Metrics metrics = new Metrics(this, 9734);
         
         Setup.setup(this);
-
-        new OreGenerationManager(this);
         
         PluginUtils.scheduleRepeatingSync(() -> {
             long time = System.nanoTime();
@@ -45,8 +43,9 @@ public class GridFoundation extends JavaPlugin implements SlimefunAddon {
             } else {
                 tick = 1;
             }
-            timings = (System.nanoTime() - time) / 1000000;
-        }, 60, PluginUtils.TICKER_DELAY);
+            // keep 3 decimal places
+            timings = Math.round((System.nanoTime() - time) / 1000D) / 1000D;
+        }, 100, PluginUtils.TICKER_DELAY);
     }
 
     @Override

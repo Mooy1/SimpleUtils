@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @UtilityClass
-public final class CombinedRecipeService {
+public final class CombinedCraftingService {
 
     private static final Map<MultiFilter, ItemStack> recipes = new HashMap<>();
     

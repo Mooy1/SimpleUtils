@@ -9,18 +9,17 @@ import java.util.List;
 /**
  * represents a generator in a power grid
  */
-public final class GPGenerator extends GPComponent {
+public final class GridGenerator extends GridComponent {
     
     @Setter
     int generation;
 
-    GPGenerator(@Nonnull ItemStack item) {
+    GridGenerator(@Nonnull ItemStack item) {
         super(item);
-        this.generation = 0;
     }
 
     @Override
-    protected void addViewerInfo(List<String> info) {
+    protected void addViewerInfo(@Nonnull List<String> info) {
         info.add("");
         info.add("&aGenerating: " + this.generation);
     }

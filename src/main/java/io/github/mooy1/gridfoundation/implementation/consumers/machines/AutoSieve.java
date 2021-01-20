@@ -46,6 +46,7 @@ public final class AutoSieve extends AbstractProcessor {
         return output;
     }
 
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull ItemTransportFlow flow) {
         if (flow == ItemTransportFlow.INSERT) {

@@ -19,8 +19,8 @@ import java.util.Map;
 @NoArgsConstructor
 public final class PowerGrid {
     
-    private final Map<Integer, GPGenerator> generators = new HashMap<>();
-    private final Map<Integer, GPConsumer> consumers = new HashMap<>();
+    private final Map<Integer, GridGenerator> generators = new HashMap<>();
+    private final Map<Integer, GridConsumer> consumers = new HashMap<>();
     
     int usage;
     int max;
@@ -31,11 +31,11 @@ public final class PowerGrid {
         this.max = 0;
         this.maxed = false;
 
-        for (GPGenerator generator : this.generators.values()) {
+        for (GridGenerator generator : this.generators.values()) {
             this.max += generator.generation;
         }
         
-        for (GPConsumer consumer : this.consumers.values()) {
+        for (GridConsumer consumer : this.consumers.values()) {
             this.usage += consumer.consumption;
             if (this.maxed) {
                 consumer.consume = false;
@@ -51,12 +51,12 @@ public final class PowerGrid {
     }
     
     @Nullable
-    public GPGenerator getGenerator(int hash) {
+    public GridGenerator getGenerator(int hash) {
         return this.generators.get(hash);
     }
 
     @Nonnull
-    public GPGenerator addGenerator(int hash, @Nonnull GPGenerator generator) {
+    public GridGenerator addGenerator(int hash, @Nonnull GridGenerator generator) {
         this.generators.put(hash, generator);
         return generator;
     }
@@ -66,12 +66,12 @@ public final class PowerGrid {
     }
 
     @Nullable
-    public GPConsumer getConsumer(int hash) {
+    public GridConsumer getConsumer(int hash) {
         return this.consumers.get(hash);
     }
 
     @Nonnull
-    public GPConsumer addConsumer(int hash, GPConsumer consumer) {
+    public GridConsumer addConsumer(int hash, GridConsumer consumer) {
         this.consumers.put(hash, consumer);
         return consumer;
     }
@@ -80,8 +80,8 @@ public final class PowerGrid {
         this.consumers.remove(hash);
     }
     
-    List<GPComponent> getComponents() {
-        List<GPComponent> list = new ArrayList<>();
+    List<GridComponent> getComponents() {
+        List<GridComponent> list = new ArrayList<>();
         list.addAll(this.generators.values());
         list.addAll(this.consumers.values());
         return list;

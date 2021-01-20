@@ -35,9 +35,6 @@ import io.github.mooy1.gridfoundation.implementation.tools.Hammer;
 import io.github.mooy1.gridfoundation.implementation.tools.Wrench;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeKit;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeType;
-import io.github.mooy1.gridfoundation.implementation.wireless.WirelessConfigurator;
-import io.github.mooy1.gridfoundation.implementation.wireless.WirelessInputNode;
-import io.github.mooy1.gridfoundation.implementation.wireless.WirelessOutputNode;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -169,10 +166,6 @@ public final class Setup {
         }
         
         // tools
-
-        new WirelessConfigurator().register(plugin);
-        new WirelessInputNode().register(plugin);
-        new WirelessOutputNode().register(plugin);
         
         new Wrench().register(plugin);
         
@@ -183,4 +176,4 @@ public final class Setup {
         
     }
 
-    }
+}

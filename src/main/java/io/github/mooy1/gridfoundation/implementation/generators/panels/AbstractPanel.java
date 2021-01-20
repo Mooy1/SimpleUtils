@@ -37,6 +37,7 @@ public abstract class AbstractPanel extends AbstractGridGenerator {
         }
     }
 
+    @Nonnull
     @Override
     public int[] getTransportSlots(@Nonnull ItemTransportFlow itemTransportFlow) {
         return new int[0];

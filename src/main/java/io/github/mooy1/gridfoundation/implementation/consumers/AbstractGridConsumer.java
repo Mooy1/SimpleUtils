@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.consumers;
 
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
-import io.github.mooy1.gridfoundation.implementation.powergrid.GPConsumer;
+import io.github.mooy1.gridfoundation.implementation.powergrid.GridConsumer;
 import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
@@ -53,7 +53,7 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer impleme
 
     @Override
     public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull PowerGrid grid) {
-        GPConsumer consumer = grid.getConsumer(block.getLocation().hashCode());
+        GridConsumer consumer = grid.getConsumer(block.getLocation().hashCode());
         if (consumer != null) {
             int tier = getTier(block);
             consumer.setConsumption(this.consumption << Math.max(0, tier - 1));

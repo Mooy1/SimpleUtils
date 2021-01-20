@@ -1,7 +1,7 @@
 package io.github.mooy1.gridfoundation.implementation.generators;
 
 import io.github.mooy1.gridfoundation.implementation.AbstractGridContainer;
-import io.github.mooy1.gridfoundation.implementation.powergrid.GPGenerator;
+import io.github.mooy1.gridfoundation.implementation.powergrid.GridGenerator;
 import io.github.mooy1.gridfoundation.implementation.powergrid.PowerGrid;
 import io.github.mooy1.gridfoundation.implementation.upgrades.UpgradeableBlock;
 import io.github.mooy1.gridfoundation.setup.Categories;
@@ -48,7 +48,7 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer implem
 
     @Override
     public final void tick(@Nonnull Block block, @Nonnull BlockMenu blockMenu, @Nonnull PowerGrid grid) {
-        GPGenerator generator = grid.getGenerator(block.getLocation().hashCode());
+        GridGenerator generator = grid.getGenerator(block.getLocation().hashCode());
         if (generator != null) {
             int tier = getTier(block);
             int generation = getGeneration(blockMenu, block, tier) << tier;

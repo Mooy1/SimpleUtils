@@ -104,7 +104,7 @@ public final class PowerGridViewer extends SimpleSlimefunItem<BlockUseHandler> {
     }
     
     private static void refresh(@Nonnull Player p, @Nonnull ChestMenu menu, @Nonnull PowerGrid grid, MutableInt page, MutableInt pages) {
-        List<GPComponent> components = grid.getComponents();
+        List<GridComponent> components = grid.getComponents();
         
         pages.setValue(1 + components.size() / 36);
         
