@@ -1,20 +1,20 @@
-name: GridFoundation
+name: GridUtils
 author: Mooy1
 description: More machines and utility items for slimefun
-website: https://github.com/Mooy1/GridFoundation
-main: io.github.mooy1.gridfoundation.GridFoundation
-depend: [Slimefun, CS-CoreLib]
+website: https://github.com/Mooy1/GridUtils
+main: io.github.mooy1.gridutils.GridUtils
+depend: [Slimefun]
 softdepend: []
 version: ${project.version}
 api-version: 1.16
 
 commands:
   gridfoundation:
-    description: Do /help gridfoundation for a list of commands
-    usage: /<command> <subcommand>
-    aliases: [foundation, grid, gf]
+    description: Do /help gridutils for a list of commands
+    usage: /gridutils <subcommand>
+    aliases: [grid, gu]
 
 permissions:
-  gridfoundation.admin:
-    description: GridFoundation admin commands
+  gridutils.admin:
+    description: GridUtils admin commands
     default: op
