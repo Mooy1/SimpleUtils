@@ -25,17 +25,18 @@ public final class GridGenerator extends GridComponent {
 
     public GridGenerator(@Nonnull ItemStack item, @Nonnull Block b, @Nonnull PowerGrid grid) {
         super(item, b, grid);
-        GENERATORS.put(b.getLocation(), this);
     }
 
     @Override
-    protected void add() {
+    protected void add(@Nonnull Location l) {
         this.grid.addGenerator(this);
+        GENERATORS.put(l, this);
     }
 
     @Override
-    public void remove() {
+    public void remove(@Nonnull Location l) {
         this.grid.removeGenerator(this);
+        GENERATORS.remove(l);
     }
 
     @Nonnull

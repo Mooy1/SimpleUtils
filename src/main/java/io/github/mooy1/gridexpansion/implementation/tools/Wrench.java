@@ -4,6 +4,7 @@ import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.player.LeaveListener;
+import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -20,6 +21,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -60,7 +62,7 @@ public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
             
             SlimefunItem sfItem = SlimefunItem.getByItem(e.getItem());
 
-            if (sfItem instanceof Wrench && !sfItem.isDisabled()
+            if (sfItem instanceof Wrench
                     && SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), e.getClickedBlock(), ProtectableAction.BREAK_BLOCK)
                     && System.currentTimeMillis() - this.coolDowns.getOrDefault(e.getPlayer().getUniqueId(), 0L) > 200
             ) {
@@ -80,12 +82,14 @@ public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
     }
     
     private static void breakSfBlock(Player p, Block b) {
+        MessageUtils.broadcast("BREAKING");
+        
         SlimefunItem sfItem = BlockStorage.check(b);
 
         if (sfItem != null && !sfItem.useVanillaBlockBreaking()) {
             SlimefunBlockHandler handler = SlimefunPlugin.getRegistry().getBlockHandlers().get(sfItem.getId());
 
-            if (handler != null && !handler.onBreak(p, b, sfItem, UnregisterReason.PLAYER_BREAK)) {
+            if (handler == null || handler.onBreak(p, b, sfItem, UnregisterReason.PLAYER_BREAK)) {
                 SlimefunPlugin.getProtectionManager().logAction(p, b, ProtectableAction.BREAK_BLOCK);
                 
                 ItemStack drop = BlockStorage.retrieve(b);
@@ -103,10 +107,10 @@ public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
         if (doubleChest != null) {
             Pair<Location, Location> pair = TransferUtils.getBothChests(doubleChest);
             if (pair != null) {
-                reverseFace(pair.getFirstValue());
-                reverseFace(pair.getSecondValue());
+                reverseFace(pair.getFirstValue().getBlock(), Chest.Type.LEFT);
+                reverseFace(pair.getSecondValue().getBlock(), Chest.Type.RIGHT);
+                return;
             }
-            return;
         }
 
         BlockData blockData = b.getBlockData();
@@ -129,13 +133,13 @@ public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
             b.setBlockData(data, true);
         }
     }
- 
-    private static void reverseFace(Location l) {
-        Block b = l.getBlock();
+    
+    private static void reverseFace(@Nonnull Block b, @Nonnull Chest.Type type) {
         BlockData blockData = b.getBlockData();
-        if (blockData instanceof Directional) {
-            Directional data = (Directional) blockData;
+        if (blockData instanceof Chest) {
+            Chest data = (Chest) blockData;
             data.setFacing(data.getFacing().getOppositeFace());
+            data.setType(type);
             b.setBlockData(data, true);
         }
     }

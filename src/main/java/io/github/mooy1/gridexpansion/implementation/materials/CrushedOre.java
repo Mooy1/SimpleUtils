@@ -48,7 +48,7 @@ public final class CrushedOre extends SlimefunItem implements NotPlaceable {
      */
     public CrushedOre(SlimefunItemStack ore, SlimefunItemStack dust, ItemStack ingot, ItemStack... crushedBlocks) {
         this(ore , ingot, crushedBlocks);
-        Pulverizer.addRecipe(ore, new SlimefunItemStack(dust, 2), true);
+        ((Pulverizer) Objects.requireNonNull(Pulverizer.ITEM.getItem())).addRecipe(ore, new SlimefunItemStack(dust, 2), true);
     }
     
     private static SlimefunItemStack make(SlimefunItemStack dust, Material material) {

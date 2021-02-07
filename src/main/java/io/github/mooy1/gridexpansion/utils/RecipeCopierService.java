@@ -17,7 +17,7 @@ public final class RecipeCopierService {
         final List<AContainer> containers = new ArrayList<>(items.length);
         
         for (SlimefunItemStack item : items) {
-            if (!(item.getItem() instanceof AContainer)) {
+            if (item.getItem() instanceof AContainer) {
                 containers.add((AContainer) item.getItem());
             }
         }

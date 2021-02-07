@@ -84,7 +84,7 @@ public final class AutoSieve extends AbstractProcessor {
 
     @Override
     protected int getStatusSlot() {
-        return 0;
+        return 15;
     }
 
     @Nonnull

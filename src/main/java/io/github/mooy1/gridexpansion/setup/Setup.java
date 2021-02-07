@@ -49,56 +49,6 @@ public final class Setup {
         new ManualSieve().register(plugin);
         new EnhancedWorkbench().register(plugin);
         
-        // components
-
-        new MachineFrame().register(plugin);
-        
-        new Alloy(Alloy.GLASS, new ItemStack(Material.SAND, 4), new SlimefunItemStack(SlimefunItems.SILVER_DUST, 6), new ItemStack(Material.QUARTZ, 4)).register(plugin);
-        new Alloy(Alloy.INFUSED, new SlimefunItemStack(SlimefunItems.SILVER_INGOT, 4), InfusionShard.ITEM, new ItemStack(Material.QUARTZ, 3)).register(plugin);
-        new Alloy(Alloy.ULTIMATUM, new SlimefunItemStack(SlimefunItems.REINFORCED_PLATE, 8), new SlimefunItemStack(Ingot.PLATINUM, 16), new SlimefunItemStack(Alloy.INFUSED, 16)).register(plugin);
-        
-        new CrushedBlock(CrushedBlock.DUST).register(plugin);
-        new CrushedBlock(CrushedBlock.END).register(plugin);
-        new CrushedBlock(CrushedBlock.NETHER).register(plugin);
-        new CrushedBlock(CrushedBlock.ANDESITE).register(plugin);
-        new CrushedBlock(CrushedBlock.GRANITE).register(plugin);
-        new CrushedBlock(CrushedBlock.DIORITE).register(plugin);
-        
-        new Wire(Wire.SILVER, SlimefunItems.SILVER_INGOT).register(plugin);
-
-        new Gear(Gear.COPPER, new SlimefunItemStack(SlimefunItems.COPPER_INGOT, 8)).register(plugin);
-        new Gear(Gear.COBALT, new SlimefunItemStack(SlimefunItems.COBALT_INGOT, 8)).register(plugin);
-        new Gear(Gear.GOLDEN, new ItemStack(Material.GOLD_INGOT, 8)).register(plugin);
-        new Gear(Gear.TIN, new SlimefunItemStack(SlimefunItems.TIN_INGOT, 8)).register(plugin);
-
-        new Plate(Plate.ALUMINUM, new SlimefunItemStack(SlimefunItems.ALUMINUM_INGOT, 16)).register(plugin);
-        new Plate(Plate.BRONZE, new SlimefunItemStack(SlimefunItems.BRONZE_INGOT, 16)).register(plugin);
-        new Plate(Plate.IRON, new ItemStack(Material.IRON_INGOT, 16)).register(plugin);
-        new Plate(Plate.LEAD, new SlimefunItemStack(SlimefunItems.LEAD_INGOT, 16)).register(plugin);
-        
-        new Dust(Dust.PLATINUM, CrushedOre.PLATINUM).register(plugin);
-        new Dust(Dust.COBALT, CrushedOre.COBALT, SlimefunItems.COBALT_INGOT).register(plugin);
-        new Dust(Dust.NICKEL, CrushedOre.NICKEL, SlimefunItems.NICKEL_INGOT).register(plugin);
-
-        new Ingot(Ingot.PLATINUM, Dust.PLATINUM).register(plugin);
-
-        new CrushedOre(CrushedOre.COPPER, SlimefunItems.COPPER_DUST, SlimefunItems.COPPER_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.GOLD, SlimefunItems.GOLD_DUST, new ItemStack(Material.GOLD_INGOT)).register(plugin);
-        new CrushedOre(CrushedOre.IRON, SlimefunItems.IRON_DUST, new ItemStack(Material.IRON_INGOT)).register(plugin);
-        new CrushedOre(CrushedOre.ZINC, SlimefunItems.ZINC_DUST, SlimefunItems.ZINC_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.TIN, SlimefunItems.TIN_DUST, SlimefunItems.TIN_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.LEAD, SlimefunItems.LEAD_DUST, SlimefunItems.LEAD_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.SILVER, SlimefunItems.SILVER_DUST, SlimefunItems.SILVER_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.ALUMINUM, SlimefunItems.ALUMINUM_DUST, SlimefunItems.ALUMINUM_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.MAGNESIUM, SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.PLATINUM, Ingot.PLATINUM).register(plugin);
-        new CrushedOre(CrushedOre.COBALT, SlimefunItems.COBALT_INGOT).register(plugin);
-        new CrushedOre(CrushedOre.NICKEL, SlimefunItems.NICKEL_INGOT).register(plugin);
-        
-        new InfusionShard().register(plugin);
-        
-        // TODO: circuits, custom dusts from sifter
-        
         // consumers
         
         new CobbleGen().register(plugin);
@@ -161,6 +111,56 @@ public final class Setup {
         new Hammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, ChatColor.GRAY, 5).register(plugin);
         
         // TODO workbench, wand, hammers, gear for advanced ingots
+
+        // components
+
+        new MachineFrame().register(plugin);
+
+        new Alloy(Alloy.GLASS, new ItemStack(Material.SAND, 4), new SlimefunItemStack(SlimefunItems.SILVER_DUST, 6), new ItemStack(Material.QUARTZ, 4)).register(plugin);
+        new Alloy(Alloy.INFUSED, new SlimefunItemStack(SlimefunItems.SILVER_INGOT, 4), InfusionShard.ITEM, new ItemStack(Material.QUARTZ, 3)).register(plugin);
+        new Alloy(Alloy.ULTIMATUM, new SlimefunItemStack(SlimefunItems.REINFORCED_PLATE, 8), new SlimefunItemStack(Ingot.PLATINUM, 16), new SlimefunItemStack(Alloy.INFUSED, 16)).register(plugin);
+
+        new CrushedBlock(CrushedBlock.DUST).register(plugin);
+        new CrushedBlock(CrushedBlock.END).register(plugin);
+        new CrushedBlock(CrushedBlock.NETHER).register(plugin);
+        new CrushedBlock(CrushedBlock.ANDESITE).register(plugin);
+        new CrushedBlock(CrushedBlock.GRANITE).register(plugin);
+        new CrushedBlock(CrushedBlock.DIORITE).register(plugin);
+
+        new Wire(Wire.SILVER, SlimefunItems.SILVER_INGOT).register(plugin);
+
+        new Gear(Gear.COPPER, new SlimefunItemStack(SlimefunItems.COPPER_INGOT, 8)).register(plugin);
+        new Gear(Gear.COBALT, new SlimefunItemStack(SlimefunItems.COBALT_INGOT, 8)).register(plugin);
+        new Gear(Gear.GOLDEN, new ItemStack(Material.GOLD_INGOT, 8)).register(plugin);
+        new Gear(Gear.TIN, new SlimefunItemStack(SlimefunItems.TIN_INGOT, 8)).register(plugin);
+
+        new Plate(Plate.ALUMINUM, new SlimefunItemStack(SlimefunItems.ALUMINUM_INGOT, 16)).register(plugin);
+        new Plate(Plate.BRONZE, new SlimefunItemStack(SlimefunItems.BRONZE_INGOT, 16)).register(plugin);
+        new Plate(Plate.IRON, new ItemStack(Material.IRON_INGOT, 16)).register(plugin);
+        new Plate(Plate.LEAD, new SlimefunItemStack(SlimefunItems.LEAD_INGOT, 16)).register(plugin);
+
+        new Dust(Dust.PLATINUM, CrushedOre.PLATINUM).register(plugin);
+        new Dust(Dust.COBALT, CrushedOre.COBALT, SlimefunItems.COBALT_INGOT).register(plugin);
+        new Dust(Dust.NICKEL, CrushedOre.NICKEL, SlimefunItems.NICKEL_INGOT).register(plugin);
+
+        new Ingot(Ingot.PLATINUM, Dust.PLATINUM).register(plugin);
+
+        new CrushedOre(CrushedOre.COPPER, SlimefunItems.COPPER_DUST, SlimefunItems.COPPER_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.GOLD, SlimefunItems.GOLD_DUST, new ItemStack(Material.GOLD_INGOT)).register(plugin);
+        new CrushedOre(CrushedOre.IRON, SlimefunItems.IRON_DUST, new ItemStack(Material.IRON_INGOT)).register(plugin);
+        new CrushedOre(CrushedOre.ZINC, SlimefunItems.ZINC_DUST, SlimefunItems.ZINC_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.TIN, SlimefunItems.TIN_DUST, SlimefunItems.TIN_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.LEAD, SlimefunItems.LEAD_DUST, SlimefunItems.LEAD_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.SILVER, SlimefunItems.SILVER_DUST, SlimefunItems.SILVER_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.ALUMINUM, SlimefunItems.ALUMINUM_DUST, SlimefunItems.ALUMINUM_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.MAGNESIUM, SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.PLATINUM, Ingot.PLATINUM).register(plugin);
+        new CrushedOre(CrushedOre.COBALT, SlimefunItems.COBALT_INGOT).register(plugin);
+        new CrushedOre(CrushedOre.NICKEL, SlimefunItems.NICKEL_INGOT).register(plugin);
+
+        new InfusionShard().register(plugin);
+
+        // TODO: circuits, custom dusts from sifter        
         
     }
 

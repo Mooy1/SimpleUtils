@@ -2,6 +2,7 @@ package io.github.mooy1.gridexpansion.implementation.powergrid;
 
 import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.player.LeaveListener;
+import io.github.mooy1.infinitylib.presets.LorePreset;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -115,7 +116,7 @@ public final class PowerGridViewer extends SimpleSlimefunItem<BlockUseHandler> {
         menu.replaceExistingItem(STATUS, new CustomItem(
                 grid.maxed ? Material.RED_STAINED_GLASS_PANE : grid.usage == grid.max ? Material.YELLOW_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS_PANE,
                 "&6Grid: &e" + grid.usage + " / " + grid.max,
-                "&7Usage: " + (100f * (float) grid.usage / grid.max) + "%",
+                "&7Usage: " + (grid.max == 0 ? '0' : LorePreset.format(100 * (double) grid.usage / grid.max)) + "%",
                 "",
                 grid.maxed ? "&cGrid Overloaded!" : ""
         ));

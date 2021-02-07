@@ -49,7 +49,7 @@ public abstract class AbstractGridConsumer extends AbstractGridContainer {
     @Override
     protected void onBreak(@Nonnull BlockBreakEvent e, @Nonnull BlockMenu menu) {
         super.onBreak(e, menu);
-        GridConsumer.get(e.getBlock().getLocation()).remove();
+        GridConsumer.get(e.getBlock().getLocation()).remove(e.getBlock().getLocation());
     }
 
     @Override

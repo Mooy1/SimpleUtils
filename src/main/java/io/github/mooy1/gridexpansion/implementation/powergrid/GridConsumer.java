@@ -29,18 +29,19 @@ public final class GridConsumer extends GridComponent {
     public GridConsumer(@Nonnull ItemStack item, int consumption, @Nonnull Block b, @Nonnull PowerGrid grid) {
         super(item, b, grid);
         this.consumption = consumption;
-        CONSUMERS.put(b.getLocation(), this);
     }
 
 
     @Override
-    protected void add() {
+    protected void add(@Nonnull Location l) {
         this.grid.addConsumer(this);
+        CONSUMERS.put(l, this);
     }
 
     @Override
-    public void remove() {
+    public void remove(@Nonnull Location l) {
         this.grid.removeConsumer(this);
+        CONSUMERS.remove(l);
     }
 
     @Nonnull

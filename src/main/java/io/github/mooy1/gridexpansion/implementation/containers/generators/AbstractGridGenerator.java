@@ -45,7 +45,7 @@ public abstract class AbstractGridGenerator extends AbstractGridContainer {
     @Override
     protected void onBreak(@Nonnull BlockBreakEvent e, @Nonnull BlockMenu menu) {
         super.onBreak(e, menu);
-        GridGenerator.get(e.getBlock().getLocation()).remove();
+        GridGenerator.get(e.getBlock().getLocation()).remove(e.getBlock().getLocation());
     }
 
     @Override

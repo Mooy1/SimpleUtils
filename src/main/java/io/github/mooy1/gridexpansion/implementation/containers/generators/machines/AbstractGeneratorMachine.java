@@ -99,7 +99,7 @@ public abstract class AbstractGeneratorMachine extends AbstractGridGenerator imp
     @Override
     public void getStats(@Nonnull List<String> stats, int tier) {
         super.getStats(stats, tier);
-        stats.add("&6Consumption: &e" + (1 << Math.min(0, tier - 1)) + "x");
+        stats.add("&6Consumption: &e" + (1 << Math.max(0, tier - 1)) + "x");
     }
     
     @Override

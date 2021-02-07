@@ -20,6 +20,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -66,7 +67,10 @@ public final class EnhancedWorkbench extends AbstractContainer {
         PluginUtils.runSync(() -> {
             List<ItemStack[]> list = ((MultiBlockMachine) RecipeType.ENHANCED_CRAFTING_TABLE.getMachine()).getRecipes();
             for (int i = 0 ; i < list.size() ; i+=2) {
-                this.recipes.put(new MultiFilter(FilterType.IGNORE_AMOUNT, list.get(i)), list.get(i + 1)[0]);
+                ItemStack[] recipe = list.get(i);
+                if (!ArrayUtils.isEmpty(recipe)) {
+                    this.recipes.put(new MultiFilter(FilterType.IGNORE_AMOUNT, recipe), list.get(i + 1)[0]);
+                }
             }
         }, 50);
     }
@@ -96,9 +100,9 @@ public final class EnhancedWorkbench extends AbstractContainer {
         }
     }
 
-    private void craftMax(Player p, BlockMenu menu) {
+    private void craftMax(Player p, BlockMenu menu) { 
         MultiFilter input = MultiFilter.fromMenu(FilterType.IGNORE_AMOUNT, menu, INPUT_SLOTS);
-       ItemStack output = this.recipes.get(input);
+        ItemStack output = this.recipes.get(input);
         if (output == null) {
             return;
         }
@@ -120,8 +124,10 @@ public final class EnhancedWorkbench extends AbstractContainer {
             consume++;
         }
         // consume correct amount
-        for (int i : INPUT_SLOTS) {
-            menu.consumeItem(i, consume);
+        for (int i = 0 ; i < 9 ; i++) {
+            if (input.getAmounts()[i] != 0) {
+                menu.consumeItem(i, consume, true);
+            }
         }
         refreshOutput(menu);
     }

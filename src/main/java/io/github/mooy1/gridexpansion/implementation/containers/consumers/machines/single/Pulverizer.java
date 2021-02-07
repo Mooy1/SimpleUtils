@@ -11,21 +11,13 @@ import me.mrCookieSlime.Slimefun.cscorelib2.collections.Pair;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public final class Pulverizer extends AbstractSingleProcessor {
 
-    public static final Map<ItemFilter, Pair<ItemStack, Integer>> recipes = new HashMap<>();
-    private static final List<ItemStack> displayRecipes = new ArrayList<>();
-    
     public static final SlimefunItemStack ITEM = make(4,"Pulverizer", "Pulverizes ores and ingots, into dusts", Material.GRAY_CONCRETE);
     public static final DelayedRecipeType TYPE = new DelayedRecipeType(ITEM);
 
     public Pulverizer() {
-        super(ITEM,Material.IRON_PICKAXE, 4, recipes, displayRecipes, new ItemStack[] {
+        super(ITEM,Material.IRON_PICKAXE, 4, new ItemStack[] {
                 
         });
         TYPE.acceptEach(((stacks, stack) -> addRecipe(stacks[0], stack, true)));
@@ -35,13 +27,13 @@ public final class Pulverizer extends AbstractSingleProcessor {
         );
     }
     
-    public static void addRecipe(ItemStack input, ItemStack stack, boolean force) {
+    public void addRecipe(ItemStack input, ItemStack stack, boolean force) {
         if (!force && (SlimefunTag.STONE_VARIANTS.isTagged(input.getType()) || input.getType() == Material.COBBLESTONE || input.getType() == Material.NETHERRACK)) {
             return;
         }
-        displayRecipes.add(input);
-        displayRecipes.add(stack);
-        recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(stack, input.getAmount()));
+        this.displayRecipes.add(input);
+        this.displayRecipes.add(stack);
+        this.recipes.put(new ItemFilter(input, FilterType.MIN_AMOUNT), new Pair<>(stack, input.getAmount()));
     }
 
     @Override

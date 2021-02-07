@@ -1,14 +1,14 @@
 package io.github.mooy1.gridexpansion.implementation.powergrid;
 
-import io.github.mooy1.infinitylib.items.LoreUtils;
+import me.mrCookieSlime.Slimefun.cscorelib2.chat.ChatColors;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,23 +24,28 @@ abstract class GridComponent {
     GridComponent(@Nonnull ItemStack item, @Nonnull Block b, @Nonnull PowerGrid grid) {
         this.item = item;
         this.location = b.getLocation();
-        this.status = "Location: " + b.getX() + "x " + b.getY() + "y " + b.getZ() + "z " + b.getWorld().getName();
+        this.status = "&7Location: " + b.getX() + "x " + b.getY() + "y " + b.getZ() + "z " + b.getWorld().getName();
         this.grid = grid;
-        add();
+        add(b.getLocation());
     }
     
     @Nonnull
     protected final ItemStack getViewerItem() {
         ItemStack item = this.item.clone();
-        List<String> lore = new ArrayList<>(4);
-        lore.add("");
-        lore.add(getInfo());
-        lore.add(this.status);
-        LoreUtils.addLore(item, lore);
+
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = meta.getLore();
+        if (lore != null && lore.size() >= 4) {
+            lore = lore.subList(0, lore.size() - 3);
+            lore.add(ChatColors.color(getInfo()));
+            lore.add(ChatColors.color((this.status)));
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+        }
+        
         return item;
     }
-
-
+    
     @Nonnull
     public ItemStack getStatusItem() {
         return new CustomItem(
@@ -52,9 +57,9 @@ abstract class GridComponent {
         );
     }
     
-    protected abstract void add();
+    protected abstract void add(@Nonnull Location l);
 
-    public abstract void remove();
+    public abstract void remove(@Nonnull Location l);
     
     @Nonnull
     protected abstract String getInfo();

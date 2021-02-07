@@ -15,19 +15,17 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractSingleProcessor extends AbstractProcessor {
 
     private static final int inputSlot = MenuPreset.slot1;
-    protected final Map<ItemFilter, Pair<ItemStack, Integer>> recipes;
+    protected final Map<ItemFilter, Pair<ItemStack, Integer>> recipes = new HashMap<>();
 
-    public AbstractSingleProcessor(SlimefunItemStack item, Material progressMaterial, int base, Map<ItemFilter,
-            Pair<ItemStack, Integer>> recipes, List<ItemStack> displayRecipes, ItemStack[] recipe
-    ) {
-        super(item, displayRecipes, progressMaterial, base,  MenuPreset.slot2, new int[] {MenuPreset.slot3}, recipe);
-        this.recipes = recipes;
+    public AbstractSingleProcessor(SlimefunItemStack item, Material progressMaterial, int base, ItemStack[] recipe) {
+        super(item, new ArrayList<>(), progressMaterial, base,  MenuPreset.slot2, new int[] {MenuPreset.slot3}, recipe);
     }
 
     @Override

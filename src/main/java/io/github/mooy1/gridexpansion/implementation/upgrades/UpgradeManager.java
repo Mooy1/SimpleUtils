@@ -81,6 +81,7 @@ public final class UpgradeManager {
         Location l = e.getBlock().getLocation();
         UpgradeType type = getUpgrade(l);
         if (type != UpgradeType.BASIC) {
+            item = item.clone();
             ItemMeta meta = item.getItemMeta();
             List<String> lore = meta.getLore();
             if (lore != null) {
