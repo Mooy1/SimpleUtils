@@ -1,4 +1,4 @@
-# GridFoundation
+# GridExpansion
 A large tech addon with new ways to generate and process resources.
 
 ## Features
@@ -16,9 +16,9 @@ A large tech addon with new ways to generate and process resources.
 Inspiration taken from the mods Extra Utilities and Thermal Expansion.
 
 ## Download
-https://thebusybiscuit.github.io/builds/Mooy1/GridFoundation/master/
+https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master/
 
-[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/GridFoundation/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/InfinityExpansion/master)
+[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master)
 
 If you would like your own local server, check out my guide here:
 
@@ -29,13 +29,9 @@ Minecraft Version: 1.16+ (Paper recommended)
 
 https://papermc.io/downloads
 
-Slimefun Version: DEV 765+
+Slimefun Version: DEV 800+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/)
-
-CS-CoreLib Version: DEV 92+
-
-[![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/CS-CoreLib/master/)
 
 ## Bugs/Suggestions
 Make a new issue or pull request and contact me on discord @Riley#5911

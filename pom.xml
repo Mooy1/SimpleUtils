@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.mooy1</groupId>
-    <artifactId>GridFoundation</artifactId>
+    <artifactId>GridExpansion</artifactId>
     <version>MODIFIED</version>
 
     <properties>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>207d407</version>
+            <version>44528f7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -98,11 +98,11 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.mooy1.gridutils.bstats</shadedPattern>
+                            <shadedPattern>io.github.mooy1.gridexpansion.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>io.github.mooy1.infinitylib</pattern>
-                            <shadedPattern>io.github.mooy1.gridutils.infinitylib</shadedPattern>
+                            <shadedPattern>io.github.mooy1.gridexpansion.infinitylib</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
