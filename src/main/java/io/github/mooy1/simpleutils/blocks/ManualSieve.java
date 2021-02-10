@@ -4,8 +4,10 @@ import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.items.LoreUtils;
+import io.github.mooy1.simpleutils.Materials;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.RandomizedSet;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
@@ -42,50 +44,51 @@ public final class ManualSieve extends MultiBlockMachine {
     static {
         addRecipe(new ItemStack(Material.GRAVEL),  new ItemStack[] {
                 new ItemStack(Material.AIR), new ItemStack(Material.FLINT),
-                CrushedOre.IRON, CrushedOre.COPPER, CrushedOre.ZINC, CrushedOre.ALUMINUM, CrushedOre.LEAD, CrushedOre.TIN
+                Materials.CRUSHED_IRON, Materials.CRUSHED_COPPER, Materials.CRUSHED_ZINC,
+                Materials.CRUSHED_ALUMINUM, Materials.CRUSHED_LEAD, Materials.CRUSHED_TIN
         }, new float[] {
                 50, 5,
                 10, 15, 5, 5, 5, 5
         });
         addRecipe(new ItemStack(Material.SAND),  new ItemStack[] {
-                new ItemStack(Material.AIR), new ItemStack(Material.QUARTZ), CrushedOre.MAGNESIUM,
-                CrushedOre.GOLD, CrushedOre.SILVER, CrushedOre.COPPER
+                new ItemStack(Material.AIR), new ItemStack(Material.QUARTZ), Materials.CRUSHED_MAGNESIUM,
+                Materials.CRUSHED_GOLD, Materials.CRUSHED_SILVER, Materials.CRUSHED_COPPER
         }, new float[] {
                 50, 10, 5,
                 20, 5, 10
         });
-        addRecipe(CrushedBlock.NETHER,  new ItemStack[] {
-                new ItemStack(Material.AIR), new ItemStack(Material.GOLD_NUGGET), CrushedOre.GOLD
+        addRecipe(Materials.NETHER_GRAVEL,  new ItemStack[] {
+                new ItemStack(Material.AIR), new ItemStack(Material.GOLD_NUGGET), Materials.CRUSHED_GOLD
 
         }, new float[] {
                 50, 25, 25
         });
-        addRecipe(CrushedBlock.END,  new ItemStack[] {
+        addRecipe(Materials.END_GRAVEL,  new ItemStack[] {
 
         }, new float[] {
 
         });
-        addRecipe(CrushedBlock.DUST,  new ItemStack[] {
+        addRecipe(Materials.DUST,  new ItemStack[] {
                 new ItemStack(Material.AIR),
 
         }, new float[] {
                 1
         });
-        addRecipe(CrushedBlock.ANDESITE,  new ItemStack[] {
-                new ItemStack(Material.AIR),
-
-        }, new float[] {
-                1
-
-        });
-        addRecipe(CrushedBlock.DIORITE, new ItemStack[] {
+        addRecipe(Materials.CRUSHED_ANDESITE,  new ItemStack[] {
                 new ItemStack(Material.AIR),
 
         }, new float[] {
                 1
 
         });
-        addRecipe(CrushedBlock.GRANITE,  new ItemStack[] {
+        addRecipe(Materials.CRUSHED_DIORITE, new ItemStack[] {
+                new ItemStack(Material.AIR),
+
+        }, new float[] {
+                1
+
+        });
+        addRecipe(Materials.CRUSHED_ANDESITE,  new ItemStack[] {
                 new ItemStack(Material.AIR),
 
         }, new float[] {
@@ -104,8 +107,8 @@ public final class ManualSieve extends MultiBlockMachine {
         });
     }
     
-    public ManualSieve() {
-        super(Categories.MAIN, ITEM, new ItemStack[] {
+    public ManualSieve(Category category) {
+        super(category, ITEM, new ItemStack[] {
             null, null, null,
             null, new ItemStack(Material.OAK_TRAPDOOR), null,
             null, new ItemStack(Material.COMPOSTER), null

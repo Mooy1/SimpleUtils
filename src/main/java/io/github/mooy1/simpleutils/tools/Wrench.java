@@ -37,21 +37,17 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class Wrench extends SlimefunItem implements NotPlaceable, Listener {
-
-    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
-            "GRID_WRENCH",
-            Material.DIAMOND_HOE,
-            "&9Grid Wrench",
-            "&e > &6Left-Click to quickly dismantle a slimefun block",
-            "&e > &6Right-Click to rotate a block"
-    );
     
     private final Map<UUID, Long> coolDowns = new HashMap<>();
     
-    public Wrench(Category category) {
-        super(category, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-                
-        });
+    public Wrench(Category category, ItemStack... recipe) {
+        super(category, new SlimefunItemStack(
+                "GRID_WRENCH",
+                Material.DIAMOND_HOE,
+                "&9Grid Wrench",
+                "&e > &6Left-Click to quickly dismantle a slimefun block",
+                "&e > &6Right-Click to rotate a block"
+        ), RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         PluginUtils.registerListener(this);
         LeaveListener.add(this.coolDowns);
     }

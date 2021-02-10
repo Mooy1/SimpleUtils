@@ -74,5 +74,18 @@ public final class Materials {
         );
     }
 
+    // misc
+    public static final SlimefunItemStack AUTOMATON_CORE = new SlimefunItemStack(
+      "AUTOMATON_CORE",
+      Material.POLISHED_GRANITE,
+      "&6Automaton Core",
+      "&7Core component of simple automated machines"      
+    );
+    public static final SlimefunItemStack HAMMER_ROD = new SlimefunItemStack(
+            "HAMMER_ROD",
+            Material.STICK,
+            "&6Hammer Rod",
+            "&7Core component of mining hammers"
+    );
     
 }

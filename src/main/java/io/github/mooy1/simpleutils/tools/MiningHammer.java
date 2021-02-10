@@ -1,6 +1,7 @@
 package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.items.StackUtils;
+import io.github.mooy1.simpleutils.Materials;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
@@ -19,6 +20,7 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,7 +34,7 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
     private final int level;
     private final int blocks;
     
-    public MiningHammer(Category category, Material material, ItemStack metal, ChatColor color, int size) {
+    public MiningHammer(Category category, Material material, ItemStack metal, ChatColor color, int size, int eff, int unb) {
         super(category, new SlimefunItemStack(
                 Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_ALLOY", "").replace("_INGOT", "") + "_MINING_HAMMER",
                 material,
@@ -40,11 +42,17 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 "&7Mines in a " + size + "x" + size + " area"
         ), RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 metal, metal, metal,
-                metal, new ItemStack(Material.STICK), metal,
-                null, new ItemStack(Material.STICK), null
+                metal, Materials.HAMMER_ROD, metal,
+                null, Materials.HAMMER_ROD, null
         });
         this.level = (size - 1) >>> 1;
         this.blocks = (size * size) - 1;
+        if (eff > 0) {
+            getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
+        }
+        if (unb > 0) {
+            getItem().addUnsafeEnchantment(Enchantment.DURABILITY, unb);
+        }
     }
     
     @Nonnull
