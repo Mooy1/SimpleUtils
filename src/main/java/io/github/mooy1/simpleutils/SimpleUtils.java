@@ -1,7 +1,5 @@
-package io.github.mooy1.gridexpansion;
+package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.gridexpansion.implementation.powergrid.PowerGrid;
-import io.github.mooy1.gridexpansion.setup.Setup;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
@@ -11,23 +9,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
-public class GridExpansion extends JavaPlugin implements SlimefunAddon {
-
+public final class SimpleUtils extends JavaPlugin implements SlimefunAddon {
+    
     @Getter
-    private static GridExpansion instance;
+    private static SimpleUtils instance;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        PluginUtils.setup(ChatColor.GOLD + "GridExpansion", this, "Mooy1/GridExpansion/master", getFile());
+        
+        PluginUtils.setup(ChatColor.GOLD + "SimpleUtils", this, "Mooy1/SimpleUtils/master", getFile());
         
         @SuppressWarnings("unused")
-        final Metrics metrics = new Metrics(this, 9734);
+        final Metrics metrics = new Metrics(this, 10285);
         
         Setup.setup(this);
-        
-        PluginUtils.startTicker(PowerGrid::tickAll);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class GridExpansion extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public String getBugTrackerURL() {
-        return "https://github.com/Mooy1/GridExpansion/issues";
+        return "https://github.com/Mooy1/SimpleUtils/issues";
     }
 
     @Nonnull

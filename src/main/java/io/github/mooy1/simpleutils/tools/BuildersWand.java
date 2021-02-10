@@ -1,4 +1,4 @@
-package io.github.mooy1.gridexpansion.implementation.tools;
+package io.github.mooy1.simpleutils.tools;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.DamageableItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class BuildersWand extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable, DamageableItem {
+public final class BuildersWand extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable, DamageableItem {
 
     public BuildersWand(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);

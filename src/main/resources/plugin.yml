@@ -1,8 +1,8 @@
-name: GridExpansion
+name: SimpleUtils
 author: Mooy1
-description: More machines and utility items for slimefun
-website: https://github.com/Mooy1/GridExpansion
-main: io.github.mooy1.gridexpansion.GridExpansion
+description: Simple utilities items for slimefun
+website: https://github.com/Mooy1/SimpleUtils
+main: io.github.mooy1.simpleutils.SimpleUtils
 depend: [Slimefun]
 softdepend: []
 version: ${project.version}

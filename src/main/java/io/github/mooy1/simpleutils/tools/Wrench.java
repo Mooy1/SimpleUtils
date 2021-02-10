@@ -1,6 +1,5 @@
-package io.github.mooy1.gridexpansion.implementation.tools;
+package io.github.mooy1.simpleutils.tools;
 
-import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.player.LeaveListener;
@@ -8,6 +7,7 @@ import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
+public final class Wrench extends SlimefunItem implements NotPlaceable, Listener {
 
     public static final SlimefunItemStack ITEM = new SlimefunItemStack(
             "GRID_WRENCH",
@@ -48,8 +48,8 @@ public class Wrench extends SlimefunItem implements NotPlaceable, Listener {
     
     private final Map<UUID, Long> coolDowns = new HashMap<>();
     
-    public Wrench() {
-        super(Categories.MAIN, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+    public Wrench(Category category) {
+        super(category, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 
         });
         PluginUtils.registerListener(this);

@@ -1,6 +1,5 @@
-package io.github.mooy1.gridexpansion.implementation.tools;
+package io.github.mooy1.simpleutils.tools;
 
-import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
@@ -9,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunIte
 import io.github.thebusybiscuit.slimefun4.implementation.items.tools.ExplosivePickaxe;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
@@ -27,13 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Hammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
+public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
     
     private final int level;
     private final int blocks;
     
-    public Hammer(Material material, ItemStack metal, ChatColor color, int size) {
-        super(Categories.MAIN, new SlimefunItemStack(
+    public MiningHammer(Category category, Material material, ItemStack metal, ChatColor color, int size) {
+        super(category, new SlimefunItemStack(
                 Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_ALLOY", "").replace("_INGOT", "") + "_MINING_HAMMER",
                 material,
                 color + ChatColor.stripColor(ItemUtils.getItemName(metal)).replace("Ingot", "") + " Hammer",

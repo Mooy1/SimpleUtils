@@ -1,6 +1,5 @@
-package io.github.mooy1.gridexpansion.implementation.blocks;
+package io.github.mooy1.simpleutils.blocks;
 
-import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.abstracts.AbstractContainer;
 import io.github.mooy1.infinitylib.filter.FilterType;
@@ -13,6 +12,7 @@ import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
@@ -21,6 +21,7 @@ import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.apache.commons.lang.ArrayUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -52,8 +53,8 @@ public final class EnhancedWorkbench extends AbstractContainer {
     
     private final Map<MultiFilter, ItemStack> recipes = new HashMap<>();
 
-    public EnhancedWorkbench() {
-        super(Categories.MAIN, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, RecipePreset.firstItem(new ItemStack(Material.CRAFTING_TABLE)));
+    public EnhancedWorkbench(Category category) {
+        super(category, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, RecipePreset.firstItem(new ItemStack(Material.CRAFTING_TABLE)));
         
         SlimefunPlugin.getMinecraftRecipeService().subscribe(recipeSnapshot -> {
             for (ShapedRecipe recipe : recipeSnapshot.getRecipes(ShapedRecipe.class)) {
@@ -76,8 +77,8 @@ public final class EnhancedWorkbench extends AbstractContainer {
     }
 
     @Override
-    protected void onBreak(@Nonnull BlockBreakEvent e, @Nonnull BlockMenu menu) {
-        menu.dropItems(e.getBlock().getLocation(), INPUT_SLOTS);
+    protected void onBreak(@Nonnull BlockBreakEvent e, @Nonnull BlockMenu menu, @Nonnull Location l) {
+        menu.dropItems(l, INPUT_SLOTS);
     }
 
     private void craft(Player p, BlockMenu menu) {

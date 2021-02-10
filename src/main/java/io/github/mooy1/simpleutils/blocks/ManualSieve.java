@@ -1,8 +1,5 @@
-package io.github.mooy1.gridexpansion.implementation.blocks;
+package io.github.mooy1.simpleutils.blocks;
 
-import io.github.mooy1.gridexpansion.implementation.materials.CrushedBlock;
-import io.github.mooy1.gridexpansion.implementation.materials.CrushedOre;
-import io.github.mooy1.gridexpansion.setup.Categories;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.filter.FilterType;
 import io.github.mooy1.infinitylib.filter.ItemFilter;

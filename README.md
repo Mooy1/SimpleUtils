@@ -1,28 +1,27 @@
-# GridExpansion
-A large tech addon with new ways to generate and process resources.
+# SimpleUtils
+A small utility addons which adds useful tools and early-mid game machines.
 
 ## Features
-- A new energy system: power grids. These are per-player and global.
+- An alternative early game resource system for getting ores: Crushed Ores.
+  These are obtained from the Manual or Automatic sieve and can be crushed
+  into dust or smelted into ingots.
+  
+
+- Enhanced Workbench - Craft Vanilla and Slimefun recipes in 1 menu
 
 
-- Machines and Generators to go along with this energy system
+- Mining Hammer - mine in 3x3 or 5x5 areas.
 
 
-- Machine Upgrades in the form of kits which persist after the block is broken and placed again
+- Wrench - quickly break cargo nodes, capacitors, and electric machines
 
 
-- Utility items and tools
-
-Inspiration taken from the mods Extra Utilities and Thermal Expansion.
+- Builders Wand - build large platforms, walls, and towers quickly
 
 ## Download
-https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master/
+https://thebusybiscuit.github.io/builds/Mooy1/SimpleUtils/master/
 
-[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master)
-
-If you would like your own local server, check out my guide here:
-
-https://github.com/Mooy1/InfinityExpansion/wiki/How-to-make-a-Slimefun-Server
+[![Build Status](https://thebusybiscuit.github.io/builds/Mooy1/SimpleUtils/master/badge.svg)](https://thebusybiscuit.github.io/builds/Mooy1/GridExpansion/master)
 
 ## Requirements
 Minecraft Version: 1.16+ (Paper recommended)
@@ -33,7 +32,3 @@ Slimefun Version: DEV 800+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/)
 
-## Bugs/Suggestions
-Make a new issue or pull request and contact me on discord @Riley#5911
-
-Join the Slimefun Discord: https://discord.com/invite/slimefun
