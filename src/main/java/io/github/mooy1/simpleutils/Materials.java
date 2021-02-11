@@ -40,9 +40,9 @@ public final class Materials {
 
     private static SlimefunItemStack crushedOre(SlimefunItemStack dust, Material material) {
         return new SlimefunItemStack(
-                "CRUSHED_" + dust.getItemId().replace("DUST", "ORE"),
+                dust.getItemId().replace("DUST", "CRUSHED_ORE"),
                 material,
-                "&6Crushed " + Objects.requireNonNull(dust.getDisplayName()).replace(" Dust", "").concat(" Ore"),
+                Objects.requireNonNull(dust.getDisplayName()).replace(" Dust", "").concat(" Crushed Ore"),
                 "&7Can be smelted into ingots or pulverized into dust"
         );
     }

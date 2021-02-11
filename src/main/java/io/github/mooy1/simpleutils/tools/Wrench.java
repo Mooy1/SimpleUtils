@@ -1,11 +1,13 @@
 package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.menus.TransferUtils;
 import io.github.mooy1.infinitylib.player.LeaveListener;
 import io.github.mooy1.infinitylib.player.MessageUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.github.thebusybiscuit.slimefun4.libraries.paperlib.features.blockstatesnapshot.BlockStateSnapshot;
+import io.github.thebusybiscuit.slimefun4.libraries.paperlib.features.blockstatesnapshot.BlockStateSnapshotResult;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
@@ -19,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Chest;
@@ -99,7 +102,6 @@ public final class Wrench extends SlimefunItem implements NotPlaceable, Listener
     private static void rotateBlock(Block b) {
         
         // double chests should both be turned opposite directions
-        Inventory doubleChest = TransferUtils.getInventory(b);
         if (doubleChest != null) {
             Pair<Location, Location> pair = TransferUtils.getBothChests(doubleChest);
             if (pair != null) {

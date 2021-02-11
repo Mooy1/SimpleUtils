@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
-import io.github.thebusybiscuit.slimefun4.implementation.items.tools.ExplosivePickaxe;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -25,34 +24,40 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
     
-    private final int level;
+    private final int start;
+    private final int side;
+    private final int top;
     private final int blocks;
     
     public MiningHammer(Category category, Material material, ItemStack metal, ChatColor color, int size, int eff, int unb) {
         super(category, new SlimefunItemStack(
-                Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_ALLOY", "").replace("_INGOT", "") + "_MINING_HAMMER",
+                Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_INGOT", "") + "_MINING_HAMMER",
                 material,
-                color + ChatColor.stripColor(ItemUtils.getItemName(metal)).replace("Ingot", "") + " Hammer",
+                color + ChatColor.stripColor(ItemUtils.getItemName(metal)).replace(" Ingot", "").concat(" Hammer"),
                 "&7Mines in a " + size + "x" + size + " area"
         ), RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 metal, metal, metal,
                 metal, Materials.HAMMER_ROD, metal,
                 null, Materials.HAMMER_ROD, null
         });
-        this.level = (size - 1) >>> 1;
-        this.blocks = (size * size) - 1;
         if (eff > 0) {
             getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
         }
         if (unb > 0) {
             getItem().addUnsafeEnchantment(Enchantment.DURABILITY, unb);
         }
+        
+        // # of extra blocks that will be mined
+        this.blocks = size * size - 1;
+        
+        // corners for mining
+        this.start = -((size - 1) >> 1);
+        this.side = size >> 1;
+        this.top = size - 2;
     }
     
     @Nonnull
@@ -64,10 +69,8 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
             if (p.isSneaking() || !SlimefunPlugin.getProtectionManager().hasPermission(p, e.getBlock(), ProtectableAction.BREAK_BLOCK)) {
                 return;
             }
-
-            List<Block> blocks = getBlocks(e.getBlock(), p.getFacing(), p.getLocation().getPitch());
             
-            for (Block b : blocks) {
+            for (Block b : getBlocks(e.getBlock(), p.getFacing(), p.getLocation().getPitch())) {
                 if (canBreak(p, b)) {
                     breakBlock(p, item, b, fortune);
                 }
@@ -83,9 +86,6 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 && !BlockStorage.hasBlockInfo(b);
     }
 
-    /**
-     * Breaks a block, this is pretty much the same as the {@link ExplosivePickaxe}'s method
-     */
     private static void breakBlock(Player p, ItemStack item, Block b, int fortune) {
         SlimefunPlugin.getProtectionManager().logAction(p, b, ProtectableAction.BREAK_BLOCK);
         b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, b.getType());
@@ -107,34 +107,35 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
         }
     }
     
-    private List<Block> getBlocks(Block middle, BlockFace face, float pitch) {
-        List<Block> blocks = new ArrayList<>(this.blocks);
+    private Block[] getBlocks(Block middle, BlockFace face, float pitch) {
+        Block[] arr = new Block[this.blocks];
+        int index = 0;
         if (pitch > 45 || pitch < -45) {
-            for (int x = -this.level ; x <= this.level ; x++) {
-                for (int z = -this.level ; z <= this.level ; z++) {
+            for (int x = this.start ; x <= this.side ; x++) {
+                for (int z = -1 ; z <= this.top ; z++) {
                     if (x != 0 || z != 0) {
-                        blocks.add(middle.getRelative(x, 0, z));
+                        arr[index++] = middle.getRelative(x, 0, z);
                     }
                 }
             }
         } else if (face == BlockFace.NORTH || face == BlockFace.SOUTH) {
-            for (int x = -this.level ; x <= this.level ; x++) {
-                for (int y = -1 ; y < this.level * 2 ; y++) {
-                    if (y != 0 | x != 0) {
-                        blocks.add(middle.getRelative(x, y, 0));
+            for (int x = this.start ; x <= this.side ; x++) {
+                for (int y = -1 ; y <= this.top ; y++) {
+                    if (y != 0 || x != 0) {
+                        arr[index++] = middle.getRelative(x, y, 0);
                     }
                 }
             }
         } else if (face == BlockFace.EAST || face == BlockFace.WEST) {
-            for (int z = -this.level ; z <= this.level ; z++) {
-                for (int y = -1 ; y < this.level * 2 ; y++) {
+            for (int z = this.start ; z <= this.side ; z++) {
+                for (int y = -1 ; y <= this.top ; y++) {
                     if (z !=0 || y != 0) {
-                        blocks.add(middle.getRelative(0, y, z));
+                        arr[index++] = middle.getRelative(0, y, z);
                     }
                 }
             }
         }
-        return blocks;
+        return arr;
     }
 
 }
