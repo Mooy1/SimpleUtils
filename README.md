@@ -15,9 +15,6 @@ A small utility addons which adds useful tools and early-mid game machines.
 
 - Wrench - quickly break cargo nodes, capacitors, and electric machines
 
-
-- Builders Wand - build large platforms, walls, and towers quickly
-
 ## Download
 https://thebusybiscuit.github.io/builds/Mooy1/SimpleUtils/master/
 

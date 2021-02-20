@@ -2,6 +2,7 @@ package io.github.mooy1.simpleutils;
 
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.presets.RecipePreset;
+import io.github.mooy1.simpleutils.blocks.AutoSieve;
 import io.github.mooy1.simpleutils.blocks.EnhancedWorkbench;
 import io.github.mooy1.simpleutils.blocks.ManualSieve;
 import io.github.mooy1.simpleutils.tools.MiningHammer;
@@ -33,9 +34,18 @@ public final class Setup {
         // blocks
         new EnhancedWorkbench(main).register(plugin);
         new ManualSieve(main).register(plugin);
+        new AutoSieve(main, "I", 9, 12, new ItemStack[] {
+            
+        }).register(plugin); 
+        new AutoSieve(main, "II", 3, 27, new ItemStack[] {
+            
+        }).register(plugin);  
+        new AutoSieve(main, "III", 1, 69, new ItemStack[] {
+            
+        }).register(plugin);
 
         // tools
-        new Wrench(main, null).register(plugin);
+        new Wrench(main).register(plugin);
         new MiningHammer(main, Material.IRON_PICKAXE, new ItemStack(Material.IRON_INGOT),
                 ChatColor.GRAY, 2, 0, 3).register(plugin);
         new MiningHammer(main, Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT,
@@ -48,8 +58,7 @@ public final class Setup {
                 ChatColor.AQUA, 5, 5, 5).register(plugin);
 
         // misc
-        new SlimefunItem(materials, Materials.AUTOMATON_CORE, RecipeType.ENHANCED_CRAFTING_TABLE,
-                fillRecipe()).register(plugin);
+        new SlimefunItem(materials, Materials.AUTOMATON_CORE, RecipeType.ENHANCED_CRAFTING_TABLE, fillRecipe()).register(plugin);
         new SlimefunItem(materials, Materials.HAMMER_ROD, RecipeType.ENHANCED_CRAFTING_TABLE,
                 fillRecipe(
                         new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT),

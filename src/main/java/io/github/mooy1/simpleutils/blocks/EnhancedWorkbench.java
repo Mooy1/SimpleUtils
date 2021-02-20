@@ -2,11 +2,11 @@ package io.github.mooy1.simpleutils.blocks;
 
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.abstracts.AbstractContainer;
-import io.github.mooy1.infinitylib.filter.FilterType;
-import io.github.mooy1.infinitylib.filter.MultiFilter;
-import io.github.mooy1.infinitylib.filter.RecipeFilter;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.mooy1.infinitylib.presets.RecipePreset;
+import io.github.mooy1.infinitylib.recipes.RecipeUtils;
+import io.github.mooy1.infinitylib.recipes.large.ShapedOutput;
+import io.github.mooy1.infinitylib.recipes.large.ShapedRecipeMap;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -48,7 +48,7 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             "&7Can craft both vanilla and slimefun recipes"
     );
     
-    private final Map<MultiFilter, ItemStack> recipes = new HashMap<>();
+    private final ShapedRecipeMap recipes = new ShapedRecipeMap();
     private final Map<UUID, BlockMenu> openMenus = new HashMap<>();
     
     public EnhancedWorkbench(Category category) {
@@ -58,14 +58,10 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
         
         SlimefunPlugin.getMinecraftRecipeService().subscribe(recipeSnapshot -> {
             for (ShapedRecipe recipe : recipeSnapshot.getRecipes(ShapedRecipe.class)) {
-                for (RecipeFilter filter : RecipeFilter.fromRecipe(recipe)) {
-                    this.recipes.put(filter, recipe.getResult());
-                }
+                this.recipes.put(RecipeUtils.fromShaped(recipe), recipe.getResult());
             }
             for (ShapelessRecipe recipe : recipeSnapshot.getRecipes(ShapelessRecipe.class)) {
-                for (RecipeFilter filter : RecipeFilter.fromRecipe(recipe)) {
-                    this.recipes.put(filter, recipe.getResult());
-                }
+                this.recipes.put(RecipeUtils.fromShapeless(recipe), recipe.getResult());
             }
         });
         
@@ -80,7 +76,7 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
                     }
                     for (int j = 0 ; j < 9 ; j++) {
                         if (recipe[j] != null) {
-                            this.recipes.put(new MultiFilter(FilterType.IGNORE_AMOUNT, recipe), list.get(i + 1)[0]);
+                            this.recipes.put(recipe, list.get(i + 1)[0]);
                             break;
                         }
                     }
@@ -95,14 +91,13 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
     }
     
     private void craft(Player p, BlockMenu menu, boolean max) { 
-        MultiFilter input = MultiFilter.fromMenu(FilterType.IGNORE_AMOUNT, menu, INPUT_SLOTS);
-        ItemStack output = this.recipes.get(input);
+        ShapedOutput output = this.recipes.get(menu, INPUT_SLOTS);
         if (output == null) {
             return;
         }
         int amount = 65;
         // find smallest amount greater than 0
-        for (int i : input.getAmounts()) {
+        for (int i : output.getInputAmounts()) {
             if (i > 0 && i < amount) {
                 amount = i;
             }
@@ -112,10 +107,12 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             return;
         }
         if (max) {
+            ItemStack item = output.getOutput();
+            
             // calc amounts
-            int total = output.getAmount() * amount;
-            int fullStacks = total / output.getMaxStackSize();
-            int partialStack = total % output.getMaxStackSize();
+            int total = item.getAmount() * amount;
+            int fullStacks = total / item.getMaxStackSize();
+            int partialStack = total % item.getMaxStackSize();
             
             // create array of items
             ItemStack[] arr;
@@ -123,12 +120,12 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
                 arr = new ItemStack[fullStacks];
             } else {
                 arr = new ItemStack[fullStacks + 1];
-                arr[fullStacks] = new CustomItem(output, amount);
+                arr[fullStacks] = new CustomItem(item, amount);
             }
             
             // fill with full stacks
             while (fullStacks-- != 0) {
-                arr[fullStacks] = new CustomItem(output, output.getMaxStackSize());
+                arr[fullStacks] = new CustomItem(item, item.getMaxStackSize());
             }
             
             // output and drop remaining
@@ -142,12 +139,12 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             
         } else {
             // output and drop remaining
-            Map<Integer, ItemStack> remaining = p.getInventory().addItem(output.clone());
+            Map<Integer, ItemStack> remaining = p.getInventory().addItem(output.getOutput().clone());
             for (ItemStack stack : remaining.values()) {
                 p.getWorld().dropItemNaturally(p.getLocation(), stack);
             }
             
-            // refresh if 1 item will run out
+            // refresh if a slot will run out
             if (amount == 1) {
                 refreshOutput(menu);
             }
@@ -156,7 +153,7 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
         }
         // consume
         for (int i = 0 ; i < 9 ; i++) {
-            if (input.getAmounts()[i] != 0) {
+            if (output.getInputAmounts()[i] != 0) {
                 menu.consumeItem(INPUT_SLOTS[i], amount, true);
             }
         }
@@ -164,11 +161,11 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
     
     private void refreshOutput(@Nonnull BlockMenu menu) {
         PluginUtils.runSync(() -> {
-            ItemStack output = this.recipes.get(MultiFilter.fromMenu(FilterType.IGNORE_AMOUNT, menu, INPUT_SLOTS));
+            ShapedOutput output = this.recipes.get(menu, INPUT_SLOTS);
             if (output == null) {
                 menu.replaceExistingItem(OUTPUT_SLOT, NO_OUTPUT);
             } else {
-                menu.replaceExistingItem(OUTPUT_SLOT, output);
+                menu.replaceExistingItem(OUTPUT_SLOT, output.getOutput());
             }
         });
     }

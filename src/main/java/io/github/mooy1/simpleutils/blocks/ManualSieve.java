@@ -1,16 +1,14 @@
 package io.github.mooy1.simpleutils.blocks;
 
 import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.filter.FilterType;
-import io.github.mooy1.infinitylib.filter.ItemFilter;
 import io.github.mooy1.infinitylib.items.LoreUtils;
+import io.github.mooy1.infinitylib.recipes.normal.RandomRecipeMap;
 import io.github.mooy1.simpleutils.Materials;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.collections.RandomizedSet;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -25,30 +23,22 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class ManualSieve extends MultiBlockMachine {
-
+    
     public static final SlimefunItemStack ITEM = new SlimefunItemStack(
             "MANUAL_SIEVE",
             Material.COMPOSTER,
-            "&6Sieve",
-            "&7Sifts gravel, sand, and crushed materials into ore chunks and minerals"
+            "&6Manual Sieve",
+            "&7Sifts gravel, sand, and crushed materials",
+            "&7into ore chunks and minerals"
     );
     public static final RecipeType TYPE = new RecipeType(PluginUtils.getKey("manual_sieve"), ITEM);
-
-    private static final Map<ItemFilter, RandomizedSet<ItemStack>> recipes = new HashMap<>();
-    public static final List<ItemStack> displayRecipes = new ArrayList<>();
-
-    public ManualSieve(Category category) {
-        super(category, ITEM, new ItemStack[] {
-            null, null, null,
-            null, new ItemStack(Material.OAK_TRAPDOOR), null,
-            null, new ItemStack(Material.COMPOSTER), null
-        }, BlockFace.SELF);
-        
+    private static final RandomRecipeMap RECIPES = new RandomRecipeMap();
+    public static final List<ItemStack> DISPLAY_RECIPES = new ArrayList<>();
+    
+    static {
         addRecipe(new ItemStack(Material.GRAVEL),  new ItemStack[] {
                 new ItemStack(Material.AIR), new ItemStack(Material.FLINT),
                 Materials.CRUSHED_IRON, Materials.CRUSHED_COPPER, Materials.CRUSHED_ZINC,
@@ -80,7 +70,7 @@ public final class ManualSieve extends MultiBlockMachine {
         });
         addRecipe(Materials.DUST,  new ItemStack[] {
                 new ItemStack(Material.AIR), Materials.CRUSHED_COPPER, Materials.CRUSHED_MAGNESIUM,
-                Materials.CRUSHED_ALUMINUM, Materials.CRUSHED_TIN, 
+                Materials.CRUSHED_ALUMINUM, Materials.CRUSHED_TIN,
         }, new float[] {
                 80, 5, 5,
                 5, 5
@@ -130,19 +120,23 @@ public final class ManualSieve extends MultiBlockMachine {
         });
     }
 
+    public ManualSieve(Category category) {
+        super(category, ITEM, new ItemStack[] {
+            null, null, null,
+            null, new ItemStack(Material.OAK_TRAPDOOR), null,
+            null, new ItemStack(Material.COMPOSTER), null
+        }, BlockFace.SELF);
+    }
+
     // use AIR for no output
     private static void addRecipe(ItemStack item, ItemStack[] stacks, float[] chances) {
-        recipes.put(new ItemFilter(item, FilterType.IGNORE_AMOUNT), new RandomizedSet<ItemStack>() {{
-            for (int i = 0 ; i < stacks.length ; i ++) {
-                add(stacks[i], chances[i]);
-            }
-        }});
+        RECIPES.put(item, stacks, chances);
         for (int i = 0 ; i < stacks.length ; i ++) {
             if (stacks[i].getType() != Material.AIR) {
-                displayRecipes.add(item);
+                DISPLAY_RECIPES.add(item);
                 ItemStack chance = stacks[i].clone();
                 LoreUtils.addLore(chance, "", ChatColor.GOLD + "Chance: " + ChatColor.YELLOW + chances[i] + "%");
-                displayRecipes.add(chance);
+                DISPLAY_RECIPES.add(chance);
             }
         }
     }
@@ -155,17 +149,13 @@ public final class ManualSieve extends MultiBlockMachine {
         if (item == null || item.getType() == Material.AIR) {
             return null;
         }
-        RandomizedSet<ItemStack> set = recipes.get(new ItemFilter(item, FilterType.IGNORE_AMOUNT));
-        if (set == null) {
-            return null;
-        }
-        return set.getRandom();
+        return RECIPES.get(item);
     }
 
     @Nonnull
     @Override
     public List<ItemStack> getDisplayRecipes() {
-        return displayRecipes;
+        return DISPLAY_RECIPES;
     }
 
     @Override
