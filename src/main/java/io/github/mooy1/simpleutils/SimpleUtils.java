@@ -3,7 +3,6 @@ package io.github.mooy1.simpleutils;
 import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,8 +20,7 @@ public final class SimpleUtils extends JavaPlugin implements SlimefunAddon {
         
         PluginUtils.setup(ChatColor.GOLD + "SimpleUtils", this, "Mooy1/SimpleUtils/master", getFile());
         
-        @SuppressWarnings("unused")
-        final Metrics metrics = new Metrics(this, 10285);
+        PluginUtils.setupMetrics(10285);
         
         Setup.setup(this);
     }

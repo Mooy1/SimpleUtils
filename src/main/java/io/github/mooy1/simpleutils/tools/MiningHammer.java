@@ -1,14 +1,13 @@
 package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.items.StackUtils;
-import io.github.mooy1.simpleutils.Materials;
+import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
@@ -33,16 +32,16 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
     private final int top;
     private final int blocks;
     
-    public MiningHammer(Category category, Material material, ItemStack metal, ChatColor color, int size, int eff, int unb) {
-        super(category, new SlimefunItemStack(
+    public MiningHammer(Material material, ItemStack metal, ChatColor color, int size, int eff, int unb) {
+        super(Items.CATEGORY, new SlimefunItemStack(
                 Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_INGOT", "") + "_MINING_HAMMER",
                 material,
                 color + ChatColor.stripColor(ItemUtils.getItemName(metal)).replace(" Ingot", "").concat(" Hammer"),
                 "&7Mines in a " + size + "x" + size + " area"
         ), RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 metal, metal, metal,
-                metal, Materials.HAMMER_ROD, metal,
-                null, Materials.HAMMER_ROD, null
+                metal, Items.HAMMER_ROD, metal,
+                null, Items.HAMMER_ROD, null
         });
         if (eff > 0) {
             getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);

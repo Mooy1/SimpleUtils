@@ -5,12 +5,12 @@ import io.github.mooy1.infinitylib.abstracts.AbstractContainer;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.mooy1.infinitylib.presets.RecipePreset;
 import io.github.mooy1.infinitylib.recipes.RecipeUtils;
-import io.github.mooy1.infinitylib.recipes.large.ShapedOutput;
-import io.github.mooy1.infinitylib.recipes.large.ShapedRecipeMap;
+import io.github.mooy1.infinitylib.recipes.shaped.ShapedOutput;
+import io.github.mooy1.infinitylib.recipes.shaped.ShapedRecipeMap;
+import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
@@ -35,24 +35,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public final class EnhancedWorkbench extends AbstractContainer implements Listener {
+public final class SimpleWorkbench extends AbstractContainer implements Listener {
     
     private static final int[] INPUT_SLOTS = MenuPreset.craftingInput;
     private static final int OUTPUT_SLOT = 24;
     
     private static final ItemStack NO_OUTPUT = new CustomItem(Material.BARRIER, " ");
     public static final SlimefunItemStack ITEM = new SlimefunItemStack(
-            "ENHANCED_WORKBENCH",
+            "SIMPLE_WORKBENCH",
             Material.CRAFTING_TABLE,
-            "&6Enhanced Workbench",
+            "&6Simple Workbench",
             "&7Can craft both vanilla and slimefun recipes"
     );
     
     private final ShapedRecipeMap recipes = new ShapedRecipeMap();
     private final Map<UUID, BlockMenu> openMenus = new HashMap<>();
     
-    public EnhancedWorkbench(Category category) {
-        super(category, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, RecipePreset.firstItem(new ItemStack(Material.CRAFTING_TABLE)));
+    public SimpleWorkbench() {
+        super(Items.CATEGORY, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, RecipePreset.firstItem(new ItemStack(Material.CRAFTING_TABLE)));
         
         PluginUtils.registerListener(this);
         
@@ -95,14 +95,14 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
         if (output == null) {
             return;
         }
-        int amount = 65;
+        int lowestAmount = 65;
         // find smallest amount greater than 0
         for (int i : output.getInputAmounts()) {
-            if (i > 0 && i < amount) {
-                amount = i;
+            if (i > 0 && i < lowestAmount) {
+                lowestAmount = i;
             }
         }
-        if (amount == 65) {
+        if (lowestAmount == 65) {
             // this would only happen if there was a empty registered recipe
             return;
         }
@@ -110,7 +110,7 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             ItemStack item = output.getOutput();
             
             // calc amounts
-            int total = item.getAmount() * amount;
+            int total = item.getAmount() * lowestAmount;
             int fullStacks = total / item.getMaxStackSize();
             int partialStack = total % item.getMaxStackSize();
             
@@ -120,14 +120,14 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
                 arr = new ItemStack[fullStacks];
             } else {
                 arr = new ItemStack[fullStacks + 1];
-                arr[fullStacks] = new CustomItem(item, amount);
+                arr[fullStacks] = new CustomItem(item, partialStack);
             }
             
             // fill with full stacks
             while (fullStacks-- != 0) {
                 arr[fullStacks] = new CustomItem(item, item.getMaxStackSize());
             }
-            
+
             // output and drop remaining
             Map<Integer, ItemStack> remaining = p.getInventory().addItem(arr);
             for (ItemStack stack : remaining.values()) {
@@ -138,6 +138,7 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             refreshOutput(menu);
             
         } else {
+            
             // output and drop remaining
             Map<Integer, ItemStack> remaining = p.getInventory().addItem(output.getOutput().clone());
             for (ItemStack stack : remaining.values()) {
@@ -145,16 +146,16 @@ public final class EnhancedWorkbench extends AbstractContainer implements Listen
             }
             
             // refresh if a slot will run out
-            if (amount == 1) {
+            if (lowestAmount == 1) {
                 refreshOutput(menu);
             }
             
-            amount = 1;
+            lowestAmount = 1;
         }
         // consume
         for (int i = 0 ; i < 9 ; i++) {
             if (output.getInputAmounts()[i] != 0) {
-                menu.consumeItem(INPUT_SLOTS[i], amount, true);
+                menu.consumeItem(INPUT_SLOTS[i], lowestAmount, true);
             }
         }
     }

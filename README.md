@@ -1,11 +1,7 @@
 # SimpleUtils
-A small utility addons which adds useful tools and early-mid game machines.
+A small utility addons which adds useful tools and blocks.
 
 ## Features
-- An alternative early game resource system for getting ores: Crushed Ores.
-  These are obtained from the Manual or Automatic sieve and can be crushed
-  into dust or smelted into ingots.
-  
 
 - Enhanced Workbench - Craft Vanilla and Slimefun recipes in 1 menu
 
@@ -25,7 +21,7 @@ Minecraft Version: 1.16+ (Paper recommended)
 
 https://papermc.io/downloads
 
-Slimefun Version: DEV 800+
+Slimefun Version: DEV 825+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/)
 

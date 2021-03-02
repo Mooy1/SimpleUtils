@@ -1,6 +1,7 @@
 package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.player.LeaveListener;
+import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
@@ -8,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
+public final class SimpleWrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
     
     public static final SlimefunItemStack ITEM =new SlimefunItemStack(
             "SIMPLE_WRENCH",
@@ -36,8 +36,8 @@ public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements 
     
     private final Map<UUID, Long> coolDowns = new HashMap<>();
 
-    public Wrench(Category category) {
-        super(category, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+    public SimpleWrench() {
+        super(Items.CATEGORY, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.ALUMINUM_INGOT, null, SlimefunItems.ALUMINUM_INGOT,
                 null, SlimefunItems.SILVER_INGOT, null,
                 null, SlimefunItems.ALUMINUM_INGOT, null

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.mooy1</groupId>
     <artifactId>SimpleUtils</artifactId>
-    <version>MODIFIED</version>
+    <version>Alpha</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -55,15 +55,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>1.7</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>b186357</version>
+            <version>aa3579e</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -96,10 +90,6 @@
                 <version>3.1.0</version>
                 <configuration>
                     <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.mooy1.simpleutils.bstats</shadedPattern>
-                        </relocation>
                         <relocation>
                             <pattern>io.github.mooy1.infinitylib</pattern>
                             <shadedPattern>io.github.mooy1.simpleutils.infinitylib</shadedPattern>
