@@ -8,7 +8,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import lombok.experimental.UtilityClass;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,10 +25,11 @@ public final class Setup {
 
         // tools
         new SimpleWrench().register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, new ItemStack(Material.IRON_INGOT), ChatColor.GRAY, 2, 0, 3).register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT, ChatColor.GOLD, 3, 3, 0).register(plugin);
-        new MiningHammer(Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), ChatColor.AQUA, 3, 3, 3).register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, ChatColor.GRAY, 4, 5, 5).register(plugin);
+        new MiningHammer(Material.IRON_PICKAXE, new ItemStack(Material.IRON_INGOT), "&fIron", 2, 0, 3).register(plugin);
+        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT, "&6Copper", 3, 3, 0).register(plugin);
+        new MiningHammer(Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), "&bDiamond", 3, 3, 3).register(plugin);
+        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, "&7Reinforced", 4, 5, 5).register(plugin);
+        new MiningHammer(Material.NETHERITE_PICKAXE, SlimefunItems.CARBON_CHUNK, "&8Carbon", 5, 6, 6).register(plugin);
         
         // dusts
         new SlimefunItem(Items.CATEGORY, Items.COBALT_DUST, SimpleSieve.TYPE, fill(new ItemStack(Material.GRAVEL))).register(plugin);

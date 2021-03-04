@@ -1,19 +1,17 @@
 package io.github.mooy1.simpleutils.tools;
 
-import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
-import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -23,7 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
+import java.util.Locale;
 
 public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
     
@@ -32,11 +30,11 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
     private final int top;
     private final int blocks;
     
-    public MiningHammer(Material material, ItemStack metal, ChatColor color, int size, int eff, int unb) {
+    public MiningHammer(Material material, ItemStack metal, String name,  int size, int eff, int unb) {
         super(Items.CATEGORY, new SlimefunItemStack(
-                Objects.requireNonNull(StackUtils.getIDorType(metal)).replace("_INGOT", "") + "_MINING_HAMMER",
+                ChatUtils.removeColorCodes(name).toUpperCase(Locale.ROOT) + "_MINING_HAMMER",
                 material,
-                color + ChatColor.stripColor(ItemUtils.getItemName(metal)).replace(" Ingot", "").concat(" Hammer"),
+                name + " Mining Hammer",
                 "&7Mines in a " + size + "x" + size + " area"
         ), RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 metal, metal, metal,
