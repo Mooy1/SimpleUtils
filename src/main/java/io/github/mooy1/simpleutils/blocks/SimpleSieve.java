@@ -30,8 +30,7 @@ public final class SimpleSieve extends MultiBlockMachine {
             "SIMPLE_SIEVE",
             Material.COMPOSTER,
             "&6Simple Sieve",
-            "&7Sifts gravel, sand, and crushed materials",
-            "&7into ore chunks and minerals"
+            "&7Sifts gravel into dusts and materials"
     );
     public static final RecipeType TYPE = new RecipeType(PluginUtils.getKey("simple_sieve"), ITEM);
     
@@ -59,7 +58,7 @@ public final class SimpleSieve extends MultiBlockMachine {
         addRecipe(new ItemStack(Material.FLINT), 5);
         addRecipe(Items.COBALT_DUST, 1);
         addRecipe(Items.NICKEL_DUST, 2);
-        addRecipe(new ItemStack(Material.IRON_INGOT), 2);
+        addRecipe(new ItemStack(Material.IRON_NUGGET), 2);
     }
     
     private void addRecipe(ItemStack item, int chance) {

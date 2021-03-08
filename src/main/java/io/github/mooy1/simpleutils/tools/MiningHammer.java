@@ -1,5 +1,6 @@
 package io.github.mooy1.simpleutils.tools;
 
+import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
@@ -13,6 +14,7 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,6 +27,7 @@ import java.util.Locale;
 
 public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
     
+    private final int size;
     private final int start;
     private final int side;
     private final int top;
@@ -47,6 +50,8 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
         if (unb > 0) {
             getItem().addUnsafeEnchantment(Enchantment.DURABILITY, unb);
         }
+        
+        this.size = size;
         
         // # of extra blocks that will be mined
         this.blocks = size * size - 1;
@@ -71,6 +76,10 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 if (canBreak(p, b)) {
                     breakBlock(p, item, b, fortune);
                 }
+            }
+
+            if (p.getGameMode() != GameMode.CREATIVE) {
+                StackUtils.damageItem(p, item, this.size);
             }
         };
     }

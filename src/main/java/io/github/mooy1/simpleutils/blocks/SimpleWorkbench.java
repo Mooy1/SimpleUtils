@@ -4,10 +4,9 @@ import io.github.mooy1.infinitylib.PluginUtils;
 import io.github.mooy1.infinitylib.abstracts.AbstractContainer;
 import io.github.mooy1.infinitylib.presets.MenuPreset;
 import io.github.mooy1.infinitylib.presets.RecipePreset;
-import io.github.mooy1.infinitylib.recipes.RecipeUtils;
-import io.github.mooy1.infinitylib.recipes.shaped.ShapedOutput;
-import io.github.mooy1.infinitylib.recipes.shaped.ShapedRecipeMap;
 import io.github.mooy1.simpleutils.Items;
+import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedOutput;
+import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedRecipeMap;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -58,10 +57,10 @@ public final class SimpleWorkbench extends AbstractContainer implements Listener
         
         SlimefunPlugin.getMinecraftRecipeService().subscribe(recipeSnapshot -> {
             for (ShapedRecipe recipe : recipeSnapshot.getRecipes(ShapedRecipe.class)) {
-                this.recipes.put(RecipeUtils.fromShaped(recipe), recipe.getResult());
+                this.recipes.put(recipe);
             }
             for (ShapelessRecipe recipe : recipeSnapshot.getRecipes(ShapelessRecipe.class)) {
-                this.recipes.put(RecipeUtils.fromShapeless(recipe), recipe.getResult());
+                this.recipes.put(recipe);
             }
         });
         
