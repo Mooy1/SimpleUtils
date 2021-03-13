@@ -25,11 +25,10 @@ public final class Setup {
 
         // tools
         new SimpleWrench().register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, new ItemStack(Material.IRON_INGOT), "&fIron", 2, 0, 3).register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT, "&6Copper", 3, 3, 0).register(plugin);
-        new MiningHammer(Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), "&bDiamond", 3, 3, 3).register(plugin);
-        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, "&7Reinforced", 4, 4, 5).register(plugin);
-        new MiningHammer(Material.NETHERITE_PICKAXE, SlimefunItems.CARBON_CHUNK, "&8Carbon", 5, 5, 7).register(plugin);
+        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT, "&6Copper", 3, 1).register(plugin);
+        new MiningHammer(Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), "&bDiamond", 3, 1).register(plugin);
+        new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, "&7Reinforced", 3, 5).register(plugin);
+        new MiningHammer(Material.NETHERITE_PICKAXE, SlimefunItems.CARBONADO, "&8Carbonado", 5, 5).register(plugin);
         
         // dusts
         new SlimefunItem(Items.CATEGORY, Items.COBALT_DUST, SimpleSieve.TYPE, fill(new ItemStack(Material.GRAVEL))).register(plugin);
@@ -42,7 +41,7 @@ public final class Setup {
         // misc
         new SlimefunItem(Items.CATEGORY, Items.HAMMER_ROD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT,
-                SlimefunItems.STEEL_INGOT, new ItemStack(Material.STICK), SlimefunItems.STEEL_INGOT,
+                SlimefunItems.STEEL_INGOT, new ItemStack(Material.BLAZE_ROD), SlimefunItems.STEEL_INGOT,
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT
         }).register(plugin);
     }

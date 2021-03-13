@@ -1,6 +1,5 @@
 package io.github.mooy1.simpleutils.tools;
 
-import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
@@ -14,26 +13,26 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
     
-    private final int size;
-    private final int start;
-    private final int side;
-    private final int top;
+    private final int radius;
     private final int blocks;
     
-    public MiningHammer(Material material, ItemStack metal, String name,  int size, int eff, int unb) {
+    public MiningHammer(Material material, ItemStack metal, String name,  int size, int eff) {
         super(Items.CATEGORY, new SlimefunItemStack(
                 ChatUtils.removeColorCodes(name).toUpperCase(Locale.ROOT) + "_MINING_HAMMER",
                 material,
@@ -44,22 +43,11 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 metal, Items.HAMMER_ROD, metal,
                 null, Items.HAMMER_ROD, null
         });
-        if (eff > 0) {
-            getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
-        }
-        if (unb > 0) {
-            getItem().addUnsafeEnchantment(Enchantment.DURABILITY, unb);
-        }
-        
-        this.size = size;
+        getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
         
         // # of extra blocks that will be mined
         this.blocks = size * size - 1;
-        
-        // corners for mining
-        this.start = -((size - 1) >> 1);
-        this.side = size >> 1;
-        this.top = size - 2;
+        this.radius = (size - 1) >> 1;
     }
     
     @Nonnull
@@ -78,8 +66,15 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 }
             }
 
-            if (p.getGameMode() != GameMode.CREATIVE) {
-                StackUtils.damageItem(p, item, this.size);
+            if (ThreadLocalRandom.current().nextInt(3 - this.radius + item.getEnchantmentLevel(Enchantment.DURABILITY)) == 0) {
+                Damageable damageable = (Damageable) item.getItemMeta();
+                damageable.setDamage(damageable.getDamage() + 1);
+                if (damageable.getDamage() >= item.getType().getMaxDurability()) {
+                    p.playSound(p.getEyeLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
+                    item.setAmount(0);
+                } else {
+                    item.setItemMeta((ItemMeta) damageable);
+                }
             }
         };
     }
@@ -104,11 +99,9 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
             boolean applyFortune = SlimefunTag.FORTUNE_COMPATIBLE_ORES.isTagged(type);
 
             for (ItemStack drop : b.getDrops(item)) {
-                if (drop != null && drop.getType() != Material.AIR) {
-                    b.getWorld().dropItemNaturally(b.getLocation(), applyFortune ? new CustomItem(drop, fortune) : drop);
-                }
+                b.getWorld().dropItemNaturally(b.getLocation(), applyFortune ? new CustomItem(drop, fortune) : drop);
             }
-
+            
             b.setType(Material.AIR);
         }
     }
@@ -117,24 +110,24 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
         Block[] arr = new Block[this.blocks];
         int index = 0;
         if (pitch > 45 || pitch < -45) {
-            for (int x = this.start ; x <= this.side ; x++) {
-                for (int z = -1 ; z <= this.top ; z++) {
+            for (int x = -this.radius ; x <= this.radius ; x++) {
+                for (int z = -this.radius ; z <= this.radius ; z++) {
                     if (x != 0 || z != 0) {
                         arr[index++] = middle.getRelative(x, 0, z);
                     }
                 }
             }
         } else if (face == BlockFace.NORTH || face == BlockFace.SOUTH) {
-            for (int x = this.start ; x <= this.side ; x++) {
-                for (int y = -1 ; y <= this.top ; y++) {
+            for (int x = -this.radius ; x <= this.radius ; x++) {
+                for (int y = -this.radius ; y <= this.radius ; y++) {
                     if (y != 0 || x != 0) {
                         arr[index++] = middle.getRelative(x, y, 0);
                     }
                 }
             }
         } else if (face == BlockFace.EAST || face == BlockFace.WEST) {
-            for (int z = this.start ; z <= this.side ; z++) {
-                for (int y = -1 ; y <= this.top ; y++) {
+            for (int z = -this.radius ; z <= this.radius ; z++) {
+                for (int y = -this.radius ; y <= this.radius ; y++) {
                     if (z !=0 || y != 0) {
                         arr[index++] = middle.getRelative(0, y, z);
                     }

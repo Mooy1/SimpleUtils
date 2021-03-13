@@ -1,9 +1,9 @@
 package io.github.mooy1.simpleutils.blocks;
 
-import io.github.mooy1.infinitylib.PluginUtils;
-import io.github.mooy1.infinitylib.abstracts.AbstractContainer;
-import io.github.mooy1.infinitylib.presets.MenuPreset;
-import io.github.mooy1.infinitylib.presets.RecipePreset;
+import io.github.mooy1.infinitylib.core.PluginUtils;
+import io.github.mooy1.infinitylib.slimefun.abstracts.AbstractContainer;
+import io.github.mooy1.infinitylib.slimefun.presets.MenuPreset;
+import io.github.mooy1.infinitylib.slimefun.presets.RecipePreset;
 import io.github.mooy1.simpleutils.Items;
 import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedOutput;
 import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedRecipeMap;

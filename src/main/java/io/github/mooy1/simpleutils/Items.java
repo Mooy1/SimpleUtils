@@ -1,6 +1,6 @@
 package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.core.PluginUtils;
 import lombok.experimental.UtilityClass;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -36,7 +36,7 @@ public final class Items {
     
     public static final SlimefunItemStack HAMMER_ROD = new SlimefunItemStack(
             "HAMMER_ROD",
-            Material.STICK,
+            Material.BLAZE_ROD,
             "&6Hammer Rod",
             "&7Core component of mining hammers"
     );

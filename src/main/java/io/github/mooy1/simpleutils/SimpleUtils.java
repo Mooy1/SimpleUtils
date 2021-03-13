@@ -1,6 +1,6 @@
 package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.core.PluginUtils;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import lombok.Getter;
 import org.bukkit.ChatColor;
@@ -16,7 +16,6 @@ public final class SimpleUtils extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         instance = this;
-
         
         PluginUtils.setup(ChatColor.GOLD + "SimpleUtils", this, "Mooy1/SimpleUtils/master", getFile());
         

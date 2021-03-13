@@ -1,6 +1,6 @@
 package io.github.mooy1.simpleutils.blocks;
 
-import io.github.mooy1.infinitylib.PluginUtils;
+import io.github.mooy1.infinitylib.core.PluginUtils;
 import io.github.mooy1.infinitylib.items.LoreUtils;
 import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.simpleutils.Items;
@@ -44,17 +44,17 @@ public final class SimpleSieve extends MultiBlockMachine {
             null, new ItemStack(Material.COMPOSTER), null
         }, BlockFace.SELF);
 
-        this.recipes.add(new ItemStack(Material.AIR), 35);
-        addRecipe(SlimefunItems.ALUMINUM_DUST, 5);
-        addRecipe(SlimefunItems.COPPER_DUST, 5);
-        addRecipe(SlimefunItems.IRON_DUST, 5);
-        addRecipe(SlimefunItems.LEAD_DUST, 5);
-        addRecipe(SlimefunItems.GOLD_DUST, 5);
-        addRecipe(SlimefunItems.ZINC_DUST, 5);
-        addRecipe(SlimefunItems.MAGNESIUM_DUST, 5);
-        addRecipe(SlimefunItems.SILVER_DUST, 5);
-        addRecipe(SlimefunItems.TIN_DUST, 5);
-        addRecipe(new ItemStack(Material.CLAY), 5);
+        this.recipes.add(new ItemStack(Material.AIR), 50);
+        addRecipe(SlimefunItems.ALUMINUM_DUST, 4);
+        addRecipe(SlimefunItems.COPPER_DUST, 4);
+        addRecipe(SlimefunItems.IRON_DUST, 4);
+        addRecipe(SlimefunItems.LEAD_DUST, 4);
+        addRecipe(SlimefunItems.GOLD_DUST, 4);
+        addRecipe(SlimefunItems.ZINC_DUST, 4);
+        addRecipe(SlimefunItems.MAGNESIUM_DUST, 4);
+        addRecipe(SlimefunItems.SILVER_DUST, 4);
+        addRecipe(SlimefunItems.TIN_DUST, 4);
+        addRecipe(new ItemStack(Material.CLAY_BALL), 4);
         addRecipe(new ItemStack(Material.FLINT), 5);
         addRecipe(Items.COBALT_DUST, 1);
         addRecipe(Items.NICKEL_DUST, 2);
