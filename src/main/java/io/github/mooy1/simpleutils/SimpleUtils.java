@@ -1,43 +1,41 @@
 package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.infinitylib.core.PluginUtils;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import lombok.Getter;
-import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.github.mooy1.infinitylib.InfinityAddon;
+import io.github.mooy1.infinitylib.command.AbstractCommand;
 
-import javax.annotation.Nonnull;
-
-public final class SimpleUtils extends JavaPlugin implements SlimefunAddon {
+public final class SimpleUtils extends InfinityAddon {
     
-    @Getter
     private static SimpleUtils instance;
 
+    public static SimpleUtils inst() {
+        return instance;
+    }
+    
     @Override
     public void onEnable() {
+        super.onEnable();
         instance = this;
-        
-        PluginUtils.setup(ChatColor.GOLD + "SimpleUtils", this, "Mooy1/SimpleUtils/master", getFile());
-        
-        PluginUtils.setupMetrics(10285);
-        
         Setup.setup(this);
+    }
+
+    @Override
+    protected int getMetricsID() {
+        return 10285;
+    }
+
+    @Override
+    protected String getGithubPath() {
+        return "Mooy1/SimpleUtils/master";
+    }
+
+    @Override
+    protected AbstractCommand[] getCommands() {
+        return new AbstractCommand[0];
     }
 
     @Override
     public void onDisable() {
         instance = null;
-    }
-
-    @Override
-    public String getBugTrackerURL() {
-        return "https://github.com/Mooy1/SimpleUtils/issues";
-    }
-
-    @Nonnull
-    @Override
-    public JavaPlugin getJavaPlugin() {
-        return this;
     }
 
 }

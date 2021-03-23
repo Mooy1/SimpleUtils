@@ -2,6 +2,7 @@ package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.players.CoolDownMap;
 import io.github.mooy1.simpleutils.Items;
+import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
@@ -30,7 +31,7 @@ public final class SimpleWrench extends SimpleSlimefunItem<ItemUseHandler> imple
             "&eRight-Click to quickly dismantle cargo, capacitors, and machines"
     );
     
-    private final CoolDownMap coolDowns = new CoolDownMap();
+    private final CoolDownMap coolDowns = new CoolDownMap(SimpleUtils.inst());
 
     public SimpleWrench() {
         super(Items.CATEGORY, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {

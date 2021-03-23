@@ -12,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 
 @UtilityClass
 public final class Setup {
@@ -30,14 +29,6 @@ public final class Setup {
         new MiningHammer(Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, "&7Reinforced", 3, 5).register(plugin);
         new MiningHammer(Material.NETHERITE_PICKAXE, SlimefunItems.CARBONADO, "&8Carbonado", 5, 5).register(plugin);
         
-        // dusts
-        new SlimefunItem(Items.CATEGORY, Items.COBALT_DUST, SimpleSieve.TYPE, fill(new ItemStack(Material.GRAVEL))).register(plugin);
-        new SlimefunItem(Items.CATEGORY, Items.NICKEL_DUST, SimpleSieve.TYPE, fill(new ItemStack(Material.GRAVEL))).register(plugin);
-
-        // ingots
-        RecipeType.SMELTERY.register(fill(Items.NICKEL_DUST), SlimefunItems.NICKEL_INGOT);
-        RecipeType.SMELTERY.register(fill(Items.COBALT_DUST), SlimefunItems.COBALT_INGOT);
-        
         // misc
         new SlimefunItem(Items.CATEGORY, Items.HAMMER_ROD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT,
@@ -45,9 +36,4 @@ public final class Setup {
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT
         }).register(plugin);
     }
-
-    private static ItemStack[] fill(ItemStack... items) {
-        return Arrays.copyOf(items, 9);
-    }
-
 }

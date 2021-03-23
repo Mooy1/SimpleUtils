@@ -1,10 +1,10 @@
 package io.github.mooy1.simpleutils.blocks;
 
-import io.github.mooy1.infinitylib.core.PluginUtils;
 import io.github.mooy1.infinitylib.slimefun.abstracts.AbstractContainer;
 import io.github.mooy1.infinitylib.slimefun.presets.MenuPreset;
 import io.github.mooy1.infinitylib.slimefun.presets.RecipePreset;
 import io.github.mooy1.simpleutils.Items;
+import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedOutput;
 import io.github.mooy1.simpleutils.blocks.shapedrecipe.ShapedRecipeMap;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
@@ -53,7 +53,7 @@ public final class SimpleWorkbench extends AbstractContainer implements Listener
     public SimpleWorkbench() {
         super(Items.CATEGORY, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, RecipePreset.firstItem(new ItemStack(Material.CRAFTING_TABLE)));
         
-        PluginUtils.registerListener(this);
+        SimpleUtils.inst().registerListener(this);
         
         SlimefunPlugin.getMinecraftRecipeService().subscribe(recipeSnapshot -> {
             for (ShapedRecipe recipe : recipeSnapshot.getRecipes(ShapedRecipe.class)) {
@@ -64,7 +64,7 @@ public final class SimpleWorkbench extends AbstractContainer implements Listener
             }
         });
         
-        PluginUtils.runSync(() -> {
+        SimpleUtils.inst().runSync(() -> {
             RecipeType[] types = {RecipeType.ENHANCED_CRAFTING_TABLE, RecipeType.ARMOR_FORGE, RecipeType.MAGIC_WORKBENCH};
             for (RecipeType type : types) {
                 List<ItemStack[]> list = ((MultiBlockMachine) type.getMachine()).getRecipes();
@@ -160,7 +160,7 @@ public final class SimpleWorkbench extends AbstractContainer implements Listener
     }
     
     private void refreshOutput(@Nonnull BlockMenu menu) {
-        PluginUtils.runSync(() -> {
+        SimpleUtils.inst().runSync(() -> {
             ShapedOutput output = this.recipes.get(menu, INPUT_SLOTS);
             if (output == null) {
                 menu.replaceExistingItem(OUTPUT_SLOT, NO_OUTPUT);
