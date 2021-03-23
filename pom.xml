@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.github.TheBusyBiscuit</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-20</version>
+            <version>RC-21</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>io.github.mooy1</groupId>
             <artifactId>InfinityLib</artifactId>
-            <version>55672ad</version>
+            <version>b4d28d6</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
