@@ -1,9 +1,13 @@
 package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.infinitylib.InfinityAddon;
-import io.github.mooy1.infinitylib.command.AbstractCommand;
+import io.github.mooy1.infinitylib.AbstractAddon;
+import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
+import io.github.mooy1.infinitylib.commands.AbstractCommand;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
 
-public final class SimpleUtils extends InfinityAddon {
+public final class SimpleUtils extends AbstractAddon {
     
     private static SimpleUtils instance;
 
@@ -13,29 +17,31 @@ public final class SimpleUtils extends InfinityAddon {
     
     @Override
     public void onEnable() {
-        super.onEnable();
         instance = this;
-        Setup.setup(this);
-    }
-
-    @Override
-    protected int getMetricsID() {
-        return 10285;
-    }
-
-    @Override
-    protected String getGithubPath() {
-        return "Mooy1/SimpleUtils/master";
-    }
-
-    @Override
-    protected AbstractCommand[] getCommands() {
-        return new AbstractCommand[0];
+        super.onEnable();
+        Items.setup(this);
     }
 
     @Override
     public void onDisable() {
         instance = null;
+    }
+
+    @Nonnull
+    @Override
+    protected Metrics setupMetrics() {
+        return new Metrics(this,10285);
+    }
+    
+    @Override
+    protected String getGithubPath() {
+        return "Mooy1/SimpleUtils/master";
+    }
+
+    @Nonnull
+    @Override
+    protected List<AbstractCommand> getSubCommands() {
+        return new ArrayList<>();
     }
 
 }

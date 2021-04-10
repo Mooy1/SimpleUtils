@@ -7,3 +7,9 @@ depend: [Slimefun]
 softdepend: []
 version: ${project.version}
 api-version: 1.16
+
+commands:
+  simpleutils:
+    description: Do /simpleutils help for a list of commands
+    usage: /simpleutils <subcommand>
+    aliases: [su, simple]

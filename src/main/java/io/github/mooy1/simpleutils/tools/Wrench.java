@@ -1,15 +1,15 @@
 package io.github.mooy1.simpleutils.tools;
 
 import io.github.mooy1.infinitylib.players.CoolDownMap;
-import io.github.mooy1.simpleutils.Items;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
+import javax.annotation.Nonnull;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
@@ -20,25 +20,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-
-public final class SimpleWrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
-    
-    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
-            "SIMPLE_WRENCH",
-            Material.IRON_HOE,
-            "&6Simple Wrench",
-            "&eRight-Click to quickly dismantle cargo, capacitors, and machines"
-    );
+public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
     
     private final CoolDownMap coolDowns = new CoolDownMap(SimpleUtils.inst());
 
-    public SimpleWrench() {
-        super(Items.CATEGORY, ITEM, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-                SlimefunItems.ALUMINUM_INGOT, null, SlimefunItems.ALUMINUM_INGOT,
-                null, SlimefunItems.SILVER_INGOT, null,
-                null, SlimefunItems.ALUMINUM_INGOT, null
-        });
+    public Wrench(Category category, SlimefunItemStack item, RecipeType type, ItemStack[] recipe) {
+        super(category, item, type, recipe);
     }
 
     @Nonnull

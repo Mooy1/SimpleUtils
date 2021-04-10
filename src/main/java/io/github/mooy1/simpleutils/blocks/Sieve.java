@@ -2,18 +2,16 @@ package io.github.mooy1.simpleutils.blocks;
 
 import io.github.mooy1.infinitylib.items.LoreUtils;
 import io.github.mooy1.infinitylib.items.StackUtils;
-import io.github.mooy1.simpleutils.Items;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.RandomizedSet;
 import me.mrCookieSlime.Slimefun.cscorelib2.inventory.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,25 +23,13 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SimpleSieve extends MultiBlockMachine {
-    
-    public static final SlimefunItemStack ITEM = new SlimefunItemStack(
-            "SIMPLE_SIEVE",
-            Material.COMPOSTER,
-            "&6Simple Sieve",
-            "&7Sifts gravel into dusts and materials"
-    );
-    public static final RecipeType TYPE = new RecipeType(new NamespacedKey(SimpleUtils.inst(), "simple_sieve"), ITEM);
-    
+public final class Sieve extends MultiBlockMachine {
+
     private final RandomizedSet<ItemStack> recipes = new RandomizedSet<>();
     private final List<ItemStack> display = new ArrayList<>();
     
-    public SimpleSieve() {
-        super(Items.CATEGORY, ITEM, new ItemStack[] {
-            null, null, null,
-            null, new ItemStack(Material.OAK_TRAPDOOR), null,
-            null, new ItemStack(Material.COMPOSTER), null
-        }, BlockFace.SELF);
+    public Sieve(Category category, SlimefunItemStack item, ItemStack[] recipe, BlockFace face) {
+        super(category, item, recipe, face);
 
         this.recipes.add(new ItemStack(Material.AIR), 72);
         addRecipe(SlimefunItems.ALUMINUM_DUST, 2);

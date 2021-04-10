@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunIte
 import io.github.thebusybiscuit.slimefun4.utils.ChatUtils;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
+import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
@@ -32,8 +33,8 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
     private final int radius;
     private final int blocks;
     
-    public MiningHammer(Material material, ItemStack metal, String name,  int size, int eff) {
-        super(Items.CATEGORY, new SlimefunItemStack(
+    public MiningHammer(Category category, Material material, ItemStack metal, String name, int size, int eff) {
+        super(category, new SlimefunItemStack(
                 ChatUtils.removeColorCodes(name).toUpperCase(Locale.ROOT) + "_MINING_HAMMER",
                 material,
                 name + " Mining Hammer",
