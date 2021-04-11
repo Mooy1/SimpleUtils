@@ -402,6 +402,7 @@ public final class Workbench extends AbstractContainer implements Listener {
         SIX_DOOR(110110110, 11011011),
         SIX_STAIRS(1011111, 100110111),
         SIX_BOW(120102120, 12102012),
+        SIX_FENCE(121121000, 121121),
     
         SHAPED();
     
