@@ -51,23 +51,37 @@ public final class Workbench extends AbstractContainer implements Listener {
             for (ShapedRecipe recipe : recipeSnapshot.getRecipes(ShapedRecipe.class)) {
                 
                 Map<Character, ItemStack> choices = recipe.getIngredientMap();
-                String shape = String.join("", recipe.getShape());
-                
                 ItemStack[] arr = new ItemStack[9];
-                List<Integer> plankSlots = new ArrayList<>();
+                String[] shape = recipe.getShape();
                 
-                for (int i = 0 ; i < shape.length() ; i++) {
-                    ItemStack stack = choices.get(shape.charAt(i));
-                    if (stack != null) {
-                        arr[i] = stack;
-                        if (stack.getType() == Material.OAK_PLANKS) {
-                            plankSlots.add(i);
+                List<Integer> plankSlots = null;
+                boolean couldHaveAltPlankRecipes = true;
+                
+                for (int r = 0 ; r < shape.length ; r++) {
+                    for (int c = 0 ; c < shape[r].length() ; c++) {
+                        char ch = shape[r].charAt(c);
+                        ItemStack stack = choices.get(ch);
+                        if (stack != null) {
+                            int slot = r * 3 + c;
+                            arr[slot] = stack;
+                            
+                            // add plank slots
+                            if (couldHaveAltPlankRecipes && stack.getType() == Material.OAK_PLANKS) {
+                                if (plankSlots != null) {
+                                    plankSlots.add(slot);
+                                } else if (recipe.getChoiceMap().get(ch).test(new ItemStack(Material.SPRUCE_PLANKS))) {
+                                    plankSlots = new ArrayList<>();
+                                    plankSlots.add(slot);
+                                } else {
+                                    couldHaveAltPlankRecipes = false;
+                                }
+                            }
                         }
                     }
                 }
                 
                 // add alternate plank recipes
-                if (plankSlots.size() != 0 && recipe.getChoiceMap().get(shape.charAt(plankSlots.get(0))).test(new ItemStack(Material.SPRUCE_PLANKS))) {
+                if (couldHaveAltPlankRecipes && plankSlots != null) {
                     for (Material material : SlimefunTag.PLANKS.getValues()) {
                         if (material != Material.OAK_PLANKS) {
                             ItemStack plank = new ItemStack(material);
@@ -310,15 +324,21 @@ public final class Workbench extends AbstractContainer implements Listener {
                 if (items[i] != null) {
                     String id = ids[i] = StackUtils.getIDorType(items[i]);
                     shapeInt += map.computeIfAbsent(id, k -> digit.getAndIncrement());
-                    hashCode += id.hashCode();
                 }
             }
     
             // find shape
             shape = SHAPES.getOrDefault(shapeInt, Shape.SHAPED);
             
-            if (shape != Shape.SHAPED) {
-                // full should keep the current ids & hash
+            if (shape == Shape.SHAPED) {
+                for (String id : ids) {
+                    if (id != null) {
+                        hashCode += id.hashCode();
+                    } else {
+                        hashCode += 1;
+                    }
+                }
+            } else {
                 ids = new String[map.size()];
                 hashCode = 0;
                 if (shape == Shape.SHAPELESS) {
@@ -336,7 +356,7 @@ public final class Workbench extends AbstractContainer implements Listener {
                     }
                 }
             }
-    
+            
             this.shape = shape;
             this.ids = ids;
             this.hashCode = hashCode + shape.hashCode();
