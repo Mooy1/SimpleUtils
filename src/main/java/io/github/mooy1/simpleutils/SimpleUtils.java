@@ -1,20 +1,21 @@
 package io.github.mooy1.simpleutils;
 
-import io.github.mooy1.infinitylib.AbstractAddon;
-import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
-import io.github.mooy1.infinitylib.commands.AbstractCommand;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+import io.github.mooy1.infinitylib.AbstractAddon;
+import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
+import io.github.mooy1.infinitylib.commands.AbstractCommand;
+
 public final class SimpleUtils extends AbstractAddon {
-    
+
     private static SimpleUtils instance;
 
     public static SimpleUtils inst() {
         return instance;
     }
-    
+
     @Override
     public void onEnable() {
         instance = this;
@@ -30,9 +31,9 @@ public final class SimpleUtils extends AbstractAddon {
     @Nonnull
     @Override
     protected Metrics setupMetrics() {
-        return new Metrics(this,10285);
+        return new Metrics(this, 10285);
     }
-    
+
     @Override
     protected String getGithubPath() {
         return "Mooy1/SimpleUtils/master";

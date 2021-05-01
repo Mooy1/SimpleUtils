@@ -4,7 +4,6 @@ description: Simple utilities items for slimefun
 website: https://github.com/Mooy1/SimpleUtils
 main: io.github.mooy1.simpleutils.SimpleUtils
 depend: [Slimefun]
-softdepend: []
 version: ${project.version}
 api-version: 1.16
 
@@ -12,4 +11,4 @@ commands:
   simpleutils:
     description: Do /simpleutils help for a list of commands
     usage: /simpleutils <subcommand>
-    aliases: [su, simple]
+    aliases: [ su, simple ]
