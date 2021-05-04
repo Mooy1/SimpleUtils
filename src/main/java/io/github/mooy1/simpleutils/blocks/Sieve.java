@@ -83,19 +83,15 @@ public final class Sieve extends MultiBlockMachine {
 
         ItemStack output = item.clone();
 
-        Inventory outputChest = findOutputChest(b.getRelative(BlockFace.DOWN), output);
-
-        if (outputChest != null) {
-            SimpleUtils.inst().runSync(() -> {
+        SimpleUtils.inst().runSync(() -> {
+            Inventory outputChest = findOutputChest(b.getRelative(BlockFace.DOWN), output);
+            if (outputChest != null) {
                 outputChest.addItem(output);
-                p.playSound(b.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);
-            }, 40);
-        } else {
-            SimpleUtils.inst().runSync(() -> {
+            } else {
                 b.getWorld().dropItemNaturally(b.getLocation().add(0, .5, 0), output);
-                p.playSound(b.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);
-            }, 40);
-        }
+            }
+            p.playSound(b.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);
+        }, 40);
     }
 
 }
