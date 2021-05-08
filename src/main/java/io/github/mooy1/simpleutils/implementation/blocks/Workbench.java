@@ -1,6 +1,7 @@
 package io.github.mooy1.simpleutils.implementation.blocks;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,13 +18,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
@@ -98,12 +93,12 @@ public final class Workbench extends AbstractContainer implements Listener {
                                     newLogRecipe[i] = arr[i];
                                 }
                             }
-                            RECIPES.put(new ShapedInput(newLogRecipe), new ItemStackWithRecipe(recipe));
+                            RECIPES.put(new ShapedInput(newLogRecipe), recipe.getResult());
                         }
                     }
                 }
 
-                RECIPES.put(new ShapedInput(arr), new ItemStackWithRecipe(recipe));
+                RECIPES.put(new ShapedInput(arr), recipe.getResult());
             }
             for (ShapelessRecipe recipe : recipeSnapshot.getRecipes(ShapelessRecipe.class)) {
                 List<ItemStack> ingredientList = recipe.getIngredientList();
@@ -111,12 +106,11 @@ public final class Workbench extends AbstractContainer implements Listener {
                 for (int i = 0 ; i < Math.min(9, ingredientList.size()) ; i++) {
                     arr[i] = ingredientList.get(i);
                 }
-                RECIPES.put(new ShapedInput(arr), new ItemStackWithRecipe(recipe));
+                RECIPES.put(new ShapedInput(arr), recipe.getResult());
             }
         });
         SimpleUtils.inst().runSync(() -> {
-            RecipeType[] types = {RecipeType.ENHANCED_CRAFTING_TABLE, RecipeType.ARMOR_FORGE, RecipeType.MAGIC_WORKBENCH};
-            for (RecipeType type : types) {
+            for (RecipeType type : Arrays.asList(RecipeType.ENHANCED_CRAFTING_TABLE, RecipeType.ARMOR_FORGE, RecipeType.MAGIC_WORKBENCH)) {
                 List<ItemStack[]> list = ((MultiBlockMachine) type.getMachine()).getRecipes();
                 for (int i = 0 ; i < list.size() ; i += 2) {
                     ItemStack[] recipe = list.get(i);
@@ -177,19 +171,6 @@ public final class Workbench extends AbstractContainer implements Listener {
         if (lowestAmount == 65) {
             // this would only happen if there was a empty registered recipe
             return;
-        }
-
-        if (output instanceof ItemStackWithRecipe) {
-            CraftItemEvent e = new CraftItemEvent(
-                    ((ItemStackWithRecipe) output).recipe, p.getOpenInventory(), 
-                    InventoryType.SlotType.CONTAINER, OUTPUT_SLOT,
-                    max ? ClickType.SHIFT_LEFT : ClickType.LEFT,
-                    max ? InventoryAction.MOVE_TO_OTHER_INVENTORY : InventoryAction.PICKUP_ALL
-            );
-            Bukkit.getPluginManager().callEvent(e);
-            if (e.isCancelled()) {
-                return;
-            }
         }
 
         if (max) {
@@ -400,17 +381,6 @@ public final class Workbench extends AbstractContainer implements Listener {
                 }
             }
             return true;
-        }
-
-    }
-
-    private static final class ItemStackWithRecipe extends CustomItem {
-
-        private final Recipe recipe;
-
-        private ItemStackWithRecipe(Recipe recipe) {
-            super(recipe.getResult());
-            this.recipe = recipe;
         }
 
     }
