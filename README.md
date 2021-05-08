@@ -5,9 +5,7 @@ A small utility addons which adds useful tools and blocks.
 
 - Enhanced Workbench - Craft Vanilla and Slimefun recipes in 1 menu
 
-
-- Mining Hammer - mine in 3x3 or 5x5 areas.
-
+- Simple Elevator - Jump to go up, crouch to go down
 
 - Wrench - quickly break cargo nodes, capacitors, and electric machines
 
@@ -19,9 +17,10 @@ https://thebusybiscuit.github.io/builds/Mooy1/SimpleUtils/master/
 ## Requirements
 Minecraft Version: 1.16+ (Paper recommended)
 
-https://papermc.io/downloads
-
-Slimefun Version: DEV 825+
+Slimefun Version: DEV 900+
 
 [![Build Status](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/badge.svg)](https://thebusybiscuit.github.io/builds/TheBusyBiscuit/Slimefun4/master/)
 
+## Changelog
+
+Dev 8 - Fixed sieve, requires slimefun Dev 900+ now

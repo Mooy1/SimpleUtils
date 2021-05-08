@@ -2,6 +2,7 @@ package io.github.mooy1.simpleutils.implementation.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
@@ -18,6 +19,7 @@ import io.github.mooy1.infinitylib.items.StackUtils;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.OutputChest;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.collections.RandomizedSet;
@@ -84,9 +86,9 @@ public final class Sieve extends MultiBlockMachine {
         ItemStack output = item.clone();
 
         SimpleUtils.inst().runSync(() -> {
-            Inventory outputChest = findOutputChest(b.getRelative(BlockFace.DOWN), output);
-            if (outputChest != null) {
-                outputChest.addItem(output);
+            Optional<Inventory> outputChest = OutputChest.findOutputChestFor(b.getRelative(BlockFace.DOWN), output);
+            if (outputChest.isPresent()) {
+                outputChest.get().addItem(output);
             } else {
                 b.getWorld().dropItemNaturally(b.getLocation().add(0, .5, 0), output);
             }
