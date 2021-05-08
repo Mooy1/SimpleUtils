@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils;
+package io.github.mooy1.simpleutils.implementation;
 
 import java.util.Arrays;
 import javax.annotation.Nonnull;
@@ -8,11 +8,12 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.mooy1.simpleutils.blocks.Elevator;
-import io.github.mooy1.simpleutils.blocks.Sieve;
-import io.github.mooy1.simpleutils.blocks.Workbench;
-import io.github.mooy1.simpleutils.tools.MiningHammer;
-import io.github.mooy1.simpleutils.tools.Wrench;
+import io.github.mooy1.simpleutils.SimpleUtils;
+import io.github.mooy1.simpleutils.implementation.blocks.Elevator;
+import io.github.mooy1.simpleutils.implementation.blocks.Sieve;
+import io.github.mooy1.simpleutils.implementation.blocks.Workbench;
+import io.github.mooy1.simpleutils.implementation.tools.MiningHammer;
+import io.github.mooy1.simpleutils.implementation.tools.Wrench;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -85,10 +86,10 @@ public final class Items {
                 null, SlimefunItems.SILVER_INGOT, null,
                 null, SlimefunItems.ALUMINUM_INGOT, null
         }).register(plugin);
-        new MiningHammer(category, Material.IRON_PICKAXE, SlimefunItems.COPPER_INGOT, "&6Copper", 3, 1).register(plugin);
-        new MiningHammer(category, Material.DIAMOND_PICKAXE, new ItemStack(Material.DIAMOND), "&bDiamond", 3, 2).register(plugin);
-        new MiningHammer(category, Material.IRON_PICKAXE, SlimefunItems.REINFORCED_ALLOY_INGOT, "&7Reinforced", 3, 3).register(plugin);
-        new MiningHammer(category, Material.NETHERITE_PICKAXE, SlimefunItems.CARBONADO, "&8Carbonado", 5, 4).register(plugin);
+        new MiningHammer(category, Material.IRON_PICKAXE, "&6Copper", 3, 1).register(plugin);
+        new MiningHammer(category, Material.DIAMOND_PICKAXE,  "&bDiamond", 3, 2).register(plugin);
+        new MiningHammer(category, Material.IRON_PICKAXE,  "&7Reinforced", 3, 3).register(plugin);
+        new MiningHammer(category, Material.NETHERITE_PICKAXE,  "&8Carbonado", 5, 4).register(plugin);
     }
 
 }

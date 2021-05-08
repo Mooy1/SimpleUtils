@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.tools;
+package io.github.mooy1.simpleutils.implementation.tools;
 
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.mooy1.simpleutils.Items;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
@@ -34,16 +33,16 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
     private final int radius;
     private final int blocks;
 
-    public MiningHammer(Category category, Material material, ItemStack metal, String name, int size, int eff) {
+    public MiningHammer(Category category, Material material, String name, int size, int eff) {
         super(category, new SlimefunItemStack(
                 ChatUtils.removeColorCodes(name).toUpperCase(Locale.ROOT) + "_MINING_HAMMER",
                 material,
                 name + " Mining Hammer",
-                "&7Mines in a " + size + "x" + size + " area"
+                "&4Deprecated for removal in a few weeks, use the Explosive Pick instead."
         ), RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-                metal, metal, metal,
-                metal, Items.HAMMER_ROD, metal,
-                null, Items.HAMMER_ROD, null
+                null, null, null,
+                null, new ItemStack(Material.BARRIER), null,
+                null, null, null
         });
         getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
 

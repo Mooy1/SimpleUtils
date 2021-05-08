@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
 import io.github.mooy1.infinitylib.commands.AbstractCommand;
+import io.github.mooy1.simpleutils.implementation.Items;
 
 public final class SimpleUtils extends AbstractAddon {
 

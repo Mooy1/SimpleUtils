@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.blocks;
+package io.github.mooy1.simpleutils.implementation.blocks;
 
 import java.util.ArrayList;
 import java.util.HashMap;

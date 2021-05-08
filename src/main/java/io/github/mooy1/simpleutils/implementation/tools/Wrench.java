@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.tools;
+package io.github.mooy1.simpleutils.implementation.tools;
 
 import javax.annotation.Nonnull;
 
