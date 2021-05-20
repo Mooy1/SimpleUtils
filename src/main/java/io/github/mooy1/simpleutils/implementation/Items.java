@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.mooy1.simpleutils.implementation.blocks.Elevator;
 import io.github.mooy1.simpleutils.implementation.blocks.Sieve;
-import io.github.mooy1.simpleutils.implementation.blocks.Workbench;
+import io.github.mooy1.simpleutils.implementation.workbench.Workbench;
 import io.github.mooy1.simpleutils.implementation.tools.MiningHammer;
 import io.github.mooy1.simpleutils.implementation.tools.Wrench;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
