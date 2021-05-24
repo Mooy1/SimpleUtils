@@ -24,3 +24,5 @@ Slimefun Version: DEV 900+
 ## Changelog
 
 Dev 8 - Fixed sieve, requires slimefun Dev 900+ now
+
+Dev 9 - Fix 2 bugs, hammers are deprecated
