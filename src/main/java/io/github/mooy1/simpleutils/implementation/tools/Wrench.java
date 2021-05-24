@@ -10,7 +10,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.mooy1.infinitylib.players.CoolDownMap;
-import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
@@ -24,7 +23,7 @@ import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 
 public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
 
-    private final CoolDownMap coolDowns = new CoolDownMap(SimpleUtils.inst());
+    private final CoolDownMap coolDowns = new CoolDownMap();
 
     public Wrench(Category category, SlimefunItemStack item, RecipeType type, ItemStack[] recipe) {
         super(category, item, type, recipe);
@@ -47,7 +46,7 @@ public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements 
                         && !sfItem.useVanillaBlockBreaking()
                         && (b.getType() == Material.PLAYER_HEAD || b.getType() == Material.PLAYER_WALL_HEAD || sfItem instanceof EnergyNetComponent)) {
 
-                    this.coolDowns.put(e.getPlayer().getUniqueId());
+                    this.coolDowns.reset(e.getPlayer().getUniqueId());
 
                     BlockBreakEvent event = new BlockBreakEvent(b, e.getPlayer());
 

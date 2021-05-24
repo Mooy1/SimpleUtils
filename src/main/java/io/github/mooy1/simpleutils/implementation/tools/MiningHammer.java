@@ -28,6 +28,7 @@ import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 
+@Deprecated
 public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> implements NotPlaceable {
 
     private final int radius;
@@ -44,11 +45,14 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
                 null, new ItemStack(Material.BARRIER), null,
                 null, null, null
         });
+
         getItem().addUnsafeEnchantment(Enchantment.DIG_SPEED, eff);
 
         // # of extra blocks that will be mined
         this.blocks = size * size - 1;
         this.radius = (size - 1) >> 1;
+
+        setHidden(true);
     }
 
     @Nonnull

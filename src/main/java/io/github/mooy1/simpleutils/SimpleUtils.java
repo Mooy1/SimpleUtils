@@ -1,12 +1,9 @@
 package io.github.mooy1.simpleutils;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Nonnull;
 
 import io.github.mooy1.infinitylib.AbstractAddon;
 import io.github.mooy1.infinitylib.bstats.bukkit.Metrics;
-import io.github.mooy1.infinitylib.commands.AbstractCommand;
 import io.github.mooy1.simpleutils.implementation.Items;
 
 public final class SimpleUtils extends AbstractAddon {
@@ -39,12 +36,6 @@ public final class SimpleUtils extends AbstractAddon {
     @Override
     protected String getGithubPath() {
         return "Mooy1/SimpleUtils/master";
-    }
-
-    @Nonnull
-    @Override
-    protected List<AbstractCommand> getSubCommands() {
-        return new ArrayList<>();
     }
 
 }

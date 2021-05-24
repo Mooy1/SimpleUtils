@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.implementation.workbench;
+package io.github.mooy1.simpleutils.implementation.blocks.workbench;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import io.github.mooy1.infinitylib.items.StackUtils;
 /**
  * A shaped, 3x3 recipe which detects the shape on its own and compares ids and shape
  */
-class ShapedInput {
+final class ShapedInput {
 
     static final Map<Integer, Shape> SHAPES = new HashMap<>();
 

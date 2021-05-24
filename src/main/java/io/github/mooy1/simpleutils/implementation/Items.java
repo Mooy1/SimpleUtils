@@ -1,6 +1,7 @@
 package io.github.mooy1.simpleutils.implementation;
 
 import java.util.Arrays;
+
 import javax.annotation.Nonnull;
 import lombok.experimental.UtilityClass;
 
@@ -11,13 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.mooy1.simpleutils.implementation.blocks.Elevator;
 import io.github.mooy1.simpleutils.implementation.blocks.Sieve;
-import io.github.mooy1.simpleutils.implementation.workbench.Workbench;
 import io.github.mooy1.simpleutils.implementation.tools.MiningHammer;
 import io.github.mooy1.simpleutils.implementation.tools.Wrench;
+import io.github.mooy1.simpleutils.implementation.blocks.workbench.Workbench;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 
@@ -29,12 +29,6 @@ public final class Items {
             Material.IRON_HOE,
             "&6Simple Wrench",
             "&eRight-Click to quickly dismantle cargo, capacitors, and machines"
-    );
-    public static final SlimefunItemStack HAMMER_ROD = new SlimefunItemStack(
-            "HAMMER_ROD",
-            Material.BLAZE_ROD,
-            "&6Hammer Rod",
-            "&7Core component of mining hammers"
     );
     public static final SlimefunItemStack SIEVE = new SlimefunItemStack(
             "SIMPLE_SIEVE",
@@ -57,12 +51,6 @@ public final class Items {
 
     public static void setup(@Nonnull SimpleUtils plugin) {
         Category category = new Category(SimpleUtils.inst().getKey("main"), new CustomItem(Material.COMPOSTER, "&6Simple Utils"), 0);
-
-        new SlimefunItem(category, HAMMER_ROD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-                SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT,
-                SlimefunItems.STEEL_INGOT, new ItemStack(Material.BLAZE_ROD), SlimefunItems.STEEL_INGOT,
-                SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT
-        }).register(plugin);
 
         new Workbench(category, WORKBENCH, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Arrays.copyOf(new ItemStack[] {new ItemStack(Material.CRAFTING_TABLE)}, 9)

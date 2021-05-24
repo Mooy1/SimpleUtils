@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.implementation.workbench;
+package io.github.mooy1.simpleutils.implementation.blocks.workbench;
 
 /**
  * Utility enum of 'shapes', for example a helmet could be:

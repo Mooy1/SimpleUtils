@@ -1,4 +1,4 @@
-package io.github.mooy1.simpleutils.implementation.workbench;
+package io.github.mooy1.simpleutils.implementation.blocks.workbench;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 
-class ResearchableItemStack extends CustomItem {
+final class ResearchableItemStack extends CustomItem {
 
     private final Research research;
     private final String name;
