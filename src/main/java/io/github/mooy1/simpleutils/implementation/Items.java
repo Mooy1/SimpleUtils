@@ -57,35 +57,35 @@ public final class Items {
 
     public static void setup(@Nonnull SimpleUtils plugin) {
         Category category = new Category(SimpleUtils.inst().getKey("main"), new CustomItem(Material.COMPOSTER, "&6Simple Utils"), 0);
-        
-        // misc
+
         new SlimefunItem(category, HAMMER_ROD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT,
                 SlimefunItems.STEEL_INGOT, new ItemStack(Material.BLAZE_ROD), SlimefunItems.STEEL_INGOT,
                 SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT, SlimefunItems.STEEL_INGOT
         }).register(plugin);
-        
-        // blocks
+
         new Workbench(category, WORKBENCH, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Arrays.copyOf(new ItemStack[] {new ItemStack(Material.CRAFTING_TABLE)}, 9)
         ).register(plugin);
+
         new Sieve(category, SIEVE, new ItemStack[] {
                 null, null, null,
                 null, new ItemStack(Material.OAK_TRAPDOOR), null,
                 null, new ItemStack(Material.COMPOSTER), null
         }, BlockFace.SELF).register(plugin);
+
         new Elevator(category, ELEVATOR, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 new ItemStack(Material.QUARTZ_BLOCK), new ItemStack(Material.QUARTZ_BLOCK), new ItemStack(Material.QUARTZ_BLOCK),
                 new ItemStack(Material.QUARTZ_BLOCK), new ItemStack(Material.ENDER_PEARL), new ItemStack(Material.QUARTZ_BLOCK),
                 new ItemStack(Material.QUARTZ_BLOCK), new ItemStack(Material.QUARTZ_BLOCK), new ItemStack(Material.QUARTZ_BLOCK)
         }).register(plugin);
 
-        // tools
         new Wrench(category, WRENCH, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
                 SlimefunItems.ALUMINUM_INGOT, null, SlimefunItems.ALUMINUM_INGOT,
                 null, SlimefunItems.SILVER_INGOT, null,
                 null, SlimefunItems.ALUMINUM_INGOT, null
         }).register(plugin);
+
         new MiningHammer(category, Material.IRON_PICKAXE, "&6Copper", 3, 1).register(plugin);
         new MiningHammer(category, Material.DIAMOND_PICKAXE,  "&bDiamond", 3, 2).register(plugin);
         new MiningHammer(category, Material.IRON_PICKAXE,  "&7Reinforced", 3, 3).register(plugin);

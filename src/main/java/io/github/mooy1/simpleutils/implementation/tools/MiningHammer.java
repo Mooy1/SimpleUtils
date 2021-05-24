@@ -57,6 +57,10 @@ public final class MiningHammer extends SimpleSlimefunItem<ToolUseHandler> imple
         return (e, item, fortune, drops) -> {
             Player p = e.getPlayer();
 
+            if (ThreadLocalRandom.current().nextInt(10) == 0) {
+                p.sendMessage("&4This item is deprecated. It will be removed soon. Use the explosive pick instead.");
+            }
+
             if (p.isSneaking() || !SlimefunPlugin.getProtectionManager().hasPermission(p, e.getBlock(), ProtectableAction.BREAK_BLOCK)) {
                 return;
             }

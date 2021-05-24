@@ -35,6 +35,7 @@ public final class SimpleUtils extends AbstractAddon {
         return new Metrics(this, 10285);
     }
 
+    @Nonnull
     @Override
     protected String getGithubPath() {
         return "Mooy1/SimpleUtils/master";

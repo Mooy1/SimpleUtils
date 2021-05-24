@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.annotation.Nonnull;
 
 import org.bukkit.Location;
@@ -15,6 +16,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -280,6 +283,14 @@ public final class Workbench extends AbstractContainer implements Listener {
         BlockMenu menu = this.openMenus.get(e.getWhoClicked().getUniqueId());
         if (menu != null) {
             refreshOutput(menu);
+        }
+    }
+
+    @EventHandler
+    private void onDoubleClick(InventoryClickEvent e) {
+        BlockMenu menu = this.openMenus.get(e.getWhoClicked().getUniqueId());
+        if (menu != null && e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
+            e.setCancelled(true);
         }
     }
 
