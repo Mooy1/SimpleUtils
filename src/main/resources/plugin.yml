@@ -4,6 +4,7 @@ description: Simple utilities items for slimefun
 website: https://github.com/Mooy1/SimpleUtils
 main: io.github.mooy1.simpleutils.SimpleUtils
 depend: [Slimefun]
+softdepend: [InfinityExpansion]
 version: ${project.version}
 api-version: 1.16
 
