@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.mooy1.simpleutils.implementation.blocks.Elevator;
 import io.github.mooy1.simpleutils.implementation.blocks.Sieve;
-import io.github.mooy1.simpleutils.implementation.tools.MiningHammer;
 import io.github.mooy1.simpleutils.implementation.tools.Wrench;
 import io.github.mooy1.simpleutils.implementation.blocks.workbench.Workbench;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -73,11 +72,6 @@ public final class Items {
                 null, SlimefunItems.SILVER_INGOT, null,
                 null, SlimefunItems.ALUMINUM_INGOT, null
         }).register(plugin);
-
-        new MiningHammer(category, Material.IRON_PICKAXE, "&6Copper", 3, 1).register(plugin);
-        new MiningHammer(category, Material.DIAMOND_PICKAXE,  "&bDiamond", 3, 2).register(plugin);
-        new MiningHammer(category, Material.IRON_PICKAXE,  "&7Reinforced", 3, 3).register(plugin);
-        new MiningHammer(category, Material.NETHERITE_PICKAXE,  "&8Carbonado", 5, 4).register(plugin);
     }
 
 }
