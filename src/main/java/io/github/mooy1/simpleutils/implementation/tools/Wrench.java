@@ -9,23 +9,23 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.mooy1.infinitylib.players.CoolDownMap;
+import io.github.mooy1.infinitylib.common.CoolDowns;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.NotPlaceable;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.items.SimpleSlimefunItem;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 
 public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements NotPlaceable {
 
-    private final CoolDownMap coolDowns = new CoolDownMap();
+    private final CoolDowns coolDowns = new CoolDowns(50);
 
-    public Wrench(Category category, SlimefunItemStack item, RecipeType type, ItemStack[] recipe) {
+    public Wrench(ItemGroup category, SlimefunItemStack item, RecipeType type, ItemStack[] recipe) {
         super(category, item, type, recipe);
     }
 
@@ -36,13 +36,13 @@ public final class Wrench extends SimpleSlimefunItem<ItemUseHandler> implements 
             e.setUseItem(Event.Result.DENY);
             e.setUseBlock(Event.Result.DENY);
 
-            if (this.coolDowns.check(e.getPlayer().getUniqueId(), 50)
+            if (this.coolDowns.check(e.getPlayer().getUniqueId())
                     && e.getClickedBlock().isPresent() && e.getSlimefunBlock().isPresent()) {
 
                 Block b = e.getClickedBlock().get();
                 SlimefunItem sfItem = e.getSlimefunBlock().get();
 
-                if (SlimefunPlugin.getProtectionManager().hasPermission(e.getPlayer(), b, ProtectableAction.BREAK_BLOCK)
+                if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), b, Interaction.BREAK_BLOCK)
                         && !sfItem.useVanillaBlockBreaking()
                         && (b.getType() == Material.PLAYER_HEAD || b.getType() == Material.PLAYER_WALL_HEAD || sfItem instanceof EnergyNetComponent)) {
 

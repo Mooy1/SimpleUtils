@@ -3,6 +3,7 @@ package io.github.mooy1.simpleutils.implementation;
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
+
 import lombok.experimental.UtilityClass;
 
 import org.bukkit.Material;
@@ -12,13 +13,13 @@ import org.bukkit.inventory.ItemStack;
 import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.mooy1.simpleutils.implementation.blocks.Elevator;
 import io.github.mooy1.simpleutils.implementation.blocks.Sieve;
+import io.github.mooy1.simpleutils.implementation.blocks.Workbench;
 import io.github.mooy1.simpleutils.implementation.tools.Wrench;
-import io.github.mooy1.simpleutils.implementation.blocks.workbench.Workbench;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
 @UtilityClass
 public final class Items {
@@ -49,7 +50,8 @@ public final class Items {
     );
 
     public static void setup(@Nonnull SimpleUtils plugin) {
-        Category category = new Category(SimpleUtils.inst().getKey("main"), new CustomItem(Material.COMPOSTER, "&6Simple Utils"), 0);
+        ItemGroup category = new ItemGroup(SimpleUtils.createKey("main"),
+                new CustomItemStack(Material.COMPOSTER, "&6Simple Utils"), 0);
 
         new Workbench(category, WORKBENCH, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Arrays.copyOf(new ItemStack[] {new ItemStack(Material.CRAFTING_TABLE)}, 9)
