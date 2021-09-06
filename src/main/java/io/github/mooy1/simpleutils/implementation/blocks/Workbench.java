@@ -32,6 +32,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.items.backpacks.SlimefunBackpack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemStackSnapshot;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -114,14 +115,15 @@ public final class Workbench extends MenuBlock implements Listener {
             }
         }
 
-        ItemStack output = Bukkit.craftItem(input, p.getWorld(), p);
-        if (output.getType().isAir()) {
-            output = fakeEnhancedCrafter.craft(input);
+        ItemStackSnapshot[] snap = ItemStackSnapshot.wrapArray(input);
+        ItemStack output = fakeEnhancedCrafter.craft(snap);
 
-            if (output == null) {
+        if (output == null) {
+            output = Bukkit.craftItem(input, p.getWorld(), p);
+            if (output.getType().isAir()) {
                 return;
             }
-
+        } else {
             SlimefunItem item = SlimefunItem.getByItem(output);
 
             if (item != null) {
@@ -211,14 +213,14 @@ public final class Workbench extends MenuBlock implements Listener {
                 input[i] = menu.getItemInSlot(INPUT_SLOTS[i]);
             }
 
-            Recipe recipe = Bukkit.getCraftingRecipe(input, menu.getBlock().getWorld());
-            ItemStack output;
+            ItemStackSnapshot[] snap = ItemStackSnapshot.wrapArray(input);
+            ItemStack output = fakeEnhancedCrafter.craft(snap);
 
-            if (recipe == null) {
-                output = fakeEnhancedCrafter.craft(input);
-            }
-            else {
-                output = recipe.getResult();
+            if (output == null) {
+                Recipe recipe = Bukkit.getCraftingRecipe(input, menu.getBlock().getWorld());
+                if (recipe != null) {
+                    output = recipe.getResult();
+                }
             }
 
             if (output == null) {

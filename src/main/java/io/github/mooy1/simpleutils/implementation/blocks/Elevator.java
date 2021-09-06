@@ -55,8 +55,10 @@ public final class Elevator extends SlimefunItem implements Listener {
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
                 if (SimpleUtils.slimefunTickCount() % 8 == 0 && block.getY() > 0) {
                     Material type = block.getRelative(0, -1, 0).getType();
-                    if (type.isSolid() && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
+                    if (type.isOccluding() && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
                         block.setType(type);
+                    } else {
+                        block.setType(getItem().getType());
                     }
                 }
             }
