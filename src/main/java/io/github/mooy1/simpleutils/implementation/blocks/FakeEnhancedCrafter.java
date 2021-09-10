@@ -9,12 +9,12 @@ import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.mooy1.infinitylib.common.Scheduler;
+import io.github.mooy1.infinitylib.common.StackUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.multiblocks.EnhancedCraftingTable;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemStackSnapshot;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 
 class FakeEnhancedCrafter extends EnhancedCraftingTable {
 
@@ -45,7 +45,7 @@ class FakeEnhancedCrafter extends EnhancedCraftingTable {
             ItemStackSnapshot[] recipe = inputs.get(i);
 
             for (int j = 0; j < recipe.length; j++) {
-                if (!SlimefunUtils.isItemSimilar(input[j], recipe[j], false, false)) {
+                if (!StackUtils.isSimilar(input[j], recipe[j])) {
                     continue loop;
                 }
             }
