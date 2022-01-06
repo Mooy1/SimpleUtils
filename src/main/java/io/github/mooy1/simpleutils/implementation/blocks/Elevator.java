@@ -36,7 +36,9 @@ public final class Elevator extends SlimefunItem implements Listener {
 
     public Elevator(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
+
         Events.registerListener(this);
+
         addItemHandler(new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(@Nonnull BlockBreakEvent e, @Nonnull ItemStack item, @Nonnull List<ItemStack> drops) {
@@ -45,6 +47,7 @@ public final class Elevator extends SlimefunItem implements Listener {
                 Elevator.this.locations.inverse().remove(l);
             }
         });
+
         addItemHandler(new BlockTicker() {
             @Override
             public boolean isSynchronized() {
@@ -53,7 +56,7 @@ public final class Elevator extends SlimefunItem implements Listener {
 
             @Override
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
-                if (SimpleUtils.slimefunTickCount() % 8 == 0 && block.getY() > 0) {
+                if (SimpleUtils.slimefunTickCount() % 16 == 0 && block.getY() > block.getWorld().getMinHeight()) {
                     Material type = block.getRelative(0, -1, 0).getType();
                     if (type.isOccluding() && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
                         block.setType(type);
@@ -67,12 +70,15 @@ public final class Elevator extends SlimefunItem implements Listener {
 
     @EventHandler
     private void onJump(@Nonnull PlayerMoveEvent e) {
-        if (e.getTo() != null && e.getTo().getY() > e.getFrom().getY() && e.getFrom().getY() - e.getFrom().getBlockY() < 0.05) {
+        if (e.getTo() != null && e.getTo().getY() > e.getFrom().getY()
+                && e.getFrom().getY() - e.getFrom().getBlockY() < 0.05) {
             Location check = elevatorUnder(e.getFrom());
+
             if (BlockStorage.check(check, getId())) {
                 teleport(e, this.locations.computeIfAbsent(check, elev -> {
+                    int max = elev.getWorld().getMaxHeight();
                     elev.add(0, 2, 0);
-                    while (elev.add(0, 1, 0).getY() < 256) {
+                    while (elev.add(0, 1, 0).getY() < max) {
                         if (BlockStorage.check(elev, getId())) {
                             return elev;
                         }
@@ -87,10 +93,12 @@ public final class Elevator extends SlimefunItem implements Listener {
     private void onCrouch(@Nonnull PlayerToggleSneakEvent e) {
         if (e.isSneaking()) {
             Location check = elevatorUnder(e.getPlayer().getLocation());
+
             if (BlockStorage.check(check, getId())) {
                 teleport(e, this.locations.inverse().computeIfAbsent(check, elev -> {
+                    int min = elev.getWorld().getMinHeight();
                     elev.subtract(0, 2, 0);
-                    while (elev.subtract(0, 1, 0).getY() > -1) {
+                    while (elev.subtract(0, 1, 0).getY() >= min) {
                         if (BlockStorage.check(elev, getId())) {
                             return elev;
                         }

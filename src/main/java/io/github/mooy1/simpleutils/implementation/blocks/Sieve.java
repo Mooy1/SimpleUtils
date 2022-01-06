@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.mooy1.infinitylib.common.Scheduler;
 import io.github.mooy1.infinitylib.common.StackUtils;
+import io.github.mooy1.simpleutils.SimpleUtils;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
@@ -30,13 +31,14 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemUtils;
 
 public final class Sieve extends MultiBlockMachine {
 
+    private final float itemChance = (float) SimpleUtils.config().getDouble("sieve-item-chance", 0, 100);
     private final RandomizedSet<ItemStack> recipes = new RandomizedSet<>();
     private final List<ItemStack> display = new ArrayList<>();
 
     public Sieve(ItemGroup category, SlimefunItemStack item, ItemStack[] recipe, BlockFace face) {
         super(category, item, recipe, face);
 
-        this.recipes.add(new ItemStack(Material.AIR), 72);
+        this.recipes.add(new ItemStack(Material.AIR), 25 * (100 - itemChance));
         addRecipe(SlimefunItems.ALUMINUM_DUST, 2);
         addRecipe(SlimefunItems.COPPER_DUST, 3);
         addRecipe(SlimefunItems.IRON_DUST, 2);
@@ -46,15 +48,16 @@ public final class Sieve extends MultiBlockMachine {
         addRecipe(SlimefunItems.MAGNESIUM_DUST, 1);
         addRecipe(SlimefunItems.SILVER_DUST, 1);
         addRecipe(SlimefunItems.TIN_DUST, 1);
-        addRecipe(new ItemStack(Material.CLAY_BALL), 5);
-        addRecipe(new ItemStack(Material.FLINT), 5);
+        addRecipe(new ItemStack(Material.CLAY_BALL), 4);
+        addRecipe(new ItemStack(Material.FLINT), 3);
         addRecipe(new ItemStack(Material.IRON_NUGGET), 3);
     }
 
-    private void addRecipe(ItemStack item, int chance) {
-        this.recipes.add(item, chance);
+    private void addRecipe(ItemStack item, float chance) {
+        float finalChance = chance * itemChance;
+        this.recipes.add(item, finalChance);
         this.displayRecipes.add(new ItemStack(Material.GRAVEL));
-        this.displayRecipes.add(new CustomItemStack(item, itemMeta -> itemMeta.setLore(Arrays.asList("", "&6Chance: " + chance))));
+        this.displayRecipes.add(new CustomItemStack(item, itemMeta -> itemMeta.setLore(Arrays.asList("", "&6Chance: " + finalChance))));
     }
 
     @Nonnull
