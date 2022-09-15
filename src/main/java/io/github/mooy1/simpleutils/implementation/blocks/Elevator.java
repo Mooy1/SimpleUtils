@@ -57,8 +57,14 @@ public final class Elevator extends SlimefunItem implements Listener {
             @Override
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
                 if (SimpleUtils.slimefunTickCount() % 16 == 0 && block.getY() > block.getWorld().getMinHeight()) {
+                    final List<Material> blackList = List.of(
+                        Material.SPAWNER,
+                        Material.NETHERITE_BLOCK,
+                        Material.DIAMOND_BLOCK
+                    );
                     Material type = block.getRelative(0, -1, 0).getType();
-                    if (type.isOccluding() && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
+                    if (!blackList.contains(type) && type.isOccluding()
+                            && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
                         block.setType(type);
                     } else {
                         block.setType(getItem().getType());
