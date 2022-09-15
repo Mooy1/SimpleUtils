@@ -1,5 +1,6 @@
 package io.github.mooy1.simpleutils.implementation.blocks;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -57,7 +58,7 @@ public final class Elevator extends SlimefunItem implements Listener {
             @Override
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
                 if (SimpleUtils.slimefunTickCount() % 16 == 0 && block.getY() > block.getWorld().getMinHeight()) {
-                    final List<Material> blackList = List.of(
+                    final List<Material> blackList = Arrays.asList(
                         Material.SPAWNER,
                         Material.NETHERITE_BLOCK,
                         Material.DIAMOND_BLOCK
