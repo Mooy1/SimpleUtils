@@ -1,5 +1,6 @@
 package io.github.mooy1.simpleutils.implementation.blocks;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -33,6 +34,9 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 public final class Elevator extends SlimefunItem implements Listener {
 
     private final BiMap<Location, Location> locations = HashBiMap.create();
+    public static final List<Material> BLACKLISTED_BLOCKS = Arrays.asList(
+        Material.SPAWNER
+    );
 
     public Elevator(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
@@ -58,7 +62,8 @@ public final class Elevator extends SlimefunItem implements Listener {
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
                 if (SimpleUtils.slimefunTickCount() % 16 == 0 && block.getY() > block.getWorld().getMinHeight()) {
                     Material type = block.getRelative(0, -1, 0).getType();
-                    if (type.isOccluding() && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
+                    if (!BLACKLISTED_BLOCKS.contains(type) && type.isOccluding()
+                            && !SlimefunTag.UNBREAKABLE_MATERIALS.isTagged(type)) {
                         block.setType(type);
                     } else {
                         block.setType(getItem().getType());
